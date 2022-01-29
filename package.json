@@ -11,9 +11,6 @@
     "husky:prepare": "husky install",
     "test:watch": "jest --watch"
   },
-  "jest": {
-    "preset": "jest-expo"
-  },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
     "@react-navigation/native": "^6.0.7",
@@ -33,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@testing-library/jest-native": "^4.0.4",
     "@testing-library/react-native": "^9.0.0",
     "@types/jest": "^27.4.0",
     "@types/react": "~17.0.21",
@@ -54,6 +52,7 @@
     "lint-staged": "^12.3.2",
     "prettier": "^2.5.1",
     "prettier-config-standard": "^4.0.0",
+    "react-test-renderer": "^17.0.2",
     "typescript": "~4.3.5"
   },
   "private": true
