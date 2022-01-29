@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator<AuthStackParamList>()
 const AuthStackNavigator: FunctionComponent<AuthStackNavigatorProps> = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
