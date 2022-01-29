@@ -10,3 +10,16 @@ it('should render Text Regular with correct styles', () => {
 
   expect(textElement).toHaveStyle({ fontFamily: 'Poppins_400Regular' })
 })
+
+it('should render Text Regular with correct styles when passing style prop', () => {
+  const { getByText } = render(
+    <TextRegular style={{ fontSize: 18 }}>Lorem Ipsum</TextRegular>
+  )
+
+  const textElement = getByText('Lorem Ipsum')
+
+  expect(textElement).toHaveStyle({
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 18
+  })
+})
