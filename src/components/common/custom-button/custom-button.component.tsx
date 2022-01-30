@@ -20,16 +20,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: Colors.textSecondary
+  },
+  disabled: {
+    backgroundColor: Colors.button.disabled
   }
 })
 
 interface CustomButtonProps extends PressableProps {
   variant: 'primary' | 'outlined'
+  disabled?: boolean
 }
 
 const CustomButton: FunctionComponent<CustomButtonProps> = ({
   children,
   variant,
+  disabled = false,
   ...rest
 }) => {
   const variantStyles = useMemo(() => {
@@ -42,7 +47,13 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
   return (
     <Pressable
       {...rest}
-      style={[styles.base, variantStyles, rest.style]}
+      onPress={disabled ? () => {} : rest.onPress}
+      style={[
+        styles.base,
+        variantStyles,
+        disabled && styles.disabled,
+        rest.style as any
+      ]}
       accessibilityLabel="Press the button">
       <TextSemiBold style={{ fontSize: 12 }}>{children}</TextSemiBold>
     </Pressable>
