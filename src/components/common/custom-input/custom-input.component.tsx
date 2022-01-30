@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { TextInput, TextInputProps, StyleSheet } from 'react-native'
 
 import Colors from '~constants/colors.constants'
@@ -29,10 +29,10 @@ interface CustomInputProps extends TextInputProps {
   hasError?: boolean
 }
 
-const CustomInput: FunctionComponent<CustomInputProps> = ({
-  hasError = false,
-  ...rest
-}) => {
+// eslint-disable-next-line react/display-name
+const CustomInput = React.forwardRef<any, CustomInputProps>((props, ref) => {
+  const { hasError, ...rest } = props
+
   const stateStyle = useMemo(() => {
     if (hasError) return styles.error
 
@@ -48,10 +48,11 @@ const CustomInput: FunctionComponent<CustomInputProps> = ({
         stateStyle,
         !rest.value && styles.placeholder
       ]}
+      ref={ref}
       placeholderTextColor={hasError ? Colors.error : Colors.textSecondary}
       selectionColor={Colors.primary}
     />
   )
-}
+})
 
 export default CustomInput
