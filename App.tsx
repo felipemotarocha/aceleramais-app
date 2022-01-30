@@ -8,10 +8,12 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
+import { Provider } from 'react-redux'
 
 import 'src/config/firebase.config'
 
 import AuthStackNavigator from '~navigators/auth/auth-stack.navigator'
+import store from '~store'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -25,7 +27,11 @@ const App = () => {
     return <AppLoading />
   }
 
-  return <AuthStackNavigator />
+  return (
+    <Provider store={store}>
+      <AuthStackNavigator />
+    </Provider>
+  )
 }
 
 export default App

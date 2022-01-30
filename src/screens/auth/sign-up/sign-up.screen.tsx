@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 })
 
 export type SignUpFormData = {
-  name: string
+  firstName: string
+  lastName: string
   email: string
   password: string
   userName: string
@@ -41,14 +42,14 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
     formState: { errors }
   } = useForm<SignUpFormData>({
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       userName: '',
       password: '',
       email: ''
     }
   })
 
-  console.log({ errors })
   return (
     <>
       <Header showBack>Crie sua conta</Header>
@@ -62,21 +63,49 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
             render={({ field: { onChange, onBlur, value } }) => (
               <CustomInput
                 style={styles.input}
-                placeholder="Digite seu nome completo"
+                placeholder="Digite seu nome"
                 textContentType="name"
                 autoCompleteType="name"
                 returnKeyType="next"
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                hasError={!!errors.name}
+                hasError={!!errors.firstName}
                 blurOnSubmit={false}
               />
             )}
-            name="name"
+            name="firstName"
           />
 
-          {errors.name && (
+          {errors.firstName && (
+            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+              Seu nome é obrigatório.
+            </TextMedium>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomInput
+                style={styles.input}
+                placeholder="Digite seu sobrenome"
+                textContentType="name"
+                autoCompleteType="name"
+                returnKeyType="next"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                hasError={!!errors.lastName}
+                blurOnSubmit={false}
+              />
+            )}
+            name="lastName"
+          />
+
+          {errors.lastName && (
             <TextMedium style={{ fontSize: 12, color: Colors.error }}>
               Seu nome é obrigatório.
             </TextMedium>
