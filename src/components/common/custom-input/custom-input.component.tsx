@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useMemo } from 'react'
-import { TextInput, TextInputProps, StyleSheet, View } from 'react-native'
+import { TextInput, TextInputProps, StyleSheet } from 'react-native'
 
 import Colors from '~constants/colors.constants'
 
@@ -40,19 +40,17 @@ const CustomInput: FunctionComponent<CustomInputProps> = ({
   }, [hasError])
 
   return (
-    <View>
-      <TextInput
-        {...rest}
-        style={[
-          rest.style,
-          styles.base,
-          stateStyle,
-          !rest.value && styles.placeholder
-        ]}
-        placeholderTextColor={hasError ? Colors.error : Colors.textSecondary}
-        selectionColor={Colors.primary}
-      />
-    </View>
+    <TextInput
+      {...rest}
+      style={[
+        rest.style,
+        styles.base,
+        stateStyle,
+        !rest.value && styles.placeholder
+      ]}
+      placeholderTextColor={hasError ? Colors.error : Colors.textSecondary}
+      selectionColor={Colors.primary}
+    />
   )
 }
 
