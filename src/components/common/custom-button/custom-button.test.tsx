@@ -23,7 +23,10 @@ describe('Custom Button', () => {
     expect(pressableElement).toHaveStyle({
       backgroundColor: Colors.primary,
       color: Colors.text,
-      borderRadius: 50
+      borderRadius: 50,
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      paddingVertical: 10
     })
   })
 
@@ -44,7 +47,10 @@ describe('Custom Button', () => {
     expect(pressableElement).toHaveStyle({
       backgroundColor: 'transparent',
       color: Colors.text,
-      borderRadius: 50
+      borderRadius: 50,
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      paddingVertical: 10
     })
   })
 })
