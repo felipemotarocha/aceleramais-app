@@ -13,8 +13,8 @@ const TextSemiBold: FunctionComponent<TextSemiBoldProps> = ({
     <Text
       {...rest}
       style={[
-        rest.style,
-        { fontFamily: 'Poppins_600SemiBold', color: Colors.text }
+        { fontFamily: 'Poppins_600SemiBold', color: Colors.text },
+        rest.style
       ]}>
       {children}
     </Text>

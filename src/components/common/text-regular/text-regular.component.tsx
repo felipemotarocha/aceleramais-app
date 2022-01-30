@@ -13,8 +13,8 @@ const TextRegular: FunctionComponent<TextRegularProps> = ({
     <Text
       {...rest}
       style={[
-        rest.style,
-        { fontFamily: 'Poppins_400Regular', color: Colors.text }
+        { fontFamily: 'Poppins_400Regular', color: Colors.text },
+        rest.style
       ]}>
       {children}
     </Text>

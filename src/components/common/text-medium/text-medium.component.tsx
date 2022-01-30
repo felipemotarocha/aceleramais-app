@@ -13,8 +13,8 @@ const TextMedium: FunctionComponent<TextMediumProps> = ({
     <Text
       {...rest}
       style={[
-        rest.style,
-        { fontFamily: 'Poppins_500Medium', color: Colors.text }
+        { fontFamily: 'Poppins_500Medium', color: Colors.text },
+        rest.style
       ]}>
       {children}
     </Text>
