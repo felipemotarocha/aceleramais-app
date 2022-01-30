@@ -9,7 +9,9 @@ const styles = StyleSheet.create({
   base: {
     borderRadius: 50,
     color: Colors.text,
-    flex: 1
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10
   },
   primary: {
     backgroundColor: Colors.primary
@@ -27,7 +29,8 @@ interface CustomButtonProps extends PressableProps {
 
 const CustomButton: FunctionComponent<CustomButtonProps> = ({
   children,
-  variant
+  variant,
+  ...rest
 }) => {
   const variantStyles = useMemo(() => {
     return {
@@ -38,7 +41,8 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
 
   return (
     <Pressable
-      style={[styles.base, variantStyles]}
+      {...rest}
+      style={[styles.base, variantStyles, rest.style]}
       accessibilityLabel="Press the button">
       <TextSemiBold style={{ fontSize: 12 }}>{children}</TextSemiBold>
     </Pressable>
