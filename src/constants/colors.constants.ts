@@ -6,8 +6,12 @@ const Colors = {
   textSecondary: '#BBBBBB',
   input: {
     background: '#333333',
-    placeholder: '# BBBBBB'
-  }
+    placeholder: '#BBBBBB'
+  },
+  button: {
+    disabled: 'rgba(225, 6, 0, 0.4)'
+  },
+  error: '#FF6A6A'
 }
 
 export default Colors
