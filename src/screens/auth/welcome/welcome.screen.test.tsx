@@ -1,12 +1,17 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-
-import WelcomeScreen from './welcome.screen'
+import { NavigationContainer } from '@react-navigation/native'
 
 import Colors from '~constants/colors.constants'
 
+import WelcomeScreenContainer from './welcome.container'
+
 it('should show the welcome text and the login buttons', async () => {
-  const { getByText } = render(<WelcomeScreen />)
+  const { getByText } = render(
+    <NavigationContainer>
+      <WelcomeScreenContainer />
+    </NavigationContainer>
+  )
 
   const textElement = getByText(
     /campeonatos do automobilismo virtual na palma da sua mão. de graça./i

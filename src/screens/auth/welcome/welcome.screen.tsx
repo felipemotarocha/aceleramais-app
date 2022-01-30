@@ -12,9 +12,13 @@ const styles = StyleSheet.create({
   button: { marginVertical: 7.5 }
 })
 
-interface WelcomeScreenProps {}
+interface WelcomeScreenProps {
+  handleSignUpPress: () => void
+}
 
-const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = () => {
+const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
+  handleSignUpPress
+}) => {
   return (
     <Container>
       <Image
@@ -30,7 +34,10 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = () => {
         </TextBold>
 
         <Buttons>
-          <CustomButton variant="primary" style={styles.button}>
+          <CustomButton
+            variant="primary"
+            style={styles.button}
+            onPress={handleSignUpPress}>
             Cadastre-se gratuitamente
           </CustomButton>
 
