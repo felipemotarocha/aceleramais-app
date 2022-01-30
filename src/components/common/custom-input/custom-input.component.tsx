@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.input.background
   },
+  placeholder: {
+    fontFamily: 'Poppins_500Medium'
+  },
   normal: {
     color: Colors.textSecondary
   },
@@ -40,7 +43,12 @@ const CustomInput: FunctionComponent<CustomInputProps> = ({
     <View>
       <TextInput
         {...rest}
-        style={[rest.style, styles.base, stateStyle]}
+        style={[
+          rest.style,
+          styles.base,
+          stateStyle,
+          !rest.value && styles.placeholder
+        ]}
         placeholderTextColor={hasError ? Colors.error : Colors.textSecondary}
         selectionColor={Colors.primary}
       />
