@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from 'react'
-import { StyleSheet } from 'react-native'
+import React, { FunctionComponent, useCallback, useRef } from 'react'
+import { Keyboard, StyleSheet } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -50,161 +51,208 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
     }
   })
 
+  const userNameInputRef = useRef<any>(null)
+  const firstNameInputRef = useRef<any>(null)
+  const lastNameInputRef = useRef<any>(null)
+  const emailInputRef = useRef<any>(null)
+  const passwordInputRef = useRef<any>(null)
+
+  const handleOnSubmitEditting = useCallback(
+    (
+      input:
+        | 'userNameInputRef'
+        | 'firstNameInputRef'
+        | 'lastNameInputRef'
+        | 'emailInputRef'
+        | 'passwordInputRef'
+    ) => {
+      return {
+        firstNameInputRef: () => lastNameInputRef?.current?.focus(),
+        lastNameInputRef: () => emailInputRef?.current?.focus(),
+        emailInputRef: () => passwordInputRef?.current?.focus(),
+        passwordInputRef: () => userNameInputRef?.current?.focus(),
+        userNameInputRef: () => Keyboard.dismiss()
+      }[input]
+    },
+
+    [
+      userNameInputRef,
+      firstNameInputRef,
+      lastNameInputRef,
+      emailInputRef,
+      passwordInputRef
+    ]
+  )
+
   return (
     <>
       <Header showBack>Crie sua conta</Header>
-      <DismissKeyboard>
-        <Container>
-          <Controller
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <CustomInput
-                style={styles.input}
-                placeholder="Digite seu nome"
-                textContentType="name"
-                autoCompleteType="name"
-                returnKeyType="next"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                hasError={!!errors.firstName}
-                blurOnSubmit={false}
-              />
+      <KeyboardAwareScrollView
+        style={{ flex: 1, backgroundColor: Colors.background }}
+        bounces={false}>
+        <DismissKeyboard>
+          <Container>
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={styles.input}
+                  placeholder="Digite seu nome"
+                  textContentType="name"
+                  autoCompleteType="name"
+                  returnKeyType="next"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.firstName}
+                  blurOnSubmit={false}
+                  onSubmitEditing={handleOnSubmitEditting('firstNameInputRef')}
+                  ref={firstNameInputRef}
+                />
+              )}
+              name="firstName"
+            />
+
+            {errors.firstName && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Seu nome é obrigatório.
+              </TextMedium>
             )}
-            name="firstName"
-          />
 
-          {errors.firstName && (
-            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-              Seu nome é obrigatório.
-            </TextMedium>
-          )}
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={styles.input}
+                  placeholder="Digite seu sobrenome"
+                  textContentType="name"
+                  autoCompleteType="name"
+                  returnKeyType="next"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.lastName}
+                  blurOnSubmit={false}
+                  onSubmitEditing={handleOnSubmitEditting('lastNameInputRef')}
+                  ref={lastNameInputRef}
+                />
+              )}
+              name="lastName"
+            />
 
-          <Controller
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <CustomInput
-                style={styles.input}
-                placeholder="Digite seu sobrenome"
-                textContentType="name"
-                autoCompleteType="name"
-                returnKeyType="next"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                hasError={!!errors.lastName}
-                blurOnSubmit={false}
-              />
+            {errors.lastName && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Seu nome é obrigatório.
+              </TextMedium>
             )}
-            name="lastName"
-          />
 
-          {errors.lastName && (
-            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-              Seu nome é obrigatório.
-            </TextMedium>
-          )}
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={styles.input}
+                  placeholder="Digite seu e-mail"
+                  textContentType="emailAddress"
+                  autoCompleteType="email"
+                  returnKeyType="next"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.email}
+                  blurOnSubmit={false}
+                  autoCapitalize="none"
+                  onSubmitEditing={handleOnSubmitEditting('emailInputRef')}
+                  ref={emailInputRef}
+                />
+              )}
+              name="email"
+            />
 
-          <Controller
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <CustomInput
-                style={styles.input}
-                placeholder="Digite seu e-mail"
-                textContentType="emailAddress"
-                autoCompleteType="email"
-                returnKeyType="next"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                hasError={!!errors.email}
-                blurOnSubmit={false}
-                autoCapitalize="none"
-              />
+            {errors.email && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                E-mail é obrigatório.
+              </TextMedium>
             )}
-            name="email"
-          />
 
-          {errors.email && (
-            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-              E-mail é obrigatório.
-            </TextMedium>
-          )}
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={styles.input}
+                  placeholder="Digite sua senha"
+                  textContentType="password"
+                  autoCompleteType="password"
+                  returnKeyType="next"
+                  secureTextEntry
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.password}
+                  blurOnSubmit={false}
+                  onSubmitEditing={handleOnSubmitEditting('passwordInputRef')}
+                  ref={passwordInputRef}
+                />
+              )}
+              name="password"
+            />
 
-          <Controller
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <CustomInput
-                style={styles.input}
-                placeholder="Digite sua senha"
-                textContentType="password"
-                autoCompleteType="password"
-                returnKeyType="next"
-                secureTextEntry
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                hasError={!!errors.password}
-                blurOnSubmit={false}
-              />
+            {errors.password && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Senha é obrigatória.
+              </TextMedium>
             )}
-            name="password"
-          />
 
-          {errors.password && (
-            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-              Senha é obrigatória.
-            </TextMedium>
-          )}
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={styles.input}
+                  placeholder="Digite seu nome de usuário"
+                  textContentType="nickname"
+                  autoCompleteType="username"
+                  autoCapitalize="none"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.userName}
+                  blurOnSubmit={false}
+                  ref={userNameInputRef}
+                  onSubmitEditing={handleOnSubmitEditting('userNameInputRef')}
+                />
+              )}
+              name="userName"
+            />
 
-          <Controller
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <CustomInput
-                style={styles.input}
-                placeholder="Digite seu nome de usuário"
-                textContentType="nickname"
-                autoCompleteType="username"
-                autoCapitalize="none"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                hasError={!!errors.userName}
-                blurOnSubmit={false}
-              />
+            {errors.userName && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Nome de usuário é obrigatório.
+              </TextMedium>
             )}
-            name="userName"
-          />
 
-          {errors.userName && (
-            <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-              Nome de usuário é obrigatório.
-            </TextMedium>
-          )}
-
-          <CustomButton
-            variant="primary"
-            style={{ marginTop: 10 }}
-            onPress={_handleSubmit(handleSubmit)}>
-            Criar Conta
-          </CustomButton>
-        </Container>
-      </DismissKeyboard>
+            <CustomButton
+              variant="primary"
+              style={{ marginTop: 10 }}
+              onPress={_handleSubmit(handleSubmit)}>
+              Criar Conta
+            </CustomButton>
+          </Container>
+        </DismissKeyboard>
+      </KeyboardAwareScrollView>
     </>
   )
 }
