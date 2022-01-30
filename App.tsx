@@ -9,6 +9,8 @@ import {
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
 
+import 'src/config/firebase.config'
+
 import AuthStackNavigator from '~navigators/auth/auth-stack.navigator'
 
 const App = () => {
