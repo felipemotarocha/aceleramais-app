@@ -15,7 +15,20 @@ const WelcomeScreenContainer: FunctionComponent<
     () => navigation.navigate('Sign Up'),
     [navigation]
   )
-  return <WelcomeScreen handleSignUpPress={handleSignUpPress} />
+
+  const handleSignInWithEmailAndPasswordPress = useCallback(
+    () => navigation.navigate('Sign In'),
+    [navigation]
+  )
+
+  return (
+    <WelcomeScreen
+      handleSignUpPress={handleSignUpPress}
+      handleSignInWithEmailAndPasswordPress={
+        handleSignInWithEmailAndPasswordPress
+      }
+    />
+  )
 }
 
 export default WelcomeScreenContainer

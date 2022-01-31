@@ -14,10 +14,12 @@ const styles = StyleSheet.create({
 
 interface WelcomeScreenProps {
   handleSignUpPress: () => void
+  handleSignInWithEmailAndPasswordPress: () => void
 }
 
 const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
-  handleSignUpPress
+  handleSignUpPress,
+  handleSignInWithEmailAndPasswordPress
 }) => {
   return (
     <Container>
@@ -41,7 +43,10 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
             Cadastre-se gratuitamente
           </CustomButton>
 
-          <CustomButton variant="outlined" style={styles.button}>
+          <CustomButton
+            variant="outlined"
+            style={styles.button}
+            onPress={handleSignInWithEmailAndPasswordPress}>
             Entrar com e-mail e senha
           </CustomButton>
 

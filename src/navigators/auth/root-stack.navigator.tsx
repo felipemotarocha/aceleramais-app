@@ -40,6 +40,8 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
     refreshAuth()
   }, [auth])
 
+  console.log('render')
+
   return (
     <NavigationContainer>
       {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
