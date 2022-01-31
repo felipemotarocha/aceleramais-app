@@ -108,7 +108,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu nome"
-                  textContentType="name"
+                  textContentType="givenName"
                   autoCompleteType="name"
                   returnKeyType="next"
                   onChangeText={onChange}
@@ -138,7 +138,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu sobrenome"
-                  textContentType="name"
+                  textContentType="familyName"
                   autoCompleteType="name"
                   returnKeyType="next"
                   onChangeText={onChange}
