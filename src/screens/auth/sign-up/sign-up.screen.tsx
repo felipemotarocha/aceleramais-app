@@ -155,7 +155,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
 
             {errors.lastName && (
               <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-                Seu nome é obrigatório.
+                Seu sobrenome é obrigatório.
               </TextMedium>
             )}
 
