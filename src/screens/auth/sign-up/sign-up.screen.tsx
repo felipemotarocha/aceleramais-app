@@ -9,12 +9,16 @@ import CustomInput from '~components/common/custom-input/custom-input.component'
 import DismissKeyboard from '~components/common/dismiss-keyboard/dismiss-keyboard.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import TextMedium from '~components/common/text-medium/text-medium.component'
+import Loading from '~components/common/loading/loading.component'
 
 // Styles
 import { Container } from './sign-up.styles'
 
 // Utilities
 import Colors from '~constants/colors.constants'
+
+// Redux
+import { useAppSelector } from '~store'
 
 const styles = StyleSheet.create({
   input: {
@@ -51,6 +55,8 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
     }
   })
 
+  const { loading } = useAppSelector((state) => state.user)
+
   const userNameInputRef = useRef<any>(null)
   const firstNameInputRef = useRef<any>(null)
   const lastNameInputRef = useRef<any>(null)
@@ -86,6 +92,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
 
   return (
     <>
+      {loading && <Loading />}
       <Header showBack>Crie sua conta</Header>
       <KeyboardAwareScrollView
         style={{ flex: 1, backgroundColor: Colors.background }}

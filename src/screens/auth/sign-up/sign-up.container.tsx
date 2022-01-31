@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 // Screens
 import SignUpScreen, { SignUpFormData } from './sign-up.screen'
 
-// Redux Actions
+// Redux
 import { createUser, loginUser } from '~store/user/user.actions'
 
 interface SignUpContainerProps {}
@@ -22,14 +22,11 @@ const SignUpContainer: FunctionComponent<SignUpContainerProps> = () => {
 
     const authToken = await user.getIdToken()
 
-    dispatch(
-      createUser({
-        user: { ...data, id: user.uid, provider: user.providerId },
-        authToken
-      })
+    await dispatch(
+      createUser({ ...data, id: user.uid, provider: user.providerId })
     )
 
-    dispatch(loginUser({ id: user.uid, authToken }))
+    await dispatch(loginUser(user.uid, authToken))
   }
   return <SignUpScreen handleSubmit={handleSubmit} />
 }

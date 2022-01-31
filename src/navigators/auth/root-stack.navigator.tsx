@@ -26,13 +26,13 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
     const refreshAuth = async () => {
       const user = auth.currentUser
 
-      if (user && !currentUser.data) {
+      if (user && !currentUser) {
         const authToken = await user.getIdToken()
 
-        return dispatch(loginUser({ id: user.uid, authToken }))
+        return dispatch(loginUser(user.uid, authToken))
       }
 
-      if (!user && currentUser.data) {
+      if (!user && currentUser) {
         return dispatch(signOutUser())
       }
     }
@@ -42,7 +42,7 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
 
   return (
     <NavigationContainer>
-      {currentUser.data ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
+      {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   )
 }

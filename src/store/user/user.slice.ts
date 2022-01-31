@@ -1,90 +1,78 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import User from '~types/user.types'
 
-import { createUser, loginUser, signOutUser } from './user.actions'
+type InitialState = {
+  currentUser: User | null
+  error: string | null
+  loading: boolean
+}
 
-const userInitialState = {
-  currentUser: {
-    data: null,
-    loading: false,
-    error: null
-  }
+const userInitialState: InitialState = {
+  currentUser: null,
+  error: null,
+  loading: false
 }
 
 const userSlice = createSlice({
   name: 'user',
   initialState: userInitialState,
-  reducers: {},
-  extraReducers: {
-    [createUser.pending.type]: (state) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: null,
-        loading: true
-      }
+  reducers: {
+    loginUserStart: (state) => {
+      state.currentUser = null
+      state.error = null
+      state.loading = true
     },
-    [createUser.fulfilled.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: null,
-        loading: false
-      }
+    loginUserSuccess: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload
+      state.error = null
+      state.loading = false
     },
-    [createUser.rejected.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: action.payload,
-        loading: false
-      }
+    loginUserFailure: (state, action) => {
+      state.currentUser = null
+      state.error = action.payload
+      state.loading = false
     },
 
-    [loginUser.pending.type]: (state) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: null,
-        loading: true
-      }
+    createUserStart: (state) => {
+      state.loading = true
+      state.error = null
     },
-    [loginUser.fulfilled.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        data: action.payload,
-        error: null,
-        loading: false
-      }
+    createUserSuccess: (state) => {
+      state.loading = false
+      state.error = null
     },
-    [loginUser.rejected.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        data: null,
-        error: action.payload,
-        loading: false
-      }
+    createUserFailure: (state, action) => {
+      state.loading = false
+      state.error = action.payload
     },
 
-    [signOutUser.pending.type]: (state) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: null,
-        loading: true
-      }
+    signOutUserStart: (state) => {
+      state.loading = true
+      state.error = null
     },
-    [signOutUser.fulfilled.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        data: null,
-        error: null,
-        loading: false
-      }
+    signOutUserSuccess: (state) => {
+      state.currentUser = null
+      state.loading = false
+      state.error = null
     },
-    [signOutUser.rejected.type]: (state, action) => {
-      state.currentUser = {
-        ...state.currentUser,
-        error: action.payload,
-        loading: false
-      }
+    signOutUserFailure: (state, action) => {
+      state.loading = false
+      state.error = action.payload
     }
   }
 })
+
+export const {
+  loginUserStart,
+  loginUserSuccess,
+  loginUserFailure,
+  createUserStart,
+  createUserSuccess,
+  createUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure
+} = userSlice.actions
 
 const userReducer = userSlice.reducer
 
