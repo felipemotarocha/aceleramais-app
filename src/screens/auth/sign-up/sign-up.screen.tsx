@@ -108,6 +108,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu nome"
+                  accessibilityLabel="Digite seu nome"
                   textContentType="givenName"
                   autoCompleteType="name"
                   returnKeyType="next"
@@ -138,6 +139,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu sobrenome"
+                  accessibilityLabel="Digite seu sobrenome"
                   textContentType="familyName"
                   autoCompleteType="name"
                   returnKeyType="next"
@@ -168,6 +170,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu e-mail"
+                  accessibilityLabel="Digite seu e-mail"
                   textContentType="emailAddress"
                   autoCompleteType="email"
                   returnKeyType="next"
@@ -199,6 +202,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite sua senha"
+                  accessibilityLabel="Digite sua senha"
                   textContentType="password"
                   autoCompleteType="password"
                   returnKeyType="next"
@@ -230,6 +234,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 <CustomInput
                   style={styles.input}
                   placeholder="Digite seu nome de usuário"
+                  accessibilityLabel="Digite seu nome de usuário"
                   textContentType="nickname"
                   autoCompleteType="username"
                   autoCapitalize="none"
