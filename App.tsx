@@ -11,9 +11,8 @@ import {
 import { Provider } from 'react-redux'
 
 import 'src/config/firebase.config'
-
-import AuthStackNavigator from '~navigators/auth/auth-stack.navigator'
 import store from '~store'
+import RootStackNavigator from '~navigators/auth/root-stack.navigator'
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -29,7 +28,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <AuthStackNavigator />
+      <RootStackNavigator />
     </Provider>
   )
 }

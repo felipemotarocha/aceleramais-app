@@ -2,8 +2,11 @@ import React, { FunctionComponent } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
 
+// Screens
 import SignUpScreen, { SignUpFormData } from './sign-up.screen'
-import { createUser } from '~store/user/user.actions'
+
+// Redux Actions
+import { createUser, loginUser } from '~store/user/user.actions'
 
 interface SignUpContainerProps {}
 
@@ -17,7 +20,16 @@ const SignUpContainer: FunctionComponent<SignUpContainerProps> = () => {
       data.password
     )
 
-    dispatch(createUser({ ...data, id: user.uid, provider: user.providerId }))
+    const authToken = await user.getIdToken()
+
+    dispatch(
+      createUser({
+        user: { ...data, id: user.uid, provider: user.providerId },
+        authToken
+      })
+    )
+
+    dispatch(loginUser({ id: user.uid, authToken }))
   }
   return <SignUpScreen handleSubmit={handleSubmit} />
 }
