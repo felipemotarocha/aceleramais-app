@@ -22,7 +22,7 @@ export const loginUser = (id: string, authToken: string) => {
     dispatch(loginUserStart())
 
     try {
-      const { data } = await axios.get(`${API_URL}/api/user/${id}`)
+      const { data } = await axios.get(`${API_URL}/api/user?id=${id}`)
 
       await AsyncStorage.setItem('authToken', authToken)
 

@@ -39,7 +39,7 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
     }
 
     refreshAuth()
-  }, [auth])
+  }, [auth, dispatch])
 
   return (
     <NavigationContainer>
