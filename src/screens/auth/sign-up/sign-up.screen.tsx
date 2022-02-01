@@ -248,10 +248,12 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
               control={control}
               rules={{
                 required: true,
+                maxLength: 30,
                 validate: {
                   alreadyExists: async (value) =>
                     await checkIfUsernameAlreadyExists(value)
-                }
+                },
+                pattern: /^(?!.\.\.)(?!.\.$)[^\W][\w.]{0,29}$/
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <CustomInput
@@ -262,7 +264,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                   autoCompleteType="username"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  onChangeText={onChange}
+                  onChangeText={(value) => onChange(value.trim())}
                   onBlur={onBlur}
                   value={value}
                   hasError={!!errors.userName}
@@ -283,6 +285,12 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
             {errors.userName?.type === 'alreadyExists' && (
               <TextMedium style={{ fontSize: 12, color: Colors.error }}>
                 Esse nome de usuário já está sendo utilizado.
+              </TextMedium>
+            )}
+
+            {errors.userName?.type === 'maxLength' && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                O tamanho máximo é de 30 caracteres.
               </TextMedium>
             )}
 
