@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useRef } from 'react'
 import { Keyboard, StyleSheet } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import validator from 'validator'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -166,7 +167,10 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
+                validate: {
+                  isValid: (value) => validator.isEmail(value)
+                }
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <CustomInput
@@ -189,9 +193,15 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
               name="email"
             />
 
-            {errors.email && (
+            {errors.email?.type === 'required' && (
               <TextMedium style={{ fontSize: 12, color: Colors.error }}>
                 E-mail é obrigatório.
+              </TextMedium>
+            )}
+
+            {errors.email?.type === 'isValid' && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Por favor, insira um e-mail válido.
               </TextMedium>
             )}
 
