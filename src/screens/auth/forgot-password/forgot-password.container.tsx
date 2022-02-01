@@ -5,7 +5,8 @@ import ForgotPasswordScreen from './forgot-password.screen'
 
 // Utilities
 import { FirebaseError } from '~types/firebase.types'
-import { showError, showSuccess } from '~helpers/flash-message.helpers'
+import { showSuccess } from '~helpers/flash-message.helpers'
+import { invalidCredentials } from '~helpers/auth.helpers'
 
 const ForgotPasswordContainer: FunctionComponent = () => {
   const handleSubmit = async ({ email }: { email: string }) => {
@@ -17,7 +18,7 @@ const ForgotPasswordContainer: FunctionComponent = () => {
       )
     } catch ({ message }) {
       if (message === FirebaseError.userNotFound) {
-        return showError('E-mail não encontrado.')
+        return invalidCredentials()
       }
     }
   }

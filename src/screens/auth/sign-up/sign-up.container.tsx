@@ -1,20 +1,20 @@
 import React, { FunctionComponent } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 // Screens
 import SignUpScreen, { SignUpFormData } from './sign-up.screen'
 
+// Utilities
+import { FirebaseError } from '~types/firebase.types'
+import { API_URL } from '~constants/config.constants'
+import { emailIsAlreadyInUse } from '~helpers/auth.helpers'
+
 // Redux
 import { createUser, loginUser } from '~store/user/user.actions'
-import { FirebaseError } from '~types/firebase.types'
-import { emailAlreadyInUseError } from './sign-up.errors'
-import axios from 'axios'
-import { API_URL } from '~constants/config.constants'
 
-interface SignUpContainerProps {}
-
-const SignUpContainer: FunctionComponent<SignUpContainerProps> = () => {
+const SignUpContainer: FunctionComponent = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = async (data: SignUpFormData) => {
@@ -34,7 +34,7 @@ const SignUpContainer: FunctionComponent<SignUpContainerProps> = () => {
       await dispatch(loginUser(user.uid, authToken))
     } catch ({ message }) {
       if (message === FirebaseError.emailAlreadyInUse) {
-        return emailAlreadyInUseError()
+        return emailIsAlreadyInUse()
       }
     }
   }
