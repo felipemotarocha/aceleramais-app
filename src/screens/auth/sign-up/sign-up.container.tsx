@@ -28,8 +28,8 @@ const SignUpContainer: FunctionComponent = () => {
       await dispatch(
         createUser({ ...data, id: user.uid, provider: user.providerId })
       )
-    } catch ({ message }) {
-      if (message === FirebaseError.emailAlreadyInUse) {
+    } catch ({ code }) {
+      if (code === FirebaseError.emailAlreadyInUse) {
         return emailIsAlreadyInUse()
       }
     }

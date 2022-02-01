@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import FlashMessage from 'react-native-flash-message'
 
 // Navigators
@@ -13,6 +13,7 @@ import { useAppSelector } from '~store'
 
 // Redux Actions
 import { loginUser, signOutUser } from '~store/user/user.actions'
+import { auth } from '~config/firebase.config'
 
 interface RootStackNavigatorProps {}
 
@@ -21,9 +22,9 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
 
   const dispatch = useDispatch()
 
-  const auth = getAuth()
-
   onAuthStateChanged(auth, async (user) => {
+    console.log({ user })
+
     if (user && !currentUser) {
       const authToken = await user.getIdToken()
 

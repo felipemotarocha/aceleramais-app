@@ -261,6 +261,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                   textContentType="nickname"
                   autoCompleteType="username"
                   autoCapitalize="none"
+                  autoCorrect={false}
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}

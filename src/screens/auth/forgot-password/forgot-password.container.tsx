@@ -16,8 +16,8 @@ const ForgotPasswordContainer: FunctionComponent = () => {
       showSuccess(
         'Um e-mail com instruções para recuperar a sua senha foi enviado para você!'
       )
-    } catch ({ message }) {
-      if (message === FirebaseError.userNotFound) {
+    } catch ({ code }) {
+      if (code === FirebaseError.userNotFound) {
         return invalidCredentials()
       }
     }
