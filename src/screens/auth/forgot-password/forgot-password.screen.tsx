@@ -13,7 +13,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 import Loading from '~components/common/loading/loading.component'
 
 // Styles
-import { Container } from './sign-in.styles'
+import { Container } from './forgot-password.styles'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -27,51 +27,41 @@ const styles = StyleSheet.create({
   }
 })
 
-export type SignInFormData = {
-  email: string
-  password: string
+interface ForgotPasswordScreenProps {
+  handleSubmit: (data: { email: string }) => void
 }
 
-interface SignInScreenProps {
-  handleSubmit: (data: SignInFormData) => void
-  handleForgotMyPasswordPress: () => void
-}
-
-const SignInScreen: FunctionComponent<SignInScreenProps> = ({
-  handleSubmit,
-  handleForgotMyPasswordPress
+const ForgotPasswordScreen: FunctionComponent<ForgotPasswordScreenProps> = ({
+  handleSubmit
 }) => {
   const {
     control,
     handleSubmit: _handleSubmit,
     formState: { errors }
-  } = useForm<SignInFormData>({
+  } = useForm<{ email: string }>({
     defaultValues: {
-      email: '',
-      password: ''
+      email: ''
     }
   })
 
   const { loading } = useAppSelector((state) => state.user)
 
   const emailInputRef = useRef<any>(null)
-  const passwordInputRef = useRef<any>(null)
 
   const handleOnSubmitEditting = useCallback(
-    (input: 'emailInputRef' | 'passwordInputRef') => {
+    (input: 'emailInputRef') => {
       return {
-        emailInputRef: () => passwordInputRef?.current?.focus(),
-        passwordInputRef: () => Keyboard.dismiss()
+        emailInputRef: () => Keyboard.dismiss()
       }[input]
     },
 
-    [emailInputRef, passwordInputRef]
+    [emailInputRef]
   )
 
   return (
     <>
       {loading && <Loading />}
-      <Header showBack>Entre com a sua conta</Header>
+      <Header showBack>Esqueci minha senha</Header>
       <KeyboardAwareScrollView
         style={{ flex: 1, backgroundColor: Colors.background }}
         bounces={false}>
@@ -118,50 +108,11 @@ const SignInScreen: FunctionComponent<SignInScreenProps> = ({
               </TextMedium>
             )}
 
-            <Controller
-              control={control}
-              rules={{
-                required: true
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <CustomInput
-                  style={styles.input}
-                  placeholder="Digite sua senha"
-                  accessibilityLabel="Digite sua senha"
-                  textContentType="password"
-                  autoCompleteType="password"
-                  returnKeyType="next"
-                  secureTextEntry
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  hasError={!!errors.password}
-                  blurOnSubmit={false}
-                  onSubmitEditing={handleOnSubmitEditting('passwordInputRef')}
-                  ref={passwordInputRef}
-                />
-              )}
-              name="password"
-            />
-
-            {errors.password && (
-              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
-                Senha é obrigatória.
-              </TextMedium>
-            )}
-
             <CustomButton
               variant="primary"
               style={{ marginTop: 10 }}
               onPress={_handleSubmit(handleSubmit)}>
-              Entrar
-            </CustomButton>
-
-            <CustomButton
-              variant="outlined"
-              style={{ marginTop: 10 }}
-              onPress={handleForgotMyPasswordPress}>
-              Esqueci minha senha
+              Enviar e-mail de recuperação
             </CustomButton>
           </Container>
         </DismissKeyboard>
@@ -170,4 +121,4 @@ const SignInScreen: FunctionComponent<SignInScreenProps> = ({
   )
 }
 
-export default SignInScreen
+export default ForgotPasswordScreen

@@ -5,11 +5,16 @@ export type AuthStackParamList = {
   Welcome: undefined
   'Sign In': undefined
   'Sign Up': undefined
+  'Forgot My Password': undefined
 }
 
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>
 export type SignInScreenRouteProp = RouteProp<AuthStackParamList, 'Sign In'>
 export type SignUpScreenRouteProp = RouteProp<AuthStackParamList, 'Sign Up'>
+export type ForgotMyPasswordScreenRouteProp = RouteProp<
+  AuthStackParamList,
+  'Forgot My Password'
+>
 
 export type WelcomeScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -22,4 +27,8 @@ export type SignInScreenNavigationProp = NativeStackNavigationProp<
 export type SignUpScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
   'Sign Up'
+>
+export type ForgotMyPasswordScreenNavigationProp = NativeStackNavigationProp<
+  AuthStackParamList,
+  'Forgot My Password'
 >

@@ -13,7 +13,6 @@ import { useAppSelector } from '~store'
 
 // Redux Actions
 import { loginUser, signOutUser } from '~store/user/user.actions'
-import Colors from '~constants/colors.constants'
 
 interface RootStackNavigatorProps {}
 
@@ -47,7 +46,6 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
       {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
       <FlashMessage
         position="bottom"
-        style={{ backgroundColor: Colors.error }}
         textStyle={{ fontFamily: 'Poppins_600SemiBold' }}
       />
     </NavigationContainer>
