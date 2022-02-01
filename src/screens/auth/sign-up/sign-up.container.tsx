@@ -9,6 +9,8 @@ import SignUpScreen, { SignUpFormData } from './sign-up.screen'
 import { createUser, loginUser } from '~store/user/user.actions'
 import { FirebaseError } from '~types/firebase.types'
 import { emailAlreadyInUseError } from './sign-up.errors'
+import axios from 'axios'
+import { API_URL } from '~constants/config.constants'
 
 interface SignUpContainerProps {}
 
@@ -37,7 +39,22 @@ const SignUpContainer: FunctionComponent<SignUpContainerProps> = () => {
     }
   }
 
-  return <SignUpScreen handleSubmit={handleSubmit} />
+  const checkIfUsernameAlreadyExists = async (userName: string) => {
+    try {
+      await axios.get(`${API_URL}/api/user?userName=${userName}`)
+
+      return false
+    } catch (_) {
+      return true
+    }
+  }
+
+  return (
+    <SignUpScreen
+      handleSubmit={handleSubmit}
+      checkIfUsernameAlreadyExists={checkIfUsernameAlreadyExists}
+    />
+  )
 }
 
 export default SignUpContainer

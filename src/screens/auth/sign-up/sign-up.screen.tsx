@@ -36,10 +36,12 @@ export type SignUpFormData = {
 
 interface SignUpScreenProps {
   handleSubmit: (data: SignUpFormData) => void
+  checkIfUsernameAlreadyExists: (userName: string) => Promise<boolean>
 }
 
 const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
-  handleSubmit
+  handleSubmit,
+  checkIfUsernameAlreadyExists
 }) => {
   const {
     control,
@@ -235,7 +237,11 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
+                validate: {
+                  alreadyExists: async (value) =>
+                    await checkIfUsernameAlreadyExists(value)
+                }
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <CustomInput
@@ -257,9 +263,15 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
               name="userName"
             />
 
-            {errors.userName && (
+            {errors.userName?.type === 'required' && (
               <TextMedium style={{ fontSize: 12, color: Colors.error }}>
                 Nome de usuário é obrigatório.
+              </TextMedium>
+            )}
+
+            {errors.userName?.type === 'alreadyExists' && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Esse nome de usuário já está sendo utilizado.
               </TextMedium>
             )}
 
