@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import FlashMessage from 'react-native-flash-message'
 
 // Navigators
@@ -23,23 +23,17 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
 
   const auth = getAuth()
 
-  useEffect(() => {
-    const refreshAuth = async () => {
-      const user = auth.currentUser
+  onAuthStateChanged(auth, async (user) => {
+    if (user && !currentUser) {
+      const authToken = await user.getIdToken()
 
-      if (user && !currentUser) {
-        const authToken = await user.getIdToken()
-
-        return dispatch(loginUser(user.uid, authToken))
-      }
-
-      if (!user && currentUser) {
-        return dispatch(signOutUser())
-      }
+      dispatch(loginUser(user.uid, authToken))
     }
 
-    refreshAuth()
-  }, [auth, dispatch])
+    if (!user && currentUser) {
+      dispatch(signOutUser())
+    }
+  })
 
   return (
     <NavigationContainer>
