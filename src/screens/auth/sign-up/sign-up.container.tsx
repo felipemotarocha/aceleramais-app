@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback, useState } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import * as ImagePicker from 'expo-image-picker'
 
 // Screens
 import SignUpScreen, { SignUpFormData } from './sign-up.screen'
@@ -15,7 +16,26 @@ import { emailIsAlreadyInUse } from '~helpers/auth.helpers'
 import { createUser } from '~store/user/user.actions'
 
 const SignUpContainer: FunctionComponent = () => {
+  const [profileImage, setProfileImage] = useState<{
+    uri: string
+    base64: string
+  } | null>(null)
+
   const dispatch = useDispatch()
+
+  const handlePickImagePress = useCallback(async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true
+    })
+
+    if (!result.cancelled) {
+      setProfileImage({ uri: result.uri, base64: result.base64! })
+    }
+  }, [])
 
   const handleSubmit = async (data: SignUpFormData) => {
     try {
@@ -26,7 +46,12 @@ const SignUpContainer: FunctionComponent = () => {
       )
 
       await dispatch(
-        createUser({ ...data, id: user.uid, provider: user.providerId })
+        createUser({
+          ...data,
+          id: user.uid,
+          provider: user.providerId,
+          profileImageBase64: profileImage?.base64
+        })
       )
     } catch ({ code }) {
       if (code === FirebaseError.emailAlreadyInUse) {
@@ -47,8 +72,10 @@ const SignUpContainer: FunctionComponent = () => {
 
   return (
     <SignUpScreen
+      profileImageUri={profileImage?.uri}
       handleSubmit={handleSubmit}
       checkIfUsernameAlreadyExists={checkIfUsernameAlreadyExists}
+      handlePickImagePress={handlePickImagePress}
     />
   )
 }

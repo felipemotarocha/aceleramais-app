@@ -33,7 +33,7 @@ export const loginUser = (id: string, authToken: string) => {
   }
 }
 
-export const createUser = (user: User) => {
+export const createUser = (user: User & { profileImageBase64?: string }) => {
   return async (dispatch: Dispatch) => {
     dispatch(createUserStart())
 

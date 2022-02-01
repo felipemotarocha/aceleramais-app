@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useCallback, useRef } from 'react'
-import { Keyboard, StyleSheet } from 'react-native'
+import { Image, Keyboard, StyleSheet, View } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import validator from 'validator'
+import { Feather } from '@expo/vector-icons'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -13,7 +14,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 import Loading from '~components/common/loading/loading.component'
 
 // Styles
-import { Container } from './sign-up.styles'
+import { Container, ImagePickerButton } from './sign-up.styles'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -36,13 +37,17 @@ export type SignUpFormData = {
 }
 
 interface SignUpScreenProps {
+  profileImageUri?: string
   handleSubmit: (data: SignUpFormData) => void
   checkIfUsernameAlreadyExists: (userName: string) => Promise<boolean>
+  handlePickImagePress: () => Promise<void>
 }
 
 const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
+  profileImageUri,
   handleSubmit,
-  checkIfUsernameAlreadyExists
+  checkIfUsernameAlreadyExists,
+  handlePickImagePress
 }) => {
   const {
     control,
@@ -102,6 +107,32 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
         bounces={false}>
         <DismissKeyboard>
           <Container>
+            <ImagePickerButton
+              onPress={handlePickImagePress}
+              showBackground={!profileImageUri}>
+              {profileImageUri ? (
+                <Image
+                  source={{
+                    uri: profileImageUri
+                  }}
+                  resizeMode="cover"
+                  style={{ borderRadius: 200, flex: 1 }}
+                />
+              ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
+                  <Feather
+                    name="camera"
+                    size={72}
+                    color={Colors.input.placeholder}
+                  />
+                </View>
+              )}
+            </ImagePickerButton>
             <Controller
               control={control}
               rules={{
