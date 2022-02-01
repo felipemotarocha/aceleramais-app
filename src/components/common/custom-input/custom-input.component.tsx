@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { TextInput, TextInputProps, StyleSheet } from 'react-native'
 
 import Colors from '~constants/colors.constants'
@@ -33,11 +33,11 @@ interface CustomInputProps extends TextInputProps {
 const CustomInput = React.forwardRef<any, CustomInputProps>((props, ref) => {
   const { hasError, ...rest } = props
 
-  const stateStyle = useMemo(() => {
-    if (hasError) return styles.error
+  // const stateStyle = useMemo(() => {
+  //   if (hasError && !rest.value) return styles.error
 
-    return styles.normal
-  }, [hasError])
+  //   return styles.normal
+  // }, [hasError, rest])
 
   return (
     <TextInput
@@ -45,8 +45,8 @@ const CustomInput = React.forwardRef<any, CustomInputProps>((props, ref) => {
       style={[
         rest.style,
         styles.base,
-        stateStyle,
-        !rest.value && styles.placeholder
+        !rest.value && styles.placeholder,
+        styles.normal
       ]}
       ref={ref}
       placeholderTextColor={hasError ? Colors.error : Colors.textSecondary}

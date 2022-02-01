@@ -196,7 +196,8 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
             <Controller
               control={control}
               rules={{
-                required: true
+                required: true,
+                minLength: 6
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <CustomInput
@@ -219,9 +220,15 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
               name="password"
             />
 
-            {errors.password && (
+            {errors.password?.type === 'required' && (
               <TextMedium style={{ fontSize: 12, color: Colors.error }}>
                 Senha é obrigatória.
+              </TextMedium>
+            )}
+
+            {errors.password?.type === 'minLength' && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                A senha deve ter no mínimo 6 caracteres.
               </TextMedium>
             )}
 

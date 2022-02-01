@@ -18,11 +18,7 @@ const SignInContainer: FunctionComponent<SignInContainerProps> = () => {
       data.password
     )
 
-    console.log({ user })
-
     const authToken = await user.getIdToken()
-
-    console.log({ authToken })
 
     await dispatch(loginUser(user.uid, authToken))
   }

@@ -24,8 +24,6 @@ export const loginUser = (id: string, authToken: string) => {
     try {
       const { data } = await axios.get(`${API_URL}/api/user/${id}`)
 
-      console.log({ data })
-
       await AsyncStorage.setItem('authToken', authToken)
 
       return dispatch(loginUserSuccess(data))

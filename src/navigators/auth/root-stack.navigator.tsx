@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { getAuth } from 'firebase/auth'
+import FlashMessage from 'react-native-flash-message'
 
 // Navigators
 import AuthStackNavigator from './auth-stack.navigator'
@@ -12,6 +13,7 @@ import { useAppSelector } from '~store'
 
 // Redux Actions
 import { loginUser, signOutUser } from '~store/user/user.actions'
+import Colors from '~constants/colors.constants'
 
 interface RootStackNavigatorProps {}
 
@@ -40,11 +42,14 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
     refreshAuth()
   }, [auth])
 
-  console.log('render')
-
   return (
     <NavigationContainer>
       {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
+      <FlashMessage
+        position="bottom"
+        style={{ backgroundColor: Colors.error }}
+        textStyle={{ fontFamily: 'Poppins_600SemiBold' }}
+      />
     </NavigationContainer>
   )
 }
