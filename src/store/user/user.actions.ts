@@ -1,6 +1,7 @@
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from '@reduxjs/toolkit'
+import FormData from 'form-data'
 
 import { API_URL } from '~constants/config.constants'
 
@@ -33,12 +34,35 @@ export const loginUser = (id: string, authToken: string) => {
   }
 }
 
-export const createUser = (user: User & { profileImageBase64?: string }) => {
+export const createUser = (
+  user: User & { profileImage?: { uri: string; type: string } }
+) => {
   return async (dispatch: Dispatch) => {
     dispatch(createUserStart())
 
+    const formData = new FormData()
+
+    formData.append('id', user.id)
+    formData.append('firstName', user.firstName)
+    formData.append('lastName', user.lastName)
+    formData.append('email', user.email)
+    formData.append('userName', user.userName)
+    formData.append('provider', user.provider)
+
+    if (user.profileImage) {
+      formData.append('profileImage', {
+        uri: user.profileImage.uri,
+        name: `profile_picture_${user.id}`,
+        type: 'image/jpeg'
+      })
+    }
+
     try {
-      await axios.post(`${API_URL}/api/user/`, user)
+      // eslint-disable-next-line no-undef
+      await fetch(`${API_URL}/api/user`, {
+        body: formData as any,
+        method: 'POST'
+      })
 
       return dispatch(createUserSuccess())
     } catch (error) {

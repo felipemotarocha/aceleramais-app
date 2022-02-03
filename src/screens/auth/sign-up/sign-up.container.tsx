@@ -16,10 +16,13 @@ import { emailIsAlreadyInUse } from '~helpers/auth.helpers'
 import { createUser } from '~store/user/user.actions'
 
 const SignUpContainer: FunctionComponent = () => {
-  const [profileImage, setProfileImage] = useState<{
-    uri: string
-    base64: string
-  } | null>(null)
+  const [profileImage, setProfileImage] = useState<
+    | {
+        uri: string
+        type: string
+      }
+    | undefined
+  >(undefined)
 
   const dispatch = useDispatch()
 
@@ -28,12 +31,11 @@ const SignUpContainer: FunctionComponent = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
-      base64: true
+      quality: 1
     })
 
     if (!result.cancelled) {
-      setProfileImage({ uri: result.uri, base64: result.base64! })
+      setProfileImage({ uri: result.uri, type: result.type! })
     }
   }, [])
 
@@ -50,7 +52,7 @@ const SignUpContainer: FunctionComponent = () => {
           ...data,
           id: user.uid,
           provider: user.providerId,
-          profileImageBase64: profileImage?.base64
+          profileImage: profileImage
         })
       )
     } catch ({ code }) {

@@ -25,7 +25,6 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
   onAuthStateChanged(auth, async (user) => {
     if (user && !currentUser) {
       const authToken = await user.getIdToken()
-
       dispatch(loginUser(user.uid, authToken))
     }
 
