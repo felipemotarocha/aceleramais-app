@@ -2,10 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Screen
-import ChampionshipBasicInfoScreen from '~screens/app/new-championship/basic-info/basic-info.container'
+import ChampionshipBasicInfoScreen from '~screens/app/championships/new-championship/basic-info/basic-info.container'
 
 // Utilities
-import { NewChampionshipStackParamList } from './new-championship.navigator.types'
+import { NewChampionshipStackParamList } from './new-championship.types'
 
 interface NewChampionshipNavigatorProps {}
 

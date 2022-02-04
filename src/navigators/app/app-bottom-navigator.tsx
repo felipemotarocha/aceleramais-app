@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 
 // Screens
-import ChampionshipsScreen from '~screens/app/championships/championships.container'
+import ChampionshipsScreen from '~screens/app/championship-list/championship-list.container'
 
 // Utilities
 import { AppTabBottomParamList } from './app-bottom-navigator.types'

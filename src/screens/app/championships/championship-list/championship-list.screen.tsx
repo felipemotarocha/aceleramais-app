@@ -7,9 +7,11 @@ import ChampionshipsHeader from '~components/championships-header/championships-
 // Utilities
 import Colors from '~constants/colors.constants'
 
-interface ChampionshipsScreenProps {}
+interface CHampionshipListScreenProps {}
 
-const ChampionshipsScreen: FunctionComponent<ChampionshipsScreenProps> = () => {
+const CHampionshipListScreen: FunctionComponent<
+  CHampionshipListScreenProps
+> = () => {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <ChampionshipsHeader />
@@ -17,4 +19,4 @@ const ChampionshipsScreen: FunctionComponent<ChampionshipsScreenProps> = () => {
   )
 }
 
-export default ChampionshipsScreen
+export default CHampionshipListScreen
