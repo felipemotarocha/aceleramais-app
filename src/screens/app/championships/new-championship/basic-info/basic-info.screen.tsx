@@ -10,12 +10,10 @@ import ImagePicker from '~components/common/image-picker/image-picker.component'
 import TextBold from '~components/common/text-bold/text-bold.component'
 import CustomInput from '~components/common/custom-input/custom-input.component'
 import TextMedium from '~components/common/text-medium/text-medium.component'
-
-// Styles
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 
 const styles = StyleSheet.create({
   container: {
@@ -101,6 +99,7 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
                   style={{ marginTop: 15 }}
                   placeholder="Título"
                   accessibilityLabel="Título"
+                  autoCorrect={false}
                   returnKeyType="next"
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -139,6 +138,7 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
                   blurOnSubmit={false}
                   onSubmitEditing={handleOnSubmitEditting('platformInputRef')}
                   ref={platformInputRef}
+                  autoCorrect={false}
                 />
               )}
               name="platform"
