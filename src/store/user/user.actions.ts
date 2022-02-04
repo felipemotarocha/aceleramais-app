@@ -26,6 +26,7 @@ export const loginUser = (id: string, authToken: string) => {
       const { data } = await axios.get(`${API_URL}/api/user?id=${id}`)
 
       await AsyncStorage.setItem('authToken', authToken)
+      await AsyncStorage.setItem('userId', id)
 
       return dispatch(loginUserSuccess(data))
     } catch (error) {
@@ -77,6 +78,8 @@ export const signOutUser = () => {
 
     try {
       await AsyncStorage.removeItem('authToken')
+      await AsyncStorage.removeItem('userId')
+
       return dispatch(signOutUserSuccess())
     } catch (error) {
       return dispatch(signOutUserFailure(error))

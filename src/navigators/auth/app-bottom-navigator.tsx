@@ -1,9 +1,7 @@
 import React from 'react'
 import { Pressable } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { getAuth, signOut } from 'firebase/auth'
 import TextBold from '~components/common/text-bold/text-bold.component'
-import app from '~config/firebase.config'
 import { useDispatch } from 'react-redux'
 import { signOutUser } from '~store/user/user.actions'
 
@@ -18,7 +16,6 @@ const AppBottomTabNavigator = () => {
         component={() => (
           <Pressable
             onPress={() => {
-              signOut(getAuth(app))
               dispatch(signOutUser())
             }}>
             <TextBold>sign out</TextBold>

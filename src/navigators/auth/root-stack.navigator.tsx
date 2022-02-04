@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { onAuthStateChanged } from 'firebase/auth'
 import FlashMessage from 'react-native-flash-message'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Navigators
 import AuthStackNavigator from './auth-stack.navigator'
@@ -12,37 +12,27 @@ import AppBottomTabNavigator from './app-bottom-navigator'
 import { useAppSelector } from '~store'
 
 // Redux Actions
-import { loginUser, signOutUser } from '~store/user/user.actions'
-
-// Utilities
-import { auth } from '~config/firebase.config'
-import axios from 'axios'
-import { API_URL } from '~constants/config.constants'
+import { loginUser } from '~store/user/user.actions'
 
 interface RootStackNavigatorProps {}
 
 const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
-  const { currentUser, loading } = useAppSelector((state) => state.user)
-
-  console.log({ loading })
+  const { currentUser } = useAppSelector((state) => state.user)
 
   const dispatch = useDispatch()
 
-  onAuthStateChanged(auth, async (user) => {
-    if (user && !currentUser && !loading) {
-      try {
-        await axios.get(`${API_URL}/api/user?id=${user.uid}`)
+  useEffect(() => {
+    const initUserSession = async () => {
+      const authToken = await AsyncStorage.getItem('authToken')
+      const userId = await AsyncStorage.getItem('userId')
 
-        const authToken = await user.getIdToken()
+      if (!authToken || !userId) return
 
-        dispatch(loginUser(user.uid, authToken))
-      } catch (_err) {}
+      await dispatch(loginUser(userId, authToken))
     }
 
-    if (!user && currentUser) {
-      dispatch(signOutUser())
-    }
-  })
+    initUserSession()
+  }, [dispatch])
 
   return (
     <NavigationContainer>

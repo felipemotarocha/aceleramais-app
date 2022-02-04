@@ -13,7 +13,7 @@ import { API_URL } from '~constants/config.constants'
 import { emailIsAlreadyInUse } from '~helpers/auth.helpers'
 
 // Redux
-import { createUser } from '~store/user/user.actions'
+import { createUser, loginUser } from '~store/user/user.actions'
 
 const SignUpContainer: FunctionComponent = () => {
   const [profileImage, setProfileImage] = useState<
@@ -47,6 +47,8 @@ const SignUpContainer: FunctionComponent = () => {
         data.password
       )
 
+      const authToken = await user.getIdToken()
+
       await dispatch(
         createUser({
           ...data,
@@ -55,6 +57,8 @@ const SignUpContainer: FunctionComponent = () => {
           profileImage: profileImage
         })
       )
+
+      await dispatch(loginUser(user.uid, authToken))
     } catch ({ code }) {
       if (code === FirebaseError.emailAlreadyInUse) {
         return emailIsAlreadyInUse()
