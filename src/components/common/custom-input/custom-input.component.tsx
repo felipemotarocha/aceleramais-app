@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.input.background
   },
   placeholder: {
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 12
   },
   normal: {
     color: Colors.textSecondary

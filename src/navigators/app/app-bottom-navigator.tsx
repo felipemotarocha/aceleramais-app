@@ -2,8 +2,8 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 
-// Screens
-import ChampionshipsScreen from '~screens/app/championship-list/championship-list.container'
+// Navigators
+import ChampionshipsNavigator from './championships/championships.navigator'
 
 // Utilities
 import { AppTabBottomParamList } from './app-bottom-navigator.types'
@@ -22,6 +22,7 @@ const AppBottomTabNavigator = () => {
         tabBarLabelStyle: {
           fontFamily: 'Poppins_600SemiBold'
         },
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: Colors.backgroundSecondary,
           borderTopWidth: 0,
@@ -38,7 +39,7 @@ const AppBottomTabNavigator = () => {
       }}>
       <Tab.Screen
         name="Championships"
-        component={ChampionshipsScreen}
+        component={ChampionshipsNavigator}
         options={{
           title: 'Campeonatos',
           headerShown: false,

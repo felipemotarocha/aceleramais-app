@@ -18,7 +18,7 @@ const ChampionshipsNavigator: FunctionComponent<
   ChampionshipsNavigatorProps
 > = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="Championship List"
         component={CHampionshipListScreen}

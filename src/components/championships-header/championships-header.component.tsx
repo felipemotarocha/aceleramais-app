@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
 import { View, StyleSheet, Image, Platform, Pressable } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import TextBold from '~components/common/text-bold/text-bold.component'
@@ -12,6 +13,7 @@ import Colors from '~constants/colors.constants'
 // Redux
 import { useAppSelector } from '~store'
 import TextMedium from '~components/common/text-medium/text-medium.component'
+import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +86,13 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
 
   const { currentUser } = useAppSelector((state) => state.user)
 
+  const navigation = useNavigation<ChampionshipListScreenNavigationProp>()
+
+  const handlePlusPress = useCallback(
+    () => navigation.navigate('New Championship'),
+    [navigation]
+  )
+
   return (
     <View
       style={{
@@ -101,9 +110,9 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
           <TextBold style={{ fontSize: 16 }}>Seus Campeonatos</TextBold>
         </View>
 
-        <View style={styles.right}>
+        <Pressable style={styles.right} onPress={handlePlusPress}>
           <Ionicons name="add-sharp" size={32} color={Colors.textSecondary} />
-        </View>
+        </Pressable>
       </View>
 
       <View style={styles.bottom}>
