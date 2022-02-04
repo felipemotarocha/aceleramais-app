@@ -1,26 +1,50 @@
 import React from 'react'
-import { Pressable } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import TextBold from '~components/common/text-bold/text-bold.component'
-import { useDispatch } from 'react-redux'
-import { signOutUser } from '~store/user/user.actions'
+import { Ionicons } from '@expo/vector-icons'
 
-const Tab = createBottomTabNavigator()
+// Screens
+import ChampionshipsScreen from '~screens/app/championships/championships.container'
+
+// Utilities
+import { AppTabBottomParamList } from './app-bottom-navigator.types'
+import Colors from '~constants/colors.constants'
+
+const Tab = createBottomTabNavigator<AppTabBottomParamList>()
 
 const AppBottomTabNavigator = () => {
-  const dispatch = useDispatch()
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveBackgroundColor: Colors.backgroundSecondary,
+        tabBarActiveBackgroundColor: Colors.backgroundSecondary,
+        headerTintColor: Colors.backgroundSecondary,
+        tabBarLabelStyle: {
+          fontFamily: 'Poppins_600SemiBold'
+        },
+        tabBarStyle: {
+          backgroundColor: Colors.backgroundSecondary,
+          borderTopWidth: 0,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 10,
+            height: 10
+          },
+          shadowOpacity: 0.22,
+          shadowRadius: 2.22,
+          elevation: 5
+        }
+      }}>
       <Tab.Screen
-        name="Home"
-        component={() => (
-          <Pressable
-            onPress={() => {
-              dispatch(signOutUser())
-            }}>
-            <TextBold>sign out</TextBold>
-          </Pressable>
-        )}
+        name="Championships"
+        component={ChampionshipsScreen}
+        options={{
+          title: 'Campeonatos',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="trophy" color={color} size={22} />
+          )
+        }}
       />
     </Tab.Navigator>
   )
