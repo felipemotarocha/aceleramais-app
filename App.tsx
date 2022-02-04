@@ -12,7 +12,7 @@ import { Provider } from 'react-redux'
 
 import 'src/config/firebase.config'
 import store from '~store'
-import RootStackNavigator from '~navigators/auth/root-stack.navigator'
+import RootStackNavigator from '~navigators/root/root-stack.navigator'
 
 const App = () => {
   const [fontsLoaded] = useFonts({

@@ -5,8 +5,8 @@ import FlashMessage from 'react-native-flash-message'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Navigators
-import AuthStackNavigator from './auth-stack.navigator'
-import AppBottomTabNavigator from './app-bottom-navigator'
+import AuthStackNavigator from '../auth/auth-stack.navigator'
+import AppBottomTabNavigator from '../app/app-bottom-navigator'
 
 // Redux
 import { useAppSelector } from '~store'
