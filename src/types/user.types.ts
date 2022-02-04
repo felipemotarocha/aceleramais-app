@@ -5,6 +5,7 @@ interface User {
   email: string
   provider: string
   userName: string
+  profileImageUrl?: string
 }
 
 export default User

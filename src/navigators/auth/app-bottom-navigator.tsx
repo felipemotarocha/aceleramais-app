@@ -27,12 +27,13 @@ const AppBottomTabNavigator = () => {
           borderTopWidth: 0,
           shadowColor: '#000',
           shadowOffset: {
-            width: 10,
-            height: 10
+            width: 2,
+            height: -2
           },
-          shadowOpacity: 0.22,
+          shadowOpacity: 0.12,
           shadowRadius: 2.22,
-          elevation: 5
+          elevation: -5,
+          padding: 8
         }
       }}>
       <Tab.Screen
