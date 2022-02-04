@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent, useCallback } from 'react'
+
 import { WelcomeScreenNavigationProp } from '~navigators/auth/auth-stack.navigator.types'
 
 import WelcomeScreen from './welcome.screen'

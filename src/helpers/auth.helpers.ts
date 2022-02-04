@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { API_URL } from '~constants/config.constants'
 import { showError } from './flash-message.helpers'
 
 export const invalidCredentials = () => {
@@ -14,3 +16,13 @@ export const tooManyFailedAttemps = () =>
   showError(
     'Essa conta foi bloqueada por muitas tentativas de login sem sucesso. Para recuperá-la, resete a sua senha.'
   )
+
+export const checkIfUserIsRegistered = async (userId: string) => {
+  try {
+    await axios.get(`${API_URL}/api/user?id=${userId}`)
+
+    return true
+  } catch (_) {
+    return false
+  }
+}

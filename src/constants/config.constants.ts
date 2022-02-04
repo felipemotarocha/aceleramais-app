@@ -1,3 +1,3 @@
 import { getEnvironment } from '~config/env.config'
 
-export const { API_URL, env } = getEnvironment()
+export const { API_URL, env, GOOGLE_EXPO_CLIENT_ID } = getEnvironment()

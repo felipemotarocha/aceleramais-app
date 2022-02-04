@@ -1,9 +1,8 @@
 {
   "expo": {
     "name": "sim-racer-app",
-    "plugins": [
-      "expo-camera"
-    ],
+    "plugins": ["expo-camera"],
+    "scheme": "simracerapp",
     "slug": "sim-racer-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

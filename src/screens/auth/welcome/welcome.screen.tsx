@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet } from 'react-native'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import TextBold from '~components/common/text-bold/text-bold.component'
+import SignInWithGoogleButton from '~components/common/sign-in-with-google-button/sign-in-with-google-button.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Styles
 import { Buttons, Container, Content } from './welcome.styles'
@@ -50,9 +51,9 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
             Entrar com e-mail e senha
           </CustomButton>
 
-          <CustomButton variant="outlined" style={styles.button}>
+          <SignInWithGoogleButton style={styles.button}>
             Continuar com o Google
-          </CustomButton>
+          </SignInWithGoogleButton>
 
           <CustomButton variant="outlined" style={styles.button}>
             Continuar com a Apple

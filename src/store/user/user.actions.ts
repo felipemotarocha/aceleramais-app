@@ -36,7 +36,10 @@ export const loginUser = (id: string, authToken: string) => {
 }
 
 export const createUser = (
-  user: User & { profileImage?: { uri: string; type: string } }
+  user: User & {
+    profileImage?: { uri: string; type: string }
+    profileImageUrl?: string
+  }
 ) => {
   return async (dispatch: Dispatch) => {
     dispatch(createUserStart())
@@ -56,6 +59,8 @@ export const createUser = (
         name: `profile_picture_${user.id}`,
         type: 'image/jpeg'
       })
+    } else if (user.profileImageUrl) {
+      formData.append('profileImageUrl', user.profileImageUrl)
     }
 
     try {
