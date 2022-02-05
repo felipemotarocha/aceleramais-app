@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
   basicInfo:
@@ -18,13 +18,23 @@ const championshipSlice = createSlice({
   name: 'championshipCreation',
   initialState: championshipCreationInitialState,
   reducers: {
-    updateBasicInfo: (state, action) => {
+    updateBasicInfo: (
+      state,
+      action: PayloadAction<{
+        title: string
+        platform: string
+        description?: string
+      }>
+    ) => {
       state.basicInfo = action.payload
+    },
+    clear: (state) => {
+      state.basicInfo = undefined
     }
   }
 })
 
-export const { updateBasicInfo } = championshipSlice.actions
+export const { updateBasicInfo, clear } = championshipSlice.actions
 
 const championshipCreationReducer = championshipSlice.reducer
 

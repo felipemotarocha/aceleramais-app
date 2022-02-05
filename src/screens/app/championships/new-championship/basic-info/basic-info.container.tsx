@@ -1,7 +1,20 @@
-import React, { FunctionComponent, useCallback, useState } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import * as ImagePicker from 'expo-image-picker'
 
-import ChampionshipBasicInfoScreen from './basic-info.screen'
+// Screens
+import ChampionshipBasicInfoScreen, { BasicInfoForm } from './basic-info.screen'
+
+// Redux
+import { useAppDispatch } from '~store'
+import {
+  clear,
+  updateBasicInfo
+} from '~store/championship-creation/championship-creation.slice'
 
 interface ChampionshipsBasicInfoContainerProps {}
 
@@ -16,6 +29,8 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
     | undefined
   >(undefined)
 
+  const dispatch = useAppDispatch()
+
   const handlePickImagePress = useCallback(async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -29,8 +44,15 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
     }
   }, [])
 
-  const handleSubmit = useCallback((data) => {
-    console.log({ data })
+  const handleSubmit = useCallback(
+    async (data: BasicInfoForm) => {
+      await dispatch(updateBasicInfo(data))
+    },
+    [dispatch]
+  )
+
+  useEffect(() => {
+    return () => dispatch(clear()) as any
   }, [])
 
   return (

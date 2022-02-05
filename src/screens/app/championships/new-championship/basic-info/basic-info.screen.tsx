@@ -32,7 +32,7 @@ interface ChampionshipBasicInfoScreenProps {
   handleSubmit: (data: BasicInfoForm) => void
 }
 
-type BasicInfoForm = {
+export type BasicInfoForm = {
   title: string
   platform: string
   description: string
@@ -45,7 +45,13 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
     control,
     formState: { errors },
     handleSubmit: _handleSubmit
-  } = useForm<BasicInfoForm>()
+  } = useForm<BasicInfoForm>({
+    defaultValues: {
+      title: 'PSGL Sim Racing League',
+      platform: 'PS4/PS5',
+      description: 'Join us.'
+    }
+  })
 
   const titleInputRef = useRef<any>(null)
   const platformInputRef = useRef<any>(null)
