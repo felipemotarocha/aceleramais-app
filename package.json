@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "husky:prepare": "husky install",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:staged": "yarn test",
+    "test:ci": "yarn test --coverage"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",

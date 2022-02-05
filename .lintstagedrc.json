@@ -1,4 +1,4 @@
 {
-  "*.tsx": ["yarn eslint . --ext .ts --fix"],
-  "*.ts": ["yarn eslint . --ext .ts --fix"]
+  "*.tsx": ["yarn eslint . --ext .ts --fix", "yarn test:staged"],
+  "*.ts": ["yarn eslint . --ext .ts --fix", "yarn test:staged"]
 }
