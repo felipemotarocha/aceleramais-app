@@ -21,3 +21,14 @@ export type ChampionshipBasicInfoScreenNavigationProp =
     NewChampionshipStackParamList,
     'Championship Basic Info'
   >
+
+export type ChampionshipRaceDatesScreenRouteProp = RouteProp<
+  NewChampionshipStackParamList,
+  'Championship Race Dates'
+>
+
+export type ChampionshipRaceDatesScreenNavigationProp =
+  NativeStackNavigationProp<
+    NewChampionshipStackParamList,
+    'Championship Race Dates'
+  >

@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   },
   left: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
   },
   right: {
     justifyContent: 'center'
@@ -51,7 +52,9 @@ const ChampionshipTrackItem: FunctionComponent<ChampionshipTrackItemProps> = ({
           style={{ borderRadius: 5 }}
         />
 
-        <TextMedium style={{ marginLeft: 10, fontSize: 12 }}>
+        <TextMedium
+          style={{ marginLeft: 10, fontSize: 12, flex: 1 }}
+          numberOfLines={2}>
           {track.name}
         </TextMedium>
       </View>

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // Screens
 import ChampionshipBasicInfoScreen from '~screens/app/championships/new-championship/basic-info/basic-info.container'
 import ChampionshipTrackSelectionScreen from '~screens/app/championships/new-championship/track-selection/track-selection.container'
+import ChampionshipRaceDateSelectionScreen from '~screens/app/championships/new-championship/race-date-selection/date-selection.container'
 
 // Utilities
 import { NewChampionshipStackParamList } from './new-championship.types'
@@ -18,12 +19,16 @@ const NewChampionshipNavigator: FunctionComponent<
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="Championship Basic Info"
-        component={ChampionshipBasicInfoScreen}
-      />
-      <Stack.Screen
         name="Championship Tracks"
         component={ChampionshipTrackSelectionScreen}
+      />
+      <Stack.Screen
+        name="Championship Race Dates"
+        component={ChampionshipRaceDateSelectionScreen}
+      />
+      <Stack.Screen
+        name="Championship Basic Info"
+        component={ChampionshipBasicInfoScreen}
       />
     </Stack.Navigator>
   )

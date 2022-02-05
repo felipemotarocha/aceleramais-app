@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 import { isEmpty } from 'lodash'
 import { View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 // Screens
 import ChampionshipTrackSelectionScreen from './track-selection.screen'
@@ -18,6 +19,7 @@ import ChampionshipTrackItem from '~components/championship-track-item/champions
 // Utilities
 import { API_URL } from '~constants/config.constants'
 import Track from '~types/track.types'
+import { ChampionshipRaceDatesScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -35,6 +37,8 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
   const { tracks } = useAppSelector((state) => state.championshipCreation)
 
   const dispatch = useAppDispatch()
+
+  const navigation = useNavigation<ChampionshipRaceDatesScreenNavigationProp>()
 
   useEffect(() => {
     const fetchAllTracks = async () => {
@@ -91,7 +95,10 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
     [tracks]
   )
 
-  const handleSubmit = useCallback(() => {}, [])
+  const handleSubmit = useCallback(
+    () => navigation.navigate('Championship Race Dates'),
+    [navigation]
+  )
 
   const renderItem = useCallback(
     (track: Track & { isSelected: boolean }) => (
