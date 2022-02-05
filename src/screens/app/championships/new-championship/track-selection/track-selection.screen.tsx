@@ -1,11 +1,13 @@
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
+import { Controller, useForm } from 'react-hook-form'
 
 // Components
 import Header from '~components/common/header/header.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import CustomInput from '~components/common/custom-input/custom-input.component'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -25,7 +27,9 @@ const styles = StyleSheet.create({
 interface ChampionshipTrackSelectionScreenProps {
   tracks: ({ isSelected: boolean } & Track)[]
   filteredTracks: ({ isSelected: boolean } & Track)[]
+  noTrackIsSelected: boolean
   handleSearchChange: (value: string) => void
+  handleSubmit: (data: { search: string }) => void
   renderItem: (
     track: Track & {
       isSelected: boolean
@@ -36,16 +40,51 @@ interface ChampionshipTrackSelectionScreenProps {
 
 const ChampionshipTrackSelectionScreen: FunctionComponent<
   ChampionshipTrackSelectionScreenProps
-> = ({ tracks, filteredTracks, handleSearchChange, renderItem }) => {
+> = ({
+  tracks,
+  filteredTracks,
+  noTrackIsSelected,
+  handleSearchChange,
+  handleSubmit,
+  renderItem
+}) => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit: _handleSubmit
+  } = useForm()
+
   return (
     <View style={styles.container}>
       <Header showBack>Selecionar Circuitos</Header>
 
       <View style={{ paddingHorizontal: 20, paddingTop: 20, marginBottom: 20 }}>
-        <CustomInput
-          placeholder="Buscar Circuito..."
-          onChangeText={handleSearchChange}
+        <Controller
+          control={control}
+          rules={{
+            required: noTrackIsSelected
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Buscar Circuito..."
+              onChangeText={(value) => {
+                handleSearchChange(value)
+                onChange(value)
+              }}
+              onBlur={onBlur}
+              value={value}
+              hasError={!!errors?.search}
+            />
+          )}
+          name="search"
         />
+
+        {errors.search && (
+          <TextMedium
+            style={{ fontSize: 12, color: Colors.error, marginTop: 5 }}>
+            Você precisa selecionar pelo menos 1 circuito para continuar.
+          </TextMedium>
+        )}
       </View>
 
       <FlatList
@@ -58,7 +97,11 @@ const ChampionshipTrackSelectionScreen: FunctionComponent<
       />
 
       <View style={{ paddingHorizontal: 20, paddingBottom: 20, marginTop: 10 }}>
-        <CustomButton variant="primary">Avançar</CustomButton>
+        <CustomButton
+          variant="primary"
+          onPress={_handleSubmit(handleSubmit as any)}>
+          Avançar
+        </CustomButton>
       </View>
     </View>
   )

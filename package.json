@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "husky:prepare": "husky install",
-    "test": "jest --passWithNoTests --runInBand",
+    "test": "jest --passWithNoTests --runInBand --silent",
     "test:watch": "yarn test --watch",
     "test:staged": "yarn test",
     "test:ci": "yarn test --coverage"

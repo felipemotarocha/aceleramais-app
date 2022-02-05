@@ -3,6 +3,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
+  useMemo,
   useState
 } from 'react'
 import { isEmpty } from 'lodash'
@@ -51,6 +52,11 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
     fetchAllTracks()
   }, [tracks])
 
+  const noTrackIsSelected = useMemo(
+    () => tracks.every((track) => !track.isSelected),
+    [tracks]
+  )
+
   const handleTrackPress = useCallback(
     async (_track: Track & { isSelected: boolean }) => {
       const newTracks = tracks.map((track) =>
@@ -85,6 +91,8 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
     [tracks]
   )
 
+  const handleSubmit = useCallback(() => {}, [])
+
   const renderItem = useCallback(
     (track: Track & { isSelected: boolean }) => (
       <View style={{ marginVertical: 10 }}>
@@ -98,8 +106,10 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
     <ChampionshipTrackSelectionScreen
       tracks={tracks}
       filteredTracks={filteredTracks}
+      noTrackIsSelected={noTrackIsSelected}
       renderItem={renderItem}
       handleSearchChange={handleSearchChange}
+      handleSubmit={handleSubmit}
     />
   )
 }
