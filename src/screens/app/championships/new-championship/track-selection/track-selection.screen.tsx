@@ -1,8 +1,11 @@
+import { isEmpty } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 
 // Components
 import Header from '~components/common/header/header.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
+import CustomInput from '~components/common/custom-input/custom-input.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -21,6 +24,8 @@ const styles = StyleSheet.create({
 
 interface ChampionshipTrackSelectionScreenProps {
   tracks: ({ isSelected: boolean } & Track)[]
+  filteredTracks: ({ isSelected: boolean } & Track)[]
+  handleSearchChange: (value: string) => void
   renderItem: (
     track: Track & {
       isSelected: boolean
@@ -31,15 +36,30 @@ interface ChampionshipTrackSelectionScreenProps {
 
 const ChampionshipTrackSelectionScreen: FunctionComponent<
   ChampionshipTrackSelectionScreenProps
-> = ({ tracks, renderItem }) => {
+> = ({ tracks, filteredTracks, handleSearchChange, renderItem }) => {
   return (
     <View style={styles.container}>
       <Header showBack>Selecionar Circuitos</Header>
+
+      <View style={{ paddingHorizontal: 20, paddingTop: 20, marginBottom: 20 }}>
+        <CustomInput
+          placeholder="Buscar Circuito..."
+          onChangeText={handleSearchChange}
+        />
+      </View>
+
       <FlatList
         renderItem={({ item }) => renderItem(item)}
-        data={tracks}
-        contentContainerStyle={{ padding: 20 }}
+        data={isEmpty(filteredTracks) ? tracks : filteredTracks}
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          paddingBottom: 20
+        }}
       />
+
+      <View style={{ paddingHorizontal: 20, paddingBottom: 20, marginTop: 10 }}>
+        <CustomButton variant="primary">Avançar</CustomButton>
+      </View>
     </View>
   )
 }

@@ -1,6 +1,12 @@
 import axios from 'axios'
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { isEmpty } from 'lodash'
+import { View } from 'react-native'
 
 // Screens
 import ChampionshipTrackSelectionScreen from './track-selection.screen'
@@ -15,14 +21,18 @@ import Track from '~types/track.types'
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import { updateTracks } from '~store/championship-creation/championship-creation.slice'
-import { View } from 'react-native'
 
 interface ChampionshipTrackSelectionContainerProps {}
 
 const ChampionshipTrackSelectionContainer: FunctionComponent<
   ChampionshipTrackSelectionContainerProps
 > = () => {
+  const [filteredTracks, setFilteredTracks] = useState<
+    (Track & { isSelected: boolean })[]
+  >([])
+
   const { tracks } = useAppSelector((state) => state.championshipCreation)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -50,6 +60,27 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
       )
 
       await dispatch(updateTracks(newTracks))
+
+      setFilteredTracks([])
+    },
+    [tracks]
+  )
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      if (!value) return setFilteredTracks([])
+
+      const newFilteredTracks = tracks
+        .filter(
+          (track) =>
+            track.name.toLowerCase().startsWith(value.toLowerCase()) ||
+            track.countryName.toLowerCase().startsWith(value.toLowerCase())
+        )
+        .sort((a, b) =>
+          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        )
+
+      setFilteredTracks(newFilteredTracks)
     },
     [tracks]
   )
@@ -64,7 +95,12 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
   )
 
   return (
-    <ChampionshipTrackSelectionScreen tracks={tracks} renderItem={renderItem} />
+    <ChampionshipTrackSelectionScreen
+      tracks={tracks}
+      filteredTracks={filteredTracks}
+      renderItem={renderItem}
+      handleSearchChange={handleSearchChange}
+    />
   )
 }
 
