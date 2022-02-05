@@ -24,7 +24,8 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
   props
 ) => {
   const [, response, promptAsync] = Google.useIdTokenAuthRequest({
-    expoClientId: GOOGLE_EXPO_CLIENT_ID
+    expoClientId: GOOGLE_EXPO_CLIENT_ID,
+    iosClientId: GOOGLE_EXPO_CLIENT_ID
   })
 
   const navigation = useNavigation<WelcomeScreenNavigationProp>()

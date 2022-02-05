@@ -45,13 +45,7 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
     control,
     formState: { errors },
     handleSubmit: _handleSubmit
-  } = useForm<BasicInfoForm>({
-    defaultValues: {
-      title: 'PSGL Sim Racing League',
-      platform: 'PS4/PS5',
-      description: 'Join us.'
-    }
-  })
+  } = useForm<BasicInfoForm>()
 
   const titleInputRef = useRef<any>(null)
   const platformInputRef = useRef<any>(null)

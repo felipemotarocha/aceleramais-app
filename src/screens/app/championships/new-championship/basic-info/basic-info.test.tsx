@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, act, fireEvent } from '~helpers/test.helpers'
+import { render, fireEvent, waitFor } from '~helpers/test.helpers'
 
 import ChampionshipsBasicInfoContainer from './basic-info.container'
 
@@ -12,14 +12,13 @@ describe('Championship Basic Info', () => {
 
     const descriptionInput = getByLabelText(/descrição/i)
 
+    fireEvent.changeText(descriptionInput, 'valid_description')
+
     const submitButton = getByText(/avançar/i)
 
-    await act(async () => {
-      fireEvent.changeText(descriptionInput, 'valid_description')
-      fireEvent.press(submitButton)
-    })
+    fireEvent.press(submitButton)
 
-    expect(getByText(/o título é obrigatório./i)).toBeDefined()
-    expect(getByText(/a plataforma é obrigatória./i)).toBeDefined()
+    await waitFor(() => getByText(/o título é obrigatório./i))
+    await waitFor(() => getByText(/a plataforma é obrigatória./i))
   })
 })
