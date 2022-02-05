@@ -31,15 +31,19 @@ const styles = StyleSheet.create({
   }
 })
 
-interface ChampionshipTrackItmeProps {
+interface ChampionshipTrackItemProps {
   track: Track & { isSelected: boolean }
+  handlePress: (track: Track & { isSelected: boolean }) => void
 }
 
-const ChampionshipTrackItme: FunctionComponent<ChampionshipTrackItmeProps> = ({
-  track
+const ChampionshipTrackItem: FunctionComponent<ChampionshipTrackItemProps> = ({
+  track,
+  handlePress
 }) => {
   return (
-    <Pressable style={[styles.container, track.isSelected && styles.selected]}>
+    <Pressable
+      style={[styles.container, track.isSelected && styles.selected]}
+      onPress={() => handlePress(track)}>
       <View style={styles.left}>
         <CountryFlag size={36} isoCode={track.countryCode} />
         <TextMedium style={{ marginLeft: 10, fontSize: 12 }}>
@@ -56,4 +60,4 @@ const ChampionshipTrackItme: FunctionComponent<ChampionshipTrackItmeProps> = ({
   )
 }
 
-export default ChampionshipTrackItme
+export default ChampionshipTrackItem
