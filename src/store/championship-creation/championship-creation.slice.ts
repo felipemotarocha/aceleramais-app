@@ -1,4 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import Track from '~types/track.types'
+
+type _Track = Track & { isSelected: boolean }
 
 type InitialState = {
   basicInfo:
@@ -12,10 +15,12 @@ type InitialState = {
         }
       }
     | undefined
+  tracks: _Track[]
 }
 
 const championshipCreationInitialState: InitialState = {
-  basicInfo: undefined
+  basicInfo: undefined,
+  tracks: []
 }
 
 const championshipSlice = createSlice({
@@ -36,13 +41,17 @@ const championshipSlice = createSlice({
     ) => {
       state.basicInfo = action.payload
     },
+    updateTracks: (state, action: PayloadAction<_Track[]>) => {
+      state.tracks = action.payload
+    },
     clear: (state) => {
       state.basicInfo = undefined
     }
   }
 })
 
-export const { updateBasicInfo, clear } = championshipSlice.actions
+export const { updateBasicInfo, updateTracks, clear } =
+  championshipSlice.actions
 
 const championshipCreationReducer = championshipSlice.reducer
 

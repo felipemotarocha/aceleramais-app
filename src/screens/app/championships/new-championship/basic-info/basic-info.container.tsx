@@ -15,6 +15,8 @@ import {
   clear,
   updateBasicInfo
 } from '~store/championship-creation/championship-creation.slice'
+import { useNavigation } from '@react-navigation/native'
+import { ChampionshipBasicInfoScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 interface ChampionshipsBasicInfoContainerProps {}
 
@@ -30,6 +32,7 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
   >(undefined)
 
   const dispatch = useAppDispatch()
+  const navigation = useNavigation<ChampionshipBasicInfoScreenNavigationProp>()
 
   const handlePickImagePress = useCallback(async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -50,9 +53,11 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
         return await dispatch(updateBasicInfo({ ...data, image }))
       }
 
-      return await dispatch(updateBasicInfo(data))
+      await dispatch(updateBasicInfo(data))
+
+      return navigation.navigate('Championship Tracks')
     },
-    [dispatch, image]
+    [dispatch, image, navigation]
   )
 
   useEffect(() => {
