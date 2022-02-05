@@ -45,7 +45,12 @@ const ChampionshipTrackItem: FunctionComponent<ChampionshipTrackItemProps> = ({
       style={[styles.container, track.isSelected && styles.selected]}
       onPress={() => handlePress(track)}>
       <View style={styles.left}>
-        <CountryFlag size={36} isoCode={track.countryCode} />
+        <CountryFlag
+          size={28}
+          isoCode={track.countryCode}
+          style={{ borderRadius: 5 }}
+        />
+
         <TextMedium style={{ marginLeft: 10, fontSize: 12 }}>
           {track.name}
         </TextMedium>
