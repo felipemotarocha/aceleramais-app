@@ -57,7 +57,7 @@ const ChampionshipTrackItem: FunctionComponent<ChampionshipTrackItemProps> = ({
       </View>
 
       {track.isSelected && (
-        <View style={styles.right}>
+        <View style={styles.right} accessibilityLabel="Selected">
           <MaterialIcons name="done" size={24} color={Colors.primary} />
         </View>
       )}

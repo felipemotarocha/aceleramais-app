@@ -52,7 +52,6 @@ const SocialSignUpContainer: FunctionComponent<
 
   const handleContinuePress = useCallback(
     async (data: { userName: string }) => {
-      console.log('here')
       const basePayload = {
         id,
         firstName,
