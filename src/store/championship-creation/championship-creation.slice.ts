@@ -6,6 +6,10 @@ type InitialState = {
         title: string
         platform: string
         description?: string
+        image?: {
+          uri: string
+          type?: string
+        }
       }
     | undefined
 }
@@ -24,6 +28,10 @@ const championshipSlice = createSlice({
         title: string
         platform: string
         description?: string
+        image?: {
+          uri: string
+          type?: string
+        }
       }>
     ) => {
       state.basicInfo = action.payload

@@ -46,9 +46,13 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
 
   const handleSubmit = useCallback(
     async (data: BasicInfoForm) => {
-      await dispatch(updateBasicInfo(data))
+      if (image) {
+        return await dispatch(updateBasicInfo({ ...data, image }))
+      }
+
+      return await dispatch(updateBasicInfo(data))
     },
-    [dispatch]
+    [dispatch, image]
   )
 
   useEffect(() => {
