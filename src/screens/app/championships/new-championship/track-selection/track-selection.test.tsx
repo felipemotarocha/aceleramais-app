@@ -103,4 +103,26 @@ describe('Championship Tracks Selection', () => {
     getByText(/circuit de barcelona-catalunya/i)
     expect(queryByText(/autódromo josé carlos pace/i)).toBeNull()
   })
+
+  it('should show an error on submit if no Track is selected', async () => {
+    const { getByText } = render(
+      <ChampionshipTrackSelectionContainer />,
+      initialState as any
+    )
+
+    const response = { data: initialState.championshipCreation.tracks }
+
+    mockAxios.mockResponse(response)
+
+    await waitFor(() => getByText(/autódromo josé carlos pace/i))
+    await waitFor(() => getByText(/circuit de barcelona-catalunya/i))
+
+    fireEvent.press(getByText(/avançar/i))
+
+    await waitFor(() =>
+      getByText(
+        /você precisa selecionar pelo menos 1 circuito para continuar./i
+      )
+    )
+  })
 })
