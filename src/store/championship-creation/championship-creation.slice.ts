@@ -10,7 +10,7 @@ export type _Race = {
   isCompleted: boolean
 }
 
-type InitialState = {
+export type ChampionshipCreationSliceInitialState = {
   basicInfo:
     | {
         title: string
@@ -26,11 +26,12 @@ type InitialState = {
   races: _Race[]
 }
 
-const championshipCreationInitialState: InitialState = {
-  basicInfo: undefined,
-  tracks: [],
-  races: []
-}
+const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
+  {
+    basicInfo: undefined,
+    tracks: [],
+    races: []
+  }
 
 const championshipSlice = createSlice({
   name: 'championshipCreation',
