@@ -1,7 +1,5 @@
 import 'react-native-get-random-values'
-import { isEmpty } from 'lodash'
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import React, { FunctionComponent, useCallback } from 'react'
 import { View } from 'react-native'
 
 // Components
@@ -10,10 +8,10 @@ import ChampionshipRaceDateItem from '~components/championship-race-date-item/ch
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { updateRaces } from '~store/championship-creation/championship-creation.slice'
-
-// Utilities
-import Track from '~types/track.types'
+import {
+  updateRaces,
+  updateTracks
+} from '~store/championship-creation/championship-creation.slice'
 
 interface ChampionshipRaceDateSelectionContainerProps {}
 
@@ -26,41 +24,33 @@ const ChampionshipRaceDateSelectionContainer: FunctionComponent<
 
   const dispatch = useAppDispatch()
 
-  // @ts-ignore
-  useEffect(() => {
-    if (isEmpty(races)) {
-      const newRaces = tracks
-        .filter((track) => track.isSelected)
-        .map((track) => ({
-          id: uuidv4(),
-          startDate: undefined,
-          isCompleted: false,
-          track
-        }))
+  const handleRemovePress = async ({ track }: { track: { id: string } }) => {
+    const newRaces = races.filter((race) => race.track.id !== track.id)
+    const newTracks = tracks.map((_track) =>
+      _track.id === track.id ? { ..._track, isSelected: false } : _track
+    )
 
-      dispatch(updateRaces(newRaces))
-    }
+    await dispatch(updateTracks(newTracks))
+    await dispatch(updateRaces(newRaces))
+  }
 
-    return () => dispatch(updateRaces([]))
+  const handleSelectDatePress = useCallback((data) => {
+    console.log({ data })
   }, [])
 
   const renderItem = useCallback(
-    ({
-      item: { startDate, track, isCompleted }
-    }: {
-      item: {
-        startDate?: string | undefined
-        track: Track
-        isCompleted: boolean
-      }
-    }) => {
+    ({ item }: { item }) => {
       return (
         <View style={{ marginVertical: 5 }}>
-          <ChampionshipRaceDateItem race={{ startDate, track, isCompleted }} />
+          <ChampionshipRaceDateItem
+            race={item}
+            handleRemovePress={handleRemovePress}
+            handleSelectDatePress={handleSelectDatePress}
+          />
         </View>
       )
     },
-    []
+    [tracks, races, dispatch]
   )
 
   return <ChampionshipRaceDateSelection races={races} renderItem={renderItem} />

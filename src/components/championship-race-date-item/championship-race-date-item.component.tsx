@@ -31,39 +31,50 @@ const styles = StyleSheet.create({
   }
 })
 
+type _Race = {
+  id: string
+  startDate?: string
+  track: Track
+  isCompleted: boolean
+}
+
 interface ChampionshipRaceDateItemProps {
-  race: { startDate?: string; track: Track; isCompleted: boolean }
+  race: _Race
+  handleRemovePress: (race: _Race) => void
+  handleSelectDatePress: (race: _Race) => void
 }
 
 const ChampionshipRaceDateItem: FunctionComponent<
   ChampionshipRaceDateItemProps
-> = ({ race: { track, startDate, isCompleted } }) => {
+> = ({ race, handleRemovePress, handleSelectDatePress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
         <CountryFlag
           size={28}
-          isoCode={track.countryCode}
+          isoCode={race.track.countryCode}
           style={{ borderRadius: 5 }}
         />
 
         <View style={{ marginLeft: 10, flex: 1 }}>
           <TextMedium style={{ fontSize: 12, flex: 1 }} numberOfLines={2}>
-            {track.name}
+            {race.track.name}
           </TextMedium>
-          {startDate ? (
+          {race.startDate ? (
             <TextMedium style={{ fontSize: 12 }}>
-              `Data: {format(new Date(startDate), 'DD/MM/yyyy, HH:mm')}
+              `Data: {format(new Date(race.startDate), 'DD/MM/yyyy, HH:mm')}
             </TextMedium>
           ) : (
-            <TextMedium style={{ color: Colors.textSecondary, fontSize: 12 }}>
-              Toque para selecionar a data
-            </TextMedium>
+            <Pressable onPress={() => handleSelectDatePress(race)}>
+              <TextMedium style={{ color: Colors.textSecondary, fontSize: 12 }}>
+                Toque para selecionar a data
+              </TextMedium>
+            </Pressable>
           )}
         </View>
       </View>
 
-      <Pressable style={styles.right}>
+      <Pressable style={styles.right} onPress={() => handleRemovePress(race)}>
         <AntDesign name="close" size={24} color={Colors.textSecondary} />
       </Pressable>
     </View>
