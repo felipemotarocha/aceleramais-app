@@ -4,6 +4,7 @@ import mockAxios from 'jest-mock-axios'
 import { render, waitFor, cleanup, fireEvent } from '~helpers/test.helpers'
 import ChampionshipRaceDateSelectionContainer from './race-date-selection.container'
 import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
+import Colors from '~constants/colors.constants'
 
 describe('Championship Race Dates Selection', () => {
   const tracks = [
@@ -113,5 +114,41 @@ describe('Championship Race Dates Selection', () => {
     expect(queryByText(/autódromo josé carlos pace/i)).toBeNull()
 
     getByText(/circuit de barcelona-catalunya/i)
+  })
+
+  it('should show an error when trying to submit without filling all race dates', async () => {
+    const { getByText, getByTestId, queryByText } = render(
+      <ChampionshipRaceDateSelectionContainer />,
+      {
+        preloadedState: initialState
+      }
+    )
+
+    await waitFor(async () => getByText(/autódromo josé carlos pace/i))
+    await waitFor(async () => getByText(/circuit de barcelona-catalunya/i))
+
+    const item = await waitFor(async () =>
+      getByText(/autódromo josé carlos pace/i)
+    )
+
+    fireEvent.press(item)
+
+    const confirmButton = getByTestId('DateTimePicker.Confirm')
+
+    fireEvent.press(confirmButton)
+    fireEvent.press(confirmButton)
+
+    const submitButton = getByText(/avançar/i)
+
+    await fireEvent.press(submitButton)
+
+    expect(queryByText(/circuit de barcelona-catalunya/i)).toHaveStyle({
+      color: Colors.error
+    })
+    expect(queryByText(/toque para selecionar a data/i)).toHaveStyle({
+      color: Colors.error
+    })
+
+    getByText(/avançar/i)
   })
 })
