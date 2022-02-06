@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 
 // Screens
-import ChampionshipRaceDateSelection from './date-selection.screen'
+import ChampionshipRaceDateSelection from './race-date-selection.screen'
 
 // Components
 import ChampionshipRaceDateItem from '~components/championship-race-date-item/championship-race-date-item.component'
@@ -15,6 +15,7 @@ import {
   updateRaces,
   updateTracks
 } from '~store/championship-creation/championship-creation.slice'
+import ChampionshipRaceDateSelectionHelper from './race-date-selection.helper'
 
 interface ChampionshipRaceDateSelectionContainerProps {}
 
@@ -54,8 +55,12 @@ const ChampionshipRaceDateSelectionContainer: FunctionComponent<
 
   const handleDateChange = useCallback(
     async (raceId: string, date: Date | null) => {
-      const newRaces = races.map((race) =>
-        race.id === raceId ? { ...race, startDate: date?.toISOString() } : race
+      const newRaces = ChampionshipRaceDateSelectionHelper.sortByStartDate(
+        races.map((race) =>
+          race.id === raceId
+            ? { ...race, startDate: date?.toISOString() }
+            : race
+        )
       )
 
       await dispatch(updateRaces(newRaces))

@@ -32,12 +32,7 @@ interface ChampionshipRaceDateSelectionScreenProps {
 const ChampionshipRaceDateSelectionScreen: FunctionComponent<
   ChampionshipRaceDateSelectionScreenProps
 > = ({ races, renderItem }) => {
-  const {
-    handleSubmit,
-    formState: { errors }
-  } = useFormContext()
-
-  console.log({ errors })
+  const { handleSubmit } = useFormContext()
 
   return (
     <View style={styles.container}>

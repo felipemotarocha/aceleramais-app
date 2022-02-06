@@ -21,6 +21,7 @@ import { API_URL } from '~constants/config.constants'
 import Track from '~types/track.types'
 import { ChampionshipRaceDatesScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 import ChampionshipTrackSelectionHelper from './track-selection.helper'
+import ChampionshipRaceDateSelectionHelper from '../race-date-selection/race-date-selection.helper'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -99,7 +100,10 @@ const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
       previousRaces: races
     })
 
-    await dispatch(updateRaces(newRaces))
+    const sortedRaces =
+      ChampionshipRaceDateSelectionHelper.sortByStartDate(newRaces)
+
+    await dispatch(updateRaces(sortedRaces))
 
     return navigation.navigate('Championship Race Dates')
   }, [dispatch, tracks, races])
