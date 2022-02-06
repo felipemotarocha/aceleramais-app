@@ -129,6 +129,8 @@ const ChampionshipRaceDateItem: FunctionComponent<
         mode="datetime"
         onConfirm={_onConfirm}
         onCancel={_onCancel}
+        confirmButtonTestID="DateTimePicker.Confirm"
+        cancelButtonTestID="DateTimePicker.Cancel"
       />
     </View>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import mockAxios from 'jest-mock-axios'
 
-import { render, waitFor, cleanup } from '~helpers/test.helpers'
+import { render, waitFor, cleanup, fireEvent } from '~helpers/test.helpers'
 import ChampionshipRaceDateSelectionContainer from './race-date-selection.container'
 import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
 
@@ -69,21 +69,27 @@ describe('Championship Race Dates Selection', () => {
     )
   })
 
-  it('should render all the Races', async () => {
-    const { getByText, queryAllByText } = render(
+  it('should select a date', async () => {
+    const { getByText, getByTestId, queryAllByText } = render(
       <ChampionshipRaceDateSelectionContainer />,
       {
         preloadedState: initialState
       }
     )
 
-    await waitFor(async () => getByText(/selecionar data das corridas/i))
-
-    await waitFor(async () => getByText(/autódromo josé carlos pace/i))
-    await waitFor(async () => getByText(/circuit de barcelona-catalunya/i))
-
-    await waitFor(async () =>
-      expect(queryAllByText(/toque para selecionar a data/i)).toHaveLength(2)
+    const item = await waitFor(async () =>
+      getByText(/autódromo josé carlos pace/i)
     )
+
+    fireEvent.press(item)
+
+    const confirmButton = getByTestId('DateTimePicker.Confirm')
+
+    fireEvent.press(confirmButton)
+    fireEvent.press(confirmButton)
+
+    getByText(/toque para alterar a data/i)
+
+    expect(queryAllByText(/toque para selecionar a data/i)).toHaveLength(1)
   })
 })
