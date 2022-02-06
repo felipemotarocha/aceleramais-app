@@ -20,21 +20,23 @@ import ChampionshipTrackItem from '~components/championship-track-item/champions
 import { API_URL } from '~constants/config.constants'
 import Track from '~types/track.types'
 import { ChampionshipRaceDatesScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
+import ChampionshipTrackSelectionHelper from './track-selection.helper'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { updateTracks } from '~store/championship-creation/championship-creation.slice'
+import {
+  updateRaces,
+  updateTracks
+} from '~store/championship-creation/championship-creation.slice'
 
-interface ChampionshipTrackSelectionContainerProps {}
-
-const ChampionshipTrackSelectionContainer: FunctionComponent<
-  ChampionshipTrackSelectionContainerProps
-> = () => {
+const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
   const [filteredTracks, setFilteredTracks] = useState<
     (Track & { isSelected: boolean })[]
   >([])
 
-  const { tracks } = useAppSelector((state) => state.championshipCreation)
+  const { tracks, races } = useAppSelector(
+    (state) => state.championshipCreation
+  )
 
   const dispatch = useAppDispatch()
 
@@ -80,25 +82,27 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
     (value: string) => {
       if (!value) return setFilteredTracks([])
 
-      const newFilteredTracks = tracks
-        .filter(
-          (track) =>
-            track.name.toLowerCase().startsWith(value.toLowerCase()) ||
-            track.countryName.toLowerCase().startsWith(value.toLowerCase())
-        )
-        .sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        )
+      const newFilteredTracks =
+        ChampionshipTrackSelectionHelper.filterTracksBasedOnSearch({
+          searchValue: value,
+          tracks
+        })
 
       setFilteredTracks(newFilteredTracks)
     },
     [tracks]
   )
 
-  const handleSubmit = useCallback(
-    () => navigation.navigate('Championship Race Dates'),
-    [navigation]
-  )
+  const handleSubmit = useCallback(async () => {
+    const newRaces = ChampionshipTrackSelectionHelper.generateNewRaces({
+      tracks,
+      previousRaces: races
+    })
+
+    await dispatch(updateRaces(newRaces))
+
+    return navigation.navigate('Championship Race Dates')
+  }, [dispatch, tracks, races])
 
   const renderItem = useCallback(
     (track: Track & { isSelected: boolean }) => (
@@ -106,7 +110,7 @@ const ChampionshipTrackSelectionContainer: FunctionComponent<
         <ChampionshipTrackItem track={track} handlePress={handleTrackPress} />
       </View>
     ),
-    [handleTrackPress]
+    [handleTrackPress, tracks, races, dispatch]
   )
 
   return (

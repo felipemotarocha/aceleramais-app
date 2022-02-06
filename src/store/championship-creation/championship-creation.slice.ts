@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import Track from '~types/track.types'
 
-type _Track = Track & { isSelected: boolean }
+export type _Track = Track & { isSelected: boolean }
+export type _Race = {
+  id: string
+  startDate?: string
+  track: Track
+  isCompleted: boolean
+}
 
 type InitialState = {
   basicInfo:
@@ -17,12 +23,7 @@ type InitialState = {
       }
     | undefined
   tracks: _Track[]
-  races: {
-    id: string
-    startDate?: string
-    track: Track
-    isCompleted: boolean
-  }[]
+  races: _Race[]
 }
 
 const championshipCreationInitialState: InitialState = {
