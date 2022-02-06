@@ -4,7 +4,7 @@ import CountryFlag from 'react-native-country-flag'
 import { MaterialIcons } from '@expo/vector-icons'
 
 // Components
-import TextMedium from '~components/common/text-medium/text-medium.component'
+import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 
 // Utilities
 import Track from '~types/track.types'
@@ -52,11 +52,11 @@ const ChampionshipTrackItem: FunctionComponent<ChampionshipTrackItemProps> = ({
           style={{ borderRadius: 5 }}
         />
 
-        <TextMedium
+        <TextSemiBold
           style={{ marginLeft: 10, fontSize: 12, flex: 1 }}
           numberOfLines={2}>
           {track.name}
-        </TextMedium>
+        </TextSemiBold>
       </View>
 
       {track.isSelected && (

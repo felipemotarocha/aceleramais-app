@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -30,6 +32,13 @@ interface ChampionshipRaceDateSelectionScreenProps {
 const ChampionshipRaceDateSelectionScreen: FunctionComponent<
   ChampionshipRaceDateSelectionScreenProps
 > = ({ races, renderItem }) => {
+  const {
+    handleSubmit,
+    formState: { errors }
+  } = useFormContext()
+
+  console.log({ errors })
+
   return (
     <View style={styles.container}>
       <Header showBack>Selecionar Data das Corridas</Header>
@@ -39,6 +48,14 @@ const ChampionshipRaceDateSelectionScreen: FunctionComponent<
         renderItem={renderItem}
         contentContainerStyle={{ padding: 20 }}
       />
+
+      <View style={{ paddingHorizontal: 20, paddingBottom: 20, marginTop: 10 }}>
+        <CustomButton
+          variant="primary"
+          onPress={handleSubmit((data) => console.log({ data }))}>
+          Avançar
+        </CustomButton>
+      </View>
     </View>
   )
 }
