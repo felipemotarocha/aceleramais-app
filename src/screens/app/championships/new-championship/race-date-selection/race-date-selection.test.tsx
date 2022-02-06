@@ -92,4 +92,26 @@ describe('Championship Race Dates Selection', () => {
 
     expect(queryAllByText(/toque para selecionar a data/i)).toHaveLength(1)
   })
+
+  it('should remove a race', async () => {
+    const { getByText, getByLabelText, queryByText } = render(
+      <ChampionshipRaceDateSelectionContainer />,
+      {
+        preloadedState: initialState
+      }
+    )
+
+    await waitFor(async () => getByText(/autódromo josé carlos pace/i))
+    await waitFor(async () =>
+      getByLabelText(/remove autódromo josé carlos pace/i)
+    )
+
+    const removeButton = getByLabelText(/remove autódromo josé carlos pace/i)
+
+    await fireEvent.press(removeButton)
+
+    expect(queryByText(/autódromo josé carlos pace/i)).toBeNull()
+
+    getByText(/circuit de barcelona-catalunya/i)
+  })
 })

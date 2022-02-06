@@ -116,7 +116,10 @@ const ChampionshipRaceDateItem: FunctionComponent<
         </View>
       </Pressable>
 
-      <Pressable style={styles.right} onPress={() => handleRemovePress(race)}>
+      <Pressable
+        style={styles.right}
+        onPress={() => handleRemovePress(race)}
+        accessibilityLabel={`Remove ${race.track.name}`}>
         <AntDesign
           name="close"
           size={24}
