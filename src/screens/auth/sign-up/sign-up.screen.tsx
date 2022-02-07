@@ -103,6 +103,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
       {loading && <Loading />}
       <Header showBack>Crie sua conta</Header>
       <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
         style={{ flex: 1, backgroundColor: Colors.background }}
         bounces={false}>
         <DismissKeyboard>

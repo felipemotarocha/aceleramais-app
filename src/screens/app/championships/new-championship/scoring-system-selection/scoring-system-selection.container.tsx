@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { View } from 'react-native'
 
 // Screen
 import ChampionshipScoringSystemSelectionScreen from './scoring-system-selection.screen'
@@ -13,7 +14,6 @@ import {
   updateScoringSystem,
   _ScoringSystem
 } from '~store/championship-creation/championship-creation.slice'
-import { View } from 'react-native'
 
 interface ChampionshipScoringSystemSelectionContainerProps {}
 
@@ -27,15 +27,6 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
   const methods = useForm<{ points: string }>()
 
   const dispatch = useAppDispatch()
-
-  const renderItem = useCallback(
-    ({ item }: { item: _ScoringSystem }) => (
-      <View style={{ marginBottom: 15 }}>
-        <ChampionshipPositionScoreItem {...item} />
-      </View>
-    ),
-    []
-  )
 
   const handleAddPress = useCallback(
     async (data: { points: string }) => {
@@ -51,6 +42,48 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
       methods.reset()
     },
     [dispatch, scoringSystem, methods]
+  )
+
+  const handleRemovePress = useCallback(
+    async (position: number) => {
+      const newScoringSystem: _ScoringSystem[] = scoringSystem.reduce(
+        (acc, current) => {
+          if (current.position < position) {
+            acc.push(current)
+
+            return acc
+          }
+
+          if (current.position === position) {
+            return acc
+          }
+
+          if (current.position > position) {
+            acc.push({ ...current, position: current.position - 1 })
+
+            return acc
+          }
+
+          return acc
+        },
+        [] as _ScoringSystem[]
+      )
+
+      await dispatch(updateScoringSystem(newScoringSystem))
+    },
+    [scoringSystem]
+  )
+
+  const renderItem = useCallback(
+    ({ item }: { item: _ScoringSystem }) => (
+      <View style={{ marginBottom: 15 }}>
+        <ChampionshipPositionScoreItem
+          {...item}
+          handleRemovePress={handleRemovePress}
+        />
+      </View>
+    ),
+    [scoringSystem, handleRemovePress]
   )
 
   return (

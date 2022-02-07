@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
 interface ChampionshipPositionScoreItemProps {
   position: number
   points: number
+  handleRemovePress: (position: number) => void
 }
 
 const ChampionshipPositionScoreItem: FunctionComponent<
   ChampionshipPositionScoreItemProps
-> = ({ position, points }) => {
+> = ({ position, points, handleRemovePress }) => {
   const {
     control,
     formState: { errors }
@@ -86,7 +87,7 @@ const ChampionshipPositionScoreItem: FunctionComponent<
 
       <Pressable
         style={styles.remove}
-        // onPress={() => handleRemovePress(race)}
+        onPress={() => handleRemovePress(position)}
         accessibilityLabel={`Remove ${position}`}>
         <AntDesign
           name="close"
