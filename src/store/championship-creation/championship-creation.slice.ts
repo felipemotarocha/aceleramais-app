@@ -70,6 +70,9 @@ const championshipSlice = createSlice({
     },
     clear: (state) => {
       state.basicInfo = undefined
+      state.tracks = []
+      state.races = []
+      state.scoringSystem = []
     }
   }
 })
