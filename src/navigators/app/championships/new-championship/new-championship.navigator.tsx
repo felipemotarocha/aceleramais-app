@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ChampionshipBasicInfoScreen from '~screens/app/championships/new-championship/basic-info/basic-info.container'
 import ChampionshipTrackSelectionScreen from '~screens/app/championships/new-championship/track-selection/track-selection.container'
 import ChampionshipRaceDateSelectionScreen from '~screens/app/championships/new-championship/race-date-selection/race-date-selection.container'
-import ChampionshipScoringSystemSelectionScreen from '~screens/app/championships/new-championship/scoring-system-selection/scoring-system.container'
+import ChampionshipScoringSystemSelectionScreen from '~screens/app/championships/new-championship/scoring-system-selection/scoring-system-selection.container'
 
 // Utilities
 import { NewChampionshipStackParamList } from './new-championship.types'

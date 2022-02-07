@@ -1,4 +1,10 @@
 import React, { FunctionComponent } from 'react'
+import {
+  Controller,
+  FormProvider,
+  useForm,
+  useFormContext
+} from 'react-hook-form'
 import { View, StyleSheet, ListRenderItem } from 'react-native'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
@@ -6,6 +12,7 @@ import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import CustomInput from '~components/common/custom-input/custom-input.component'
 import Header from '~components/common/header/header.component'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -26,25 +33,73 @@ const styles = StyleSheet.create({
 
 interface ChampionshipScoringSystemSelectionScreenProps {
   scoringSystem: _ScoringSystem[]
+  handleAddPress: (data: { points: string }) => void
   renderItem: ListRenderItem<_ScoringSystem> | null | undefined
 }
 
 const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
   ChampionshipScoringSystemSelectionScreenProps
-> = ({ scoringSystem, renderItem }) => {
+> = ({ scoringSystem, handleAddPress, renderItem }) => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit
+  } = useFormContext<{ points: string }>()
+
+  const methods = useForm()
+
   return (
     <View style={styles.container}>
       <Header showBack>Sistema de Pontuação</Header>
       <View style={styles.content}>
-        <CustomInput
-          placeholder="Pontos 1º Lugar"
-          style={{ marginBottom: 20 }}
+        <Controller
+          rules={{ required: true }}
+          control={control}
+          name="points"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder={`Pontos ${scoringSystem.length + 1}º Lugar`}
+              onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
+              onBlur={onBlur}
+              value={value}
+              hasError={!!errors?.points}
+              keyboardType="numeric"
+              onSubmitEditing={handleSubmit(handleAddPress)}
+              blurOnSubmit={false}
+            />
+          )}
         />
-        <CustomButton variant="outlined" style={{ marginBottom: 20 }}>
+
+        {errors.points && (
+          <TextMedium
+            style={{
+              fontSize: 12,
+              color: Colors.error,
+              marginTop: 5
+            }}>
+            Os pontos são obrigatórios.
+          </TextMedium>
+        )}
+
+        <CustomButton
+          variant="outlined"
+          style={{ marginVertical: 20 }}
+          onPress={handleSubmit(handleAddPress)}>
           Adicionar
         </CustomButton>
 
-        <KeyboardAwareFlatList data={scoringSystem} renderItem={renderItem} />
+        <FormProvider {...methods}>
+          <KeyboardAwareFlatList
+            data={scoringSystem}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item.position}
+          />
+        </FormProvider>
+
+        <View style={{ marginTop: 20 }}>
+          <CustomButton variant="primary">Avançar</CustomButton>
+        </View>
       </View>
     </View>
   )
