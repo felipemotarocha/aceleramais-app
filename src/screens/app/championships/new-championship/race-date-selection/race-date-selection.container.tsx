@@ -2,6 +2,7 @@ import 'react-native-get-random-values'
 import React, { FunctionComponent, useCallback, useMemo } from 'react'
 import { View } from 'react-native'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native'
 
 // Screens
 import ChampionshipRaceDateSelection from './race-date-selection.screen'
@@ -9,13 +10,16 @@ import ChampionshipRaceDateSelection from './race-date-selection.screen'
 // Components
 import ChampionshipRaceDateItem from '~components/championship-race-date-item/championship-race-date-item.component'
 
+// Utilities
+import ChampionshipRaceDateSelectionHelper from './race-date-selection.helper'
+import { ChampionshipRaceDatesScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
+
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import {
   updateRaces,
   updateTracks
 } from '~store/championship-creation/championship-creation.slice'
-import ChampionshipRaceDateSelectionHelper from './race-date-selection.helper'
 
 interface ChampionshipRaceDateSelectionContainerProps {}
 
@@ -25,6 +29,8 @@ const ChampionshipRaceDateSelectionContainer: FunctionComponent<
   const { races, tracks } = useAppSelector(
     (state) => state.championshipCreation
   )
+
+  const navigation = useNavigation<ChampionshipRaceDatesScreenNavigationProp>()
 
   const defaultValues = useMemo(() => {
     let _defaultValues: { [raceId: string]: string | undefined } = {}
@@ -68,6 +74,11 @@ const ChampionshipRaceDateSelectionContainer: FunctionComponent<
     [dispatch, races]
   )
 
+  const handleSubmit = useCallback(
+    () => navigation.navigate('Championship Scoring System'),
+    [navigation]
+  )
+
   const renderItem = useCallback(
     ({ item }: { item }) => {
       return (
@@ -96,7 +107,11 @@ const ChampionshipRaceDateSelectionContainer: FunctionComponent<
 
   return (
     <FormProvider {...methods}>
-      <ChampionshipRaceDateSelection races={races} renderItem={renderItem} />
+      <ChampionshipRaceDateSelection
+        races={races}
+        handleSubmit={handleSubmit}
+        renderItem={renderItem}
+      />
     </FormProvider>
   )
 }

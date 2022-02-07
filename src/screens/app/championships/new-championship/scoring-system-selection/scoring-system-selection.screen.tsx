@@ -1,10 +1,5 @@
-import React, { FunctionComponent } from 'react'
-import {
-  Controller,
-  FormProvider,
-  useForm,
-  useFormContext
-} from 'react-hook-form'
+import React, { FunctionComponent, useMemo } from 'react'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { View, StyleSheet, ListRenderItem, Platform } from 'react-native'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
@@ -33,25 +28,44 @@ const styles = StyleSheet.create({
 
 interface ChampionshipScoringSystemSelectionScreenProps {
   scoringSystem: _ScoringSystem[]
-  handleAddPress: (data: { points: string }) => void
+  handleAddPress: (data: { points: string }, resetForm: any) => void
   renderItem: ListRenderItem<_ScoringSystem> | null | undefined
+  handleSubmit: (data: { [position: string]: string }) => void
 }
 
 const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
   ChampionshipScoringSystemSelectionScreenProps
-> = ({ scoringSystem, handleAddPress, renderItem }) => {
+> = ({ scoringSystem, handleAddPress, renderItem, handleSubmit }) => {
   const {
     control,
     formState: { errors },
-    handleSubmit
-  } = useFormContext<{ points: string }>()
+    reset,
 
-  const methods = useForm()
+    handleSubmit: _handleAddPress
+  } = useForm<{ points: string }>()
+
+  const defaultValues = useMemo(() => {
+    let _defaultValues: { [key: string]: string } = {}
+
+    for (const item of scoringSystem) {
+      _defaultValues = {
+        ..._defaultValues,
+        [item.position]: item.points
+      }
+    }
+
+    return _defaultValues
+  }, [scoringSystem])
+
+  const methods = useForm({ defaultValues })
 
   return (
     <View style={styles.container}>
       <Header showBack>Sistema de Pontuação</Header>
       <View style={styles.content}>
+        <TextMedium style={{ marginBottom: 10, fontSize: 12 }}>
+          Coloque apenas as posições que pontuam.
+        </TextMedium>
         <Controller
           rules={{ required: true }}
           control={control}
@@ -64,7 +78,9 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
               value={value}
               hasError={!!errors?.points}
               keyboardType="numeric"
-              onSubmitEditing={handleSubmit(handleAddPress)}
+              onSubmitEditing={_handleAddPress((data) => {
+                handleAddPress(data, reset)
+              })}
               blurOnSubmit={false}
               returnKeyType="done"
             />
@@ -85,7 +101,9 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
         <CustomButton
           variant="outlined"
           style={{ marginVertical: 20 }}
-          onPress={handleSubmit(handleAddPress)}>
+          onPress={_handleAddPress((data) => {
+            handleAddPress(data, reset)
+          })}>
           Adicionar
         </CustomButton>
 
@@ -99,11 +117,15 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
             keyExtractor={(item) => item.position}
             enableAutomaticScroll={Platform.OS === 'ios'}
           />
-        </FormProvider>
 
-        <View style={{ marginTop: 20 }}>
-          <CustomButton variant="primary">Avançar</CustomButton>
-        </View>
+          <View style={{ marginTop: 20 }}>
+            <CustomButton
+              variant="primary"
+              onPress={methods.handleSubmit(handleSubmit)}>
+              Avançar
+            </CustomButton>
+          </View>
+        </FormProvider>
       </View>
     </View>
   )

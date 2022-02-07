@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 
 interface ChampionshipRaceDateSelectionScreenProps {
   races: { startDate?: string; track: Track; isCompleted: boolean }[]
+  handleSubmit: () => void
   renderItem:
     | ListRenderItem<{
         startDate?: string | undefined
@@ -31,8 +32,8 @@ interface ChampionshipRaceDateSelectionScreenProps {
 
 const ChampionshipRaceDateSelectionScreen: FunctionComponent<
   ChampionshipRaceDateSelectionScreenProps
-> = ({ races, renderItem }) => {
-  const { handleSubmit } = useFormContext()
+> = ({ races, handleSubmit, renderItem }) => {
+  const { handleSubmit: _handleSubmit } = useFormContext()
 
   return (
     <View style={styles.container}>
@@ -45,9 +46,7 @@ const ChampionshipRaceDateSelectionScreen: FunctionComponent<
       />
 
       <View style={{ paddingHorizontal: 20, paddingBottom: 20, marginTop: 10 }}>
-        <CustomButton
-          variant="primary"
-          onPress={handleSubmit((data) => console.log({ data }))}>
+        <CustomButton variant="primary" onPress={_handleSubmit(handleSubmit)}>
           Avançar
         </CustomButton>
       </View>

@@ -1,11 +1,18 @@
 import React, { FunctionComponent } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import {
+  Controller,
+  FieldValues,
+  useFormContext,
+  UseFormResetField
+} from 'react-hook-form'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 // Components
 import CustomInput from '~components/common/custom-input/custom-input.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+
+// Utilities
 import Colors from '~constants/colors.constants'
 
 const styles = StyleSheet.create({
@@ -42,25 +49,26 @@ const styles = StyleSheet.create({
 interface ChampionshipPositionScoreItemProps {
   position: number
   points: number
-  handleRemovePress: (position: number) => void
+  handleRemovePress: (
+    position: number,
+    resetField: UseFormResetField<FieldValues>
+  ) => void
 }
 
 const ChampionshipPositionScoreItem: FunctionComponent<
   ChampionshipPositionScoreItemProps
 > = ({ position, points, handleRemovePress }) => {
-  const {
-    control,
-    formState: { errors }
-  } = useFormContext()
+  const { control, formState, resetField } = useFormContext()
 
   return (
     <View style={styles.container}>
-      <View style={[styles.position, errors?.[position] && styles.error]}>
+      <View
+        style={[styles.position, formState.errors?.[position] && styles.error]}>
         <TextSemiBold
           numberOfLines={1}
           style={[
             { fontSize: 12, flex: 1, textAlignVertical: 'center' },
-            errors?.[position] && styles.error
+            formState.errors?.[position] && styles.errorText
           ]}>
           {position}º Lugar
         </TextSemiBold>
@@ -68,6 +76,7 @@ const ChampionshipPositionScoreItem: FunctionComponent<
 
       <View style={styles.input}>
         <Controller
+          defaultValue={points.toString()}
           control={control}
           rules={{ required: true }}
           name={position.toString()}
@@ -79,7 +88,7 @@ const ChampionshipPositionScoreItem: FunctionComponent<
               onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
               onBlur={onBlur}
               value={value}
-              hasError={!!errors?.[position]}
+              hasError={!!formState.errors?.[position]}
             />
           )}
         />
@@ -87,12 +96,14 @@ const ChampionshipPositionScoreItem: FunctionComponent<
 
       <Pressable
         style={styles.remove}
-        onPress={() => handleRemovePress(position)}
+        onPress={() => handleRemovePress(position, resetField)}
         accessibilityLabel={`Remove ${position}`}>
         <AntDesign
           name="close"
           size={24}
-          color={errors?.[position] ? Colors.error : Colors.textSecondary}
+          color={
+            formState.errors?.[position] ? Colors.error : Colors.textSecondary
+          }
         />
       </Pressable>
     </View>

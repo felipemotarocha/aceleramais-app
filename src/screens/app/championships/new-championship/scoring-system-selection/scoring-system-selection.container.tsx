@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
 import { View } from 'react-native'
+import { FieldValues, UseFormResetField } from 'react-hook-form'
 
 // Screen
 import ChampionshipScoringSystemSelectionScreen from './scoring-system-selection.screen'
@@ -24,12 +24,10 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
     (state) => state.championshipCreation
   )
 
-  const methods = useForm<{ points: string }>()
-
   const dispatch = useAppDispatch()
 
   const handleAddPress = useCallback(
-    async (data: { points: string }) => {
+    async (data: { points: string }, resetForm: any) => {
       const newPosition = scoringSystem.length + 1
 
       const newScoringSystem = [
@@ -39,13 +37,13 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
 
       await dispatch(updateScoringSystem(newScoringSystem))
 
-      methods.reset()
+      resetForm()
     },
-    [dispatch, scoringSystem, methods]
+    [dispatch, scoringSystem]
   )
 
   const handleRemovePress = useCallback(
-    async (position: number) => {
+    async (position: number, resetField: UseFormResetField<FieldValues>) => {
       const newScoringSystem: _ScoringSystem[] = scoringSystem.reduce(
         (acc, current) => {
           if (current.position < position) {
@@ -69,9 +67,10 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
         [] as _ScoringSystem[]
       )
 
+      resetField(position.toString())
       await dispatch(updateScoringSystem(newScoringSystem))
     },
-    [scoringSystem]
+    [dispatch, scoringSystem]
   )
 
   const renderItem = useCallback(
@@ -83,17 +82,20 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
         />
       </View>
     ),
-    [scoringSystem, handleRemovePress]
+    [handleRemovePress]
   )
 
+  const handleSubmit = useCallback((data: { [position: string]: string }) => {
+    console.log({ data })
+  }, [])
+
   return (
-    <FormProvider {...methods}>
-      <ChampionshipScoringSystemSelectionScreen
-        scoringSystem={scoringSystem}
-        handleAddPress={handleAddPress}
-        renderItem={renderItem}
-      />
-    </FormProvider>
+    <ChampionshipScoringSystemSelectionScreen
+      scoringSystem={scoringSystem}
+      handleAddPress={handleAddPress}
+      renderItem={renderItem}
+      handleSubmit={handleSubmit}
+    />
   )
 }
 
