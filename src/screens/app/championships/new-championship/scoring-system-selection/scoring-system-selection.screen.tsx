@@ -5,7 +5,7 @@ import {
   useForm,
   useFormContext
 } from 'react-hook-form'
-import { View, StyleSheet, ListRenderItem } from 'react-native'
+import { View, StyleSheet, ListRenderItem, Platform } from 'react-native'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
 // Components
@@ -66,6 +66,7 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
               keyboardType="numeric"
               onSubmitEditing={handleSubmit(handleAddPress)}
               blurOnSubmit={false}
+              returnKeyType="done"
             />
           )}
         />
@@ -90,10 +91,13 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
 
         <FormProvider {...methods}>
           <KeyboardAwareFlatList
+            enableOnAndroid={true}
             data={scoringSystem}
             renderItem={renderItem}
+            removeClippedSubviews={false}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.position}
+            enableAutomaticScroll={Platform.OS === 'ios'}
           />
         </FormProvider>
 
