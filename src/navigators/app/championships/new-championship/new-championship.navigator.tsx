@@ -20,10 +20,9 @@ const NewChampionshipNavigator: FunctionComponent<
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="Championship Scoring System"
-        component={ChampionshipScoringSystemSelectionScreen}
+        name="Championship Basic Info"
+        component={ChampionshipBasicInfoScreen}
       />
-
       <Stack.Screen
         name="Championship Tracks"
         component={ChampionshipTrackSelectionScreen}
@@ -33,8 +32,8 @@ const NewChampionshipNavigator: FunctionComponent<
         component={ChampionshipRaceDateSelectionScreen}
       />
       <Stack.Screen
-        name="Championship Basic Info"
-        component={ChampionshipBasicInfoScreen}
+        name="Championship Scoring System"
+        component={ChampionshipScoringSystemSelectionScreen}
       />
     </Stack.Navigator>
   )

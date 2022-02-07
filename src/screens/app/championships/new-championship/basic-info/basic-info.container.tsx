@@ -50,7 +50,9 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
   const handleSubmit = useCallback(
     async (data: BasicInfoForm) => {
       if (image) {
-        return await dispatch(updateBasicInfo({ ...data, image }))
+        await dispatch(updateBasicInfo({ ...data, image }))
+
+        return navigation.navigate('Championship Tracks')
       }
 
       await dispatch(updateBasicInfo(data))
