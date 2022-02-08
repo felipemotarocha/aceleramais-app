@@ -15,6 +15,9 @@ import {
   _ScoringSystem
 } from '~store/championship-creation/championship-creation.slice'
 
+// Utilities
+import ChampionshipScoringSystemUtils from './scoring-system-selection.utils'
+
 const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
   const { scoringSystem } = useAppSelector(
     (state) => state.championshipCreation
@@ -49,37 +52,13 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
       setValue: UseFormSetValue<FieldValues>,
       reset: UseFormReset<FieldValues>
     ) => {
-      reset()
-
-      const newScoringSystem: _ScoringSystem[] = scoringSystem.reduce(
-        (acc, current) => {
-          if (current.position < position) {
-            acc.push(current)
-
-            setValue(current.position.toString(), current.points.toString())
-
-            return acc
-          }
-
-          if (current.position === position) {
-            return acc
-          }
-
-          if (current.position > position) {
-            acc.push({ ...current, position: current.position - 1 })
-
-            setValue(
-              (current.position - 1).toString(),
-              current.points.toString()
-            )
-
-            return acc
-          }
-
-          return acc
-        },
-        [] as _ScoringSystem[]
-      )
+      const newScoringSystem =
+        ChampionshipScoringSystemUtils.updateAfterPositionRemoval({
+          scoringSystem,
+          position,
+          setValue,
+          reset
+        })
 
       await dispatch(updateScoringSystem(newScoringSystem))
     },
