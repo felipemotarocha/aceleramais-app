@@ -37,7 +37,8 @@ describe('Championship Scoring System Selection', () => {
       queryAllByLabelText,
       getByPlaceholderText,
       getByLabelText,
-      queryByText
+      queryByText,
+      getByDisplayValue
     } = render(<ChampionshipScoringSystemSelectionContainer />)
 
     const input = getByPlaceholderText(/pontos 1º lugar/i)
@@ -51,10 +52,56 @@ describe('Championship Scoring System Selection', () => {
     await waitFor(async () => {
       getByLabelText(/remove 1/i)
       getByText(/1º lugar/i)
+      getByDisplayValue('25')
+
       getByPlaceholderText(/pontos 2º lugar/i)
     })
 
     expect(queryAllByLabelText(/remove/i)).toHaveLength(1)
     expect(queryByText(/os pontos são obrigatórios/i)).toBeNull()
+  })
+
+  it('should remove the first position', async () => {
+    const {
+      getByText,
+      queryAllByLabelText,
+      getByPlaceholderText,
+      getByLabelText,
+      queryByText,
+      getByDisplayValue,
+      queryByDisplayValue
+    } = render(<ChampionshipScoringSystemSelectionContainer />)
+
+    const addButton = getByText(/adicionar/i)
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 1º lugar/i), '25')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 2º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 2º lugar/i), '20')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '18')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 4º lugar/i))
+
+    fireEvent.press(getByLabelText(/remove 1/i))
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(2)
+
+    getByText(/1º lugar/i)
+    getByDisplayValue('20')
+
+    getByText(/2º lugar/i)
+    getByDisplayValue('18')
+
+    expect(queryByText(/3º lugar/i)).toBeNull()
+    expect(queryByDisplayValue('25')).toBeNull()
   })
 })
