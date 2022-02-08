@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import { View } from 'react-native'
-import { FieldValues, UseFormResetField } from 'react-hook-form'
+import { UseFormReset, FieldValues, UseFormSetValue } from 'react-hook-form'
 
 // Screen
 import ChampionshipScoringSystemSelectionScreen from './scoring-system-selection.screen'
@@ -15,11 +15,7 @@ import {
   _ScoringSystem
 } from '~store/championship-creation/championship-creation.slice'
 
-interface ChampionshipScoringSystemSelectionContainerProps {}
-
-const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
-  ChampionshipScoringSystemSelectionContainerProps
-> = () => {
+const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
   const { scoringSystem } = useAppSelector(
     (state) => state.championshipCreation
   )
@@ -27,7 +23,12 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
   const dispatch = useAppDispatch()
 
   const handleAddPress = useCallback(
-    async (data: { points: string }, resetForm: any) => {
+    async (
+      data: { points: string },
+      resetForm: UseFormReset<{
+        points: string
+      }>
+    ) => {
       const newPosition = scoringSystem.length + 1
 
       const newScoringSystem = [
@@ -43,11 +44,19 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
   )
 
   const handleRemovePress = useCallback(
-    async (position: number, resetField: UseFormResetField<FieldValues>) => {
+    async (
+      position: number,
+      setValue: UseFormSetValue<FieldValues>,
+      reset: UseFormReset<FieldValues>
+    ) => {
+      reset()
+
       const newScoringSystem: _ScoringSystem[] = scoringSystem.reduce(
         (acc, current) => {
           if (current.position < position) {
             acc.push(current)
+
+            setValue(current.position.toString(), current.points.toString())
 
             return acc
           }
@@ -59,6 +68,11 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
           if (current.position > position) {
             acc.push({ ...current, position: current.position - 1 })
 
+            setValue(
+              (current.position - 1).toString(),
+              current.points.toString()
+            )
+
             return acc
           }
 
@@ -67,7 +81,6 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
         [] as _ScoringSystem[]
       )
 
-      resetField(position.toString())
       await dispatch(updateScoringSystem(newScoringSystem))
     },
     [dispatch, scoringSystem]
@@ -82,7 +95,7 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent<
         />
       </View>
     ),
-    [handleRemovePress]
+    [scoringSystem, handleRemovePress, dispatch]
   )
 
   const handleSubmit = useCallback((data: { [position: string]: string }) => {

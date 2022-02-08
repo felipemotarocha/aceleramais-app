@@ -38,9 +38,8 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
 > = ({ scoringSystem, handleAddPress, renderItem, handleSubmit }) => {
   const {
     control,
-    formState: { errors },
+    formState,
     reset,
-
     handleSubmit: _handleAddPress
   } = useForm<{ points: string }>()
 
@@ -50,7 +49,7 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
     for (const item of scoringSystem) {
       _defaultValues = {
         ..._defaultValues,
-        [item.position]: item.points
+        [item.position]: item.points.toString()
       }
     }
 
@@ -70,13 +69,14 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
           rules={{ required: true }}
           control={control}
           name="points"
+          shouldUnregister
           render={({ field: { onChange, onBlur, value } }) => (
             <CustomInput
               placeholder={`Pontos ${scoringSystem.length + 1}º Lugar`}
               onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
               onBlur={onBlur}
               value={value}
-              hasError={!!errors?.points}
+              hasError={!!formState?.errors?.points}
               keyboardType="numeric"
               onSubmitEditing={_handleAddPress((data) => {
                 handleAddPress(data, reset)
@@ -87,7 +87,7 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
           )}
         />
 
-        {errors.points && (
+        {formState?.errors.points && (
           <TextMedium
             style={{
               fontSize: 12,

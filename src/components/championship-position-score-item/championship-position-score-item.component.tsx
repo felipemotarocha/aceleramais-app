@@ -3,7 +3,8 @@ import {
   Controller,
   FieldValues,
   useFormContext,
-  UseFormResetField
+  UseFormReset,
+  UseFormSetValue
 } from 'react-hook-form'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -51,14 +52,15 @@ interface ChampionshipPositionScoreItemProps {
   points: number
   handleRemovePress: (
     position: number,
-    resetField: UseFormResetField<FieldValues>
-  ) => void
+    setValue: UseFormSetValue<FieldValues>,
+    reset: UseFormReset<FieldValues>
+  ) => Promise<void>
 }
 
 const ChampionshipPositionScoreItem: FunctionComponent<
   ChampionshipPositionScoreItemProps
 > = ({ position, points, handleRemovePress }) => {
-  const { control, formState, resetField } = useFormContext()
+  const { control, formState, setValue, reset } = useFormContext()
 
   return (
     <View style={styles.container}>
@@ -80,23 +82,25 @@ const ChampionshipPositionScoreItem: FunctionComponent<
           control={control}
           rules={{ required: true }}
           name={position.toString()}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomInput
-              placeholder="Pontos"
-              defaultValue={points.toString()}
-              keyboardType="numeric"
-              onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
-              onBlur={onBlur}
-              value={value}
-              hasError={!!formState.errors?.[position]}
-            />
-          )}
+          render={({ field: { onChange, onBlur, value } }) => {
+            return (
+              <CustomInput
+                placeholder="Pontos"
+                defaultValue={points.toString()}
+                keyboardType="numeric"
+                onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
+                onBlur={onBlur}
+                value={value}
+                hasError={!!formState.errors?.[position]}
+              />
+            )
+          }}
         />
       </View>
 
       <Pressable
         style={styles.remove}
-        onPress={() => handleRemovePress(position, resetField)}
+        onPress={() => handleRemovePress(position, setValue, reset)}
         accessibilityLabel={`Remove ${position}`}>
         <AntDesign
           name="close"
