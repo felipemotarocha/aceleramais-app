@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Colors from '~constants/colors.constants'
 import { render, fireEvent, waitFor } from '~helpers/test.helpers'
 
 import ChampionshipScoringSystemSelectionContainer from './scoring-system-selection.container'
@@ -29,6 +30,44 @@ describe('Championship Scoring System Selection', () => {
     await waitFor(async () => getByText(/os pontos são obrigatórios/i))
 
     expect(queryByLabelText(/remove/i)).toBeNull()
+  })
+
+  it('should show an error if trying to submit with some position empty', async () => {
+    const {
+      getByText,
+      getByPlaceholderText,
+      getByLabelText,
+      getByDisplayValue,
+      queryByDisplayValue
+    } = render(<ChampionshipScoringSystemSelectionContainer />)
+
+    const input = getByPlaceholderText(/pontos 1º lugar/i)
+
+    fireEvent.changeText(input, '25')
+
+    const addButton = getByText(/adicionar/i)
+
+    fireEvent.press(addButton)
+
+    await waitFor(async () => {
+      getByLabelText(/remove 1/i)
+      getByText(/1º lugar/i)
+      getByDisplayValue('25')
+
+      getByPlaceholderText(/pontos 2º lugar/i)
+    })
+
+    fireEvent.changeText(getByDisplayValue('25'), '')
+
+    await waitFor(async () => expect(queryByDisplayValue('25')).toBeNull())
+
+    const submitButton = getByText(/avançar/i)
+
+    fireEvent.press(submitButton)
+
+    await waitFor(async () =>
+      expect(getByText('1º Lugar')).toHaveStyle({ color: Colors.error })
+    )
   })
 
   it('should add a position score', async () => {
