@@ -121,6 +121,7 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
           <View style={{ marginTop: 20 }}>
             <CustomButton
               variant="primary"
+              disabled={scoringSystem.length === 0}
               onPress={methods.handleSubmit(handleSubmit)}>
               Avançar
             </CustomButton>

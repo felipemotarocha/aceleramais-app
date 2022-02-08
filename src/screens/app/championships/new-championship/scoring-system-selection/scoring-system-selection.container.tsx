@@ -77,9 +77,19 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
     [scoringSystem, handleRemovePress, dispatch]
   )
 
-  const handleSubmit = useCallback((data: { [position: string]: string }) => {
-    console.log({ data })
-  }, [])
+  const handleSubmit = useCallback(
+    (data: { [position: string]: string }) => {
+      const newScoringSystem: _ScoringSystem[] = Object.keys(data).map(
+        (key) => ({
+          position: parseInt(key),
+          points: parseInt(data[key])
+        })
+      )
+
+      dispatch(updateScoringSystem(newScoringSystem))
+    },
+    [dispatch]
+  )
 
   return (
     <ChampionshipScoringSystemSelectionScreen

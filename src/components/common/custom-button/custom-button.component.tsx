@@ -53,12 +53,14 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
           styles.base,
           variantStyles,
           disabled && styles.disabled,
-          pressed && { opacity: 0.75 },
+          pressed && !disabled && { opacity: 0.75 },
           rest.style as any
         ]
       }}
       accessibilityLabel="Press the button">
-      <TextSemiBold style={{ fontSize: 12 }}>{children}</TextSemiBold>
+      <TextSemiBold style={[{ fontSize: 12 }, disabled && { opacity: 0.75 }]}>
+        {children}
+      </TextSemiBold>
     </Pressable>
   )
 }
