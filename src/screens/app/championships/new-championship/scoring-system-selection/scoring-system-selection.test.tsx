@@ -104,4 +104,48 @@ describe('Championship Scoring System Selection', () => {
     expect(queryByText(/3º lugar/i)).toBeNull()
     expect(queryByDisplayValue('25')).toBeNull()
   })
+
+  it('should remove the second (middle) position', async () => {
+    const {
+      getByText,
+      queryAllByLabelText,
+      getByPlaceholderText,
+      getByLabelText,
+      queryByText,
+      getByDisplayValue,
+      queryByDisplayValue
+    } = render(<ChampionshipScoringSystemSelectionContainer />)
+
+    const addButton = getByText(/adicionar/i)
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 1º lugar/i), '25')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 2º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 2º lugar/i), '20')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '18')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 4º lugar/i))
+
+    fireEvent.press(getByLabelText(/remove 2/i))
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(2)
+
+    getByText(/1º lugar/i)
+    getByDisplayValue('25')
+
+    getByText(/2º lugar/i)
+    getByDisplayValue('18')
+
+    expect(queryByText(/3º lugar/i)).toBeNull()
+    expect(queryByDisplayValue('20')).toBeNull()
+  })
 })
