@@ -1,12 +1,15 @@
 import React, { FunctionComponent } from 'react'
-import { Control, Controller, useForm } from 'react-hook-form'
-import { View, StyleSheet, FlatList } from 'react-native'
+import { Control, Controller, useForm, UseFormReset } from 'react-hook-form'
+import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
 
 // Components
 import CustomInput from '~components/common/custom-input/custom-input.component'
 import Header from '~components/common/header/header.component'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+
+// Redux
+import { _Team } from '~store/championship-creation/championship-creation.slice'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -19,7 +22,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20
+    padding: 20,
+    paddingBottom: 0
   },
   inputRow: {
     width: '100%',
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
 })
 
 interface ChampionshipTeamSelectionScreenProps {
+  teams: _Team[]
   renderColorItem: ({
     item,
     control
@@ -53,16 +58,27 @@ interface ChampionshipTeamSelectionScreenProps {
     >
     // eslint-disable-next-line no-undef
   }) => JSX.Element
-  handleAddTeamPress: (data: { teamName: string; teamColor: string }) => void
+  handleAddTeamPress: (
+    data: {
+      teamName: string
+      teamColor: string
+    },
+    reset: UseFormReset<{
+      teamName: string
+      teamColor: string
+    }>
+  ) => void
+  renderTeamItem: ListRenderItem<_Team> | null | undefined
 }
 
 const ChampionshipTeamSelectionScreen: FunctionComponent<
   ChampionshipTeamSelectionScreenProps
-> = ({ renderColorItem, handleAddTeamPress }) => {
+> = ({ teams, renderColorItem, renderTeamItem, handleAddTeamPress }) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     watch
   } = useForm<{ teamName: string; teamColor: string }>({
     defaultValues: {
@@ -92,6 +108,10 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
                 value={value}
                 hasError={!!errors?.teamName}
                 autoCorrect={false}
+                onSubmitEditing={handleSubmit((data) => {
+                  handleAddTeamPress(data, reset)
+                })}
+                blurOnSubmit={false}
               />
             )}
           />
@@ -118,15 +138,22 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
         />
 
         <View style={styles.buttonsRow}>
-          <CustomButton variant="outlined" style={{ flex: 1, marginRight: 15 }}>
-            Personalizar Cor
-          </CustomButton>
           <CustomButton
             variant="outlined"
             style={{ flex: 1 }}
-            onPress={handleSubmit(handleAddTeamPress)}>
+            onPress={handleSubmit((data) => {
+              handleAddTeamPress(data, reset)
+            })}>
             Adicionar
           </CustomButton>
+        </View>
+
+        <View style={{ flex: 1, marginTop: 20 }}>
+          <FlatList
+            data={teams}
+            renderItem={renderTeamItem}
+            showsVerticalScrollIndicator={false}
+          />
         </View>
       </View>
     </View>

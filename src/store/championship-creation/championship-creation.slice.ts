@@ -10,7 +10,7 @@ export type _Race = {
   isCompleted: boolean
 }
 export type _ScoringSystem = { position: number; points: number }
-export type _Team = { name: string; color: string }
+export type _Team = { id: string; name: string; color: string }
 
 export type ChampionshipCreationSliceInitialState = {
   basicInfo:
