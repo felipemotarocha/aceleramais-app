@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import { Control, Controller } from 'react-hook-form'
 import { Pressable, StyleSheet } from 'react-native'
+import { useAppDispatch, useAppSelector } from '~store'
+import { updateTeams } from '~store/championship-creation/championship-creation.slice'
 
 import ChampionshipTeamSelectionScreen from './team-selection.screen'
 
@@ -17,6 +19,10 @@ interface ChampionshipTeamSelectionContainerProps {}
 const ChampionshipTeamSelectionContainer: FunctionComponent<
   ChampionshipTeamSelectionContainerProps
 > = () => {
+  const { teams } = useAppSelector((state) => state.championshipCreation)
+
+  const dispatch = useAppDispatch()
+
   const renderColorItem = useCallback(
     ({
       item,
@@ -46,9 +52,11 @@ const ChampionshipTeamSelectionContainer: FunctionComponent<
 
   const handleAddTeamPress = useCallback(
     (data: { teamName: string; teamColor: string }) => {
-      console.log({ data })
+      dispatch(
+        updateTeams([...teams, { name: data.teamName, color: data.teamColor }])
+      )
     },
-    []
+    [dispatch, teams]
   )
 
   return (

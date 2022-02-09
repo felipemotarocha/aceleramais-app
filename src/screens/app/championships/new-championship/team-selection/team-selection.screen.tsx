@@ -64,7 +64,12 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
     formState: { errors },
     handleSubmit,
     watch
-  } = useForm<{ teamName: string; teamColor: string }>()
+  } = useForm<{ teamName: string; teamColor: string }>({
+    defaultValues: {
+      teamName: '',
+      teamColor: Colors.text
+    }
+  })
 
   const watchColor = watch('teamColor')
 
