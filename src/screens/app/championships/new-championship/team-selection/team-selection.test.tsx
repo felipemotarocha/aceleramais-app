@@ -65,4 +65,20 @@ describe('Championship Team Selection', () => {
 
     expect(queryAllByLabelText(/remove/i)).toHaveLength(1)
   })
+
+  it('should show "advance" button when more than one Team is added', async () => {
+    const { getByText, getByPlaceholderText, getByLabelText } = render(
+      <ChampionshipTeamSelectionContainer />
+    )
+
+    fireEvent.changeText(getByPlaceholderText(/nome/i), 'Mercedes')
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(() => {
+      getByText(/mercedes/i)
+      getByLabelText(/remove mercedes/i)
+      getByText(/avançar/i)
+    })
+  })
 })
