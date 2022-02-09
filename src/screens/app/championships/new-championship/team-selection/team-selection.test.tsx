@@ -12,6 +12,7 @@ describe('Championship Team Selection', () => {
     getByText(/selecionar times/i)
     getByText(/adicionar/i)
     getByPlaceholderText(/nome/i)
+    getByText(/pular/i)
   })
 
   it('should show an error if trying to add a Team without providing a name', async () => {
@@ -35,5 +36,33 @@ describe('Championship Team Selection', () => {
       getByText(/mercedes/i)
       getByLabelText(/remove mercedes/i)
     })
+  })
+
+  it('should delete a Team', async () => {
+    const {
+      getByText,
+      getByPlaceholderText,
+      getByLabelText,
+      queryByText,
+      queryAllByLabelText
+    } = render(<ChampionshipTeamSelectionContainer />)
+
+    fireEvent.changeText(getByPlaceholderText(/nome/i), 'Mercedes')
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(() => getByPlaceholderText(/nome/i))
+
+    fireEvent.changeText(getByPlaceholderText(/nome/i), 'Ferrari')
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(() => getByPlaceholderText(/nome/i))
+
+    fireEvent.press(getByLabelText(/remove ferrari/i))
+
+    await waitFor(async () => expect(queryByText(/ferrari/i)).toBeNull())
+
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(1)
   })
 })
