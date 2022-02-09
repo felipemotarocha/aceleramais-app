@@ -6,6 +6,7 @@ import ChampionshipBasicInfoScreen from '~screens/app/championships/new-champion
 import ChampionshipTrackSelectionScreen from '~screens/app/championships/new-championship/track-selection/track-selection.container'
 import ChampionshipRaceDateSelectionScreen from '~screens/app/championships/new-championship/race-date-selection/race-date-selection.container'
 import ChampionshipScoringSystemSelectionScreen from '~screens/app/championships/new-championship/scoring-system-selection/scoring-system-selection.container'
+import ChampionshipTeamSelectionScreen from '~screens/app/championships/new-championship/team-selection/team-selection.container'
 
 // Utilities
 import { NewChampionshipStackParamList } from './new-championship.types'
@@ -20,6 +21,14 @@ const NewChampionshipNavigator: FunctionComponent<
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
+        name="Championship Teams"
+        component={ChampionshipTeamSelectionScreen}
+      />
+      <Stack.Screen
+        name="Championship Scoring System"
+        component={ChampionshipScoringSystemSelectionScreen}
+      />
+      <Stack.Screen
         name="Championship Basic Info"
         component={ChampionshipBasicInfoScreen}
       />
@@ -30,10 +39,6 @@ const NewChampionshipNavigator: FunctionComponent<
       <Stack.Screen
         name="Championship Race Dates"
         component={ChampionshipRaceDateSelectionScreen}
-      />
-      <Stack.Screen
-        name="Championship Scoring System"
-        component={ChampionshipScoringSystemSelectionScreen}
       />
     </Stack.Navigator>
   )
