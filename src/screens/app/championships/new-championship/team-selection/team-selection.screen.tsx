@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Control, Controller, useForm, UseFormReset } from 'react-hook-form'
 import { View, StyleSheet, FlatList, ListRenderItem } from 'react-native'
+import { isEmpty } from 'lodash'
 
 // Components
 import CustomInput from '~components/common/custom-input/custom-input.component'
@@ -154,6 +155,18 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
             renderItem={renderTeamItem}
             showsVerticalScrollIndicator={false}
           />
+        </View>
+
+        <View style={{ marginVertical: 20 }}>
+          {isEmpty(teams) ? (
+            <CustomButton variant="outlined" onPress={() => {}}>
+              Pular
+            </CustomButton>
+          ) : (
+            <CustomButton variant="primary" onPress={() => {}}>
+              Avançar
+            </CustomButton>
+          )}
         </View>
       </View>
     </View>
