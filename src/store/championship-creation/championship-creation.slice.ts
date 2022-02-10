@@ -11,6 +11,12 @@ export type _Race = {
 }
 export type _ScoringSystem = { position: number; points: number }
 export type _Team = { id: string; name: string; color: string }
+export type _Driver = {
+  fullName?: string
+  userName?: string
+  team?: _Team
+  isRegistered: boolean
+}
 
 export type ChampionshipCreationSliceInitialState = {
   basicInfo:
@@ -28,6 +34,7 @@ export type ChampionshipCreationSliceInitialState = {
   races: _Race[]
   scoringSystem: _ScoringSystem[]
   teams: _Team[]
+  drivers: _Driver[]
 }
 
 const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
@@ -36,7 +43,8 @@ const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
     tracks: [],
     races: [],
     scoringSystem: [],
-    teams: []
+    teams: [],
+    drivers: []
   }
 
 const championshipSlice = createSlice({
@@ -74,6 +82,9 @@ const championshipSlice = createSlice({
     updateTeams: (state, action: PayloadAction<_Team[]>) => {
       state.teams = action.payload
     },
+    updateDrivers: (state, action: PayloadAction<_Driver[]>) => {
+      state.drivers = action.payload
+    },
     clear: (state) => {
       state.basicInfo = undefined
       state.tracks = []
@@ -89,6 +100,7 @@ export const {
   updateRaces,
   updateScoringSystem,
   updateTeams,
+  updateDrivers,
   clear
 } = championshipSlice.actions
 
