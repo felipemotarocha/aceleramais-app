@@ -24,11 +24,6 @@ export type ChampionshipTeamsScreenNavigationProp = NativeStackNavigationProp<
   NewChampionshipStackParamList,
   'Championship Teams'
 >
-
-export type ChampionshipRaceDatesScreenRouteProp = RouteProp<
-  NewChampionshipStackParamList,
-  'Championship Race Dates'
->
 export type ChampionshipRaceDatesScreenNavigationProp =
   NativeStackNavigationProp<
     NewChampionshipStackParamList,
@@ -37,4 +32,13 @@ export type ChampionshipRaceDatesScreenNavigationProp =
 export type ChampionshiTeamsScreenNavigationProp = NativeStackNavigationProp<
   NewChampionshipStackParamList,
   'Championship Teams'
+>
+export type ChampionshipDriversScreenNavigationProp = NativeStackNavigationProp<
+  NewChampionshipStackParamList,
+  'Championship Drivers'
+>
+
+export type ChampionshipRaceDatesScreenRouteProp = RouteProp<
+  NewChampionshipStackParamList,
+  'Championship Race Dates'
 >
