@@ -22,13 +22,14 @@ const NewChampionshipNavigator: FunctionComponent<
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        component={ChampionshipDriverSelectionScreen}
-        name="Championship Drivers"
-      />
-      <Stack.Screen
         name="Championship Teams"
         component={ChampionshipTeamSelectionScreen}
       />
+      <Stack.Screen
+        component={ChampionshipDriverSelectionScreen}
+        name="Championship Drivers"
+      />
+
       <Stack.Screen
         name="Championship Scoring System"
         component={ChampionshipScoringSystemSelectionScreen}

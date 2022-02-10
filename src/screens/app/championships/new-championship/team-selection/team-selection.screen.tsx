@@ -70,15 +70,22 @@ interface ChampionshipTeamSelectionScreenProps {
     }>
   ) => void
   renderTeamItem: ListRenderItem<_Team> | null | undefined
+  handleSubmit: () => void
 }
 
 const ChampionshipTeamSelectionScreen: FunctionComponent<
   ChampionshipTeamSelectionScreenProps
-> = ({ teams, renderColorItem, renderTeamItem, handleAddTeamPress }) => {
+> = ({
+  teams,
+  renderColorItem,
+  renderTeamItem,
+  handleAddTeamPress,
+  handleSubmit
+}) => {
   const {
     control,
     formState: { errors },
-    handleSubmit,
+    handleSubmit: _handleSubmit,
     reset,
     watch
   } = useForm<{ teamName: string; teamColor: string }>({
@@ -109,7 +116,7 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
                 value={value}
                 hasError={!!errors?.teamName}
                 autoCorrect={false}
-                onSubmitEditing={handleSubmit((data) => {
+                onSubmitEditing={_handleSubmit((data) => {
                   handleAddTeamPress(data, reset)
                 })}
                 blurOnSubmit={false}
@@ -142,7 +149,7 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
           <CustomButton
             variant="outlined"
             style={{ flex: 1 }}
-            onPress={handleSubmit((data) => {
+            onPress={_handleSubmit((data) => {
               handleAddTeamPress(data, reset)
             })}>
             Adicionar
@@ -159,11 +166,11 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
 
         <View style={{ marginVertical: 20 }}>
           {isEmpty(teams) ? (
-            <CustomButton variant="outlined" onPress={() => {}}>
+            <CustomButton variant="outlined" onPress={handleSubmit}>
               Pular
             </CustomButton>
           ) : (
-            <CustomButton variant="primary" onPress={() => {}}>
+            <CustomButton variant="primary" onPress={handleSubmit}>
               Avançar
             </CustomButton>
           )}

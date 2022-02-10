@@ -2,12 +2,16 @@ import React, { FunctionComponent, useCallback } from 'react'
 import { Control, Controller, UseFormReset } from 'react-hook-form'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import ChampionshipTeamItem from '~components/championship-team-item/championship-team-item.component'
 
 // Screens
 import ChampionshipTeamSelectionScreen from './team-selection.screen'
+
+// Utilities
+import { ChampionshiTeamsScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -32,6 +36,8 @@ const ChampionshipTeamSelectionContainer: FunctionComponent<
   const { teams } = useAppSelector((state) => state.championshipCreation)
 
   const dispatch = useAppDispatch()
+
+  const navigation = useNavigation<ChampionshiTeamsScreenNavigationProp>()
 
   const renderColorItem = useCallback(
     ({
@@ -102,12 +108,18 @@ const ChampionshipTeamSelectionContainer: FunctionComponent<
     [teams]
   )
 
+  const handleSubmit = useCallback(
+    () => navigation.navigate('Championship Drivers'),
+    [navigation]
+  )
+
   return (
     <ChampionshipTeamSelectionScreen
       teams={teams}
       renderColorItem={renderColorItem}
       handleAddTeamPress={handleAddTeamPress}
       renderTeamItem={renderTeamItem}
+      handleSubmit={handleSubmit}
     />
   )
 }

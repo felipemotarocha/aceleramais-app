@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React, { FunctionComponent, useState } from 'react'
+import { View, StyleSheet, Pressable } from 'react-native'
 import CheckBox from 'expo-checkbox'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 // Components
 import CustomInput from '~components/common/custom-input/custom-input.component'
@@ -9,10 +9,14 @@ import Header from '~components/common/header/header.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import DismissKeyboard from '~components/common/dismiss-keyboard/dismiss-keyboard.component'
+import ChampionshipTeamsModal from '~components/championship-teams-modal/championship-teams-modal.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
 import UserHelpers from '~helpers/user.helpers'
+import { _Team } from '~store/championship-creation/championship-creation.slice'
+import { DriverSelectionForm } from './driver-selection.container'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,23 +29,26 @@ const styles = StyleSheet.create({
   }
 })
 
-interface ChampionshipDriverSelectionScreenProps {}
+interface ChampionshipDriverSelectionScreenProps {
+  teams: _Team[]
+  teamInputIsToBeShown: boolean
+  handleTeamChange: (team: _Team) => void
+  handleAddPress: (data: DriverSelectionForm) => void
+}
 
 const ChampionshipDriverSelectionScreen: FunctionComponent<
   ChampionshipDriverSelectionScreenProps
-> = () => {
+> = ({ teams, teamInputIsToBeShown, handleTeamChange, handleAddPress }) => {
   const {
     control,
     formState: { errors },
+    handleSubmit: _handleSubmit,
     watch
-  } = useForm<{
-    userName?: string
-    fullName?: string
-    team?: string
-    isRegistered: boolean
-  }>({ defaultValues: { isRegistered: false }, mode: 'onChange' })
+  } = useFormContext()
 
   const watchIsRegistered = watch('isRegistered')
+
+  const [teamsModalIsVisible, setTeamsModalIsVisible] = useState(false)
 
   return (
     <View style={styles.container}>
@@ -75,6 +82,7 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
             <Controller
               name="fullName"
               control={control}
+              rules={{ required: true }}
               shouldUnregister
               render={({ field: { onChange, value, onBlur } }) => (
                 <CustomInput
@@ -101,11 +109,31 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
             </TextMedium>
           )}
 
-          <CustomInput
-            placeholder="Time"
-            editable={false}
-            style={{ marginTop: 15 }}
-          />
+          {errors.fullName?.type === 'required' && (
+            <TextMedium
+              style={{ fontSize: 12, color: Colors.error, marginTop: 5 }}>
+              O nome e sobrenome são obrigatórios.
+            </TextMedium>
+          )}
+
+          {teamInputIsToBeShown && (
+            <Pressable onPress={() => setTeamsModalIsVisible(true)}>
+              <Controller
+                control={control}
+                name="team"
+                shouldUnregister
+                render={({ field: { value } }) => (
+                  <CustomInput
+                    pointerEvents="none"
+                    placeholder="Time"
+                    editable={false}
+                    style={{ marginTop: 15 }}
+                    value={value?.name}
+                  />
+                )}
+              />
+            </Pressable>
+          )}
 
           <Controller
             control={control}
@@ -130,8 +158,21 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
               </View>
             )}
           />
+
+          <CustomButton
+            variant="outlined"
+            style={{ marginTop: 15 }}
+            onPress={_handleSubmit(handleAddPress as any)}>
+            Adicionar
+          </CustomButton>
         </View>
       </DismissKeyboard>
+      <ChampionshipTeamsModal
+        teams={teams}
+        isVisible={teamsModalIsVisible}
+        setIsVisible={setTeamsModalIsVisible}
+        handleTeamChange={handleTeamChange}
+      />
     </View>
   )
 }

@@ -34,7 +34,6 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
         borderTopRightRadius: 20
       }}
       hasBackdrop={false}
-      swipeDirection="down"
       onSwipeComplete={() => setIsVisible(false)}
       backdropOpacity={0.3}
       onBackdropPress={() => setIsVisible(false)}
