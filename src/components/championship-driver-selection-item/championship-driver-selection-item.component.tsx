@@ -59,7 +59,9 @@ const ChampionshipDriverSelectionItem: FunctionComponent<
           <Pressable
             style={styles.remove}
             onPress={() => handleRemovePress(driver)}
-            accessibilityLabel={`Remove ${driver.userName}`}>
+            accessibilityLabel={`Remove ${
+              driver?.userName || driver.firstName
+            }`}>
             <AntDesign name="close" size={24} color={Colors.textSecondary} />
           </Pressable>
         </View>
