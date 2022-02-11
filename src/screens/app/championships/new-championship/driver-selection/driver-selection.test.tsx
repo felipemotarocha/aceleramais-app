@@ -102,7 +102,7 @@ describe('Championship Driver Selection', () => {
     await waitFor(async () => getByDisplayValue(/ferrari/i))
   })
 
-  it('should add a Driver with a Team', async () => {
+  it('should add a Driver with a Team (not registered)', async () => {
     const {
       getByText,
       getByPlaceholderText,
@@ -121,6 +121,24 @@ describe('Championship Driver Selection', () => {
     fireEvent.press(getByText(/ferrari/i))
 
     await waitFor(async () => getByDisplayValue(/ferrari/i))
+
+    fireEvent.changeText(
+      getByPlaceholderText(/nome e sobrenome/i),
+      'Felipe Rocha'
+    )
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(async () => getByLabelText(/remove felipe/i))
+  })
+
+  it('should add a Driver without a Team (not registered)', async () => {
+    const { getByText, getByPlaceholderText, getByLabelText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      {
+        preloadedState: initialState
+      }
+    )
 
     fireEvent.changeText(
       getByPlaceholderText(/nome e sobrenome/i),
