@@ -1,14 +1,22 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
+// Components
+import ChampionshipDriverSelectionItem from '~components/championship-driver-selection-item/championship-driver-selection-item.component'
+
 // Screens
 import ChampionshipDriverSelectionScreen from './driver-selection.screen'
 
 // Redux
-import { useAppSelector } from '~store'
+import { useAppDispatch, useAppSelector } from '~store'
 
 // Utilities
-import { _Team } from '~store/championship-creation/championship-creation.slice'
+import {
+  updateDrivers,
+  _Driver,
+  _Team
+} from '~store/championship-creation/championship-creation.slice'
+import ChampionshipDriverSelectionUtils from './driver-selection.utils'
 
 export type DriverSelectionForm = {
   userName?: string
@@ -17,16 +25,15 @@ export type DriverSelectionForm = {
   isRegistered: boolean
 }
 
-interface ChampionshipDriverSelectionContainerProps {}
-
-const ChampionshipDriverSelectionContainer: FunctionComponent<
-  ChampionshipDriverSelectionContainerProps
-> = () => {
+const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
   const methods = useForm<DriverSelectionForm>({
     defaultValues: { isRegistered: false }
   })
 
-  const { teams } = useAppSelector((state) => state.championshipCreation)
+  const { teams, drivers } = useAppSelector(
+    (state) => state.championshipCreation
+  )
+  const dispatch = useAppDispatch()
 
   const teamInputIsToBeShown = teams.length > 0
 
@@ -44,17 +51,49 @@ const ChampionshipDriverSelectionContainer: FunctionComponent<
     [methods]
   )
 
-  const handleAddPress = useCallback((data: DriverSelectionForm) => {
-    console.log({ data })
-  }, [])
+  const handleAddPress = useCallback(
+    async (data: DriverSelectionForm) => {
+      const newDrivers =
+        await ChampionshipDriverSelectionUtils.generateNewDriversAfterAddition({
+          data,
+          drivers
+        })
+
+      dispatch(updateDrivers(newDrivers))
+
+      methods.reset()
+    },
+    [dispatch, drivers, methods]
+  )
+
+  const handleRemovePress = useCallback(
+    (driver) => {
+      const newDrivers = drivers.filter((_driver) => _driver.id !== driver.id)
+
+      dispatch(updateDrivers(newDrivers))
+    },
+    [dispatch, drivers]
+  )
+
+  const renderItem = useCallback(
+    ({ item }: { item: _Driver }) => (
+      <ChampionshipDriverSelectionItem
+        driver={item}
+        handleRemovePress={handleRemovePress}
+      />
+    ),
+    [dispatch, handleRemovePress]
+  )
 
   return (
     <FormProvider {...methods}>
       <ChampionshipDriverSelectionScreen
         teams={teams}
+        drivers={drivers}
         teamInputIsToBeShown={teamInputIsToBeShown}
         handleTeamChange={handleTeamChange}
         handleAddPress={handleAddPress}
+        renderDriverItem={renderItem}
       />
     </FormProvider>
   )

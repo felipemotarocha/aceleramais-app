@@ -1,14 +1,12 @@
 import React, { FunctionComponent } from 'react'
-
 import { StyleSheet, View, Image } from 'react-native'
-import User from '~types/user.types'
 
 interface DriverItemProps {
-  driver: User
+  profileImageUrl?: string
 }
 
 const DriverItem: FunctionComponent<DriverItemProps> = ({
-  driver,
+  profileImageUrl,
   children
 }) => {
   return (
@@ -18,7 +16,7 @@ const DriverItem: FunctionComponent<DriverItemProps> = ({
           style={{ flex: 1, borderRadius: 45 }}
           source={{
             uri:
-              driver?.profileImageUrl ||
+              profileImageUrl ||
               'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
           }}
         />
@@ -31,7 +29,8 @@ const DriverItem: FunctionComponent<DriverItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
   },
   imageContainer: {
     elevation: 3,

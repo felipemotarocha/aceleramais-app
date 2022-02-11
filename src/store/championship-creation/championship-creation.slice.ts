@@ -12,10 +12,13 @@ export type _Race = {
 export type _ScoringSystem = { position: number; points: number }
 export type _Team = { id: string; name: string; color: string }
 export type _Driver = {
-  fullName?: string
+  id: string
+  firstName?: string
+  lastName?: string
   userName?: string
   team?: _Team
   isRegistered: boolean
+  profileImageUrl?: string
 }
 
 export type ChampionshipCreationSliceInitialState = {
