@@ -149,4 +149,28 @@ describe('Championship Driver Selection', () => {
 
     await waitFor(async () => getByLabelText(/remove felipe/i))
   })
+
+  it('should remove a Driver', async () => {
+    const {
+      getByText,
+      getByPlaceholderText,
+      getByLabelText,
+      queryByLabelText
+    } = render(<ChampionshipDriverSelectionContainer />, {
+      preloadedState: initialState
+    })
+
+    fireEvent.changeText(
+      getByPlaceholderText(/nome e sobrenome/i),
+      'Felipe Rocha'
+    )
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(async () => getByLabelText(/remove felipe/i))
+
+    fireEvent.press(getByLabelText(/remove felipe/i))
+
+    expect(queryByLabelText(/remove felipe/i)).toBeNull()
+  })
 })
