@@ -116,10 +116,6 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
                 value={value}
                 hasError={!!errors?.teamName}
                 autoCorrect={false}
-                onSubmitEditing={_handleSubmit((data) => {
-                  handleAddTeamPress(data, reset)
-                })}
-                blurOnSubmit={false}
               />
             )}
           />
