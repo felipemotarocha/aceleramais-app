@@ -12,7 +12,8 @@
     "test": "jest --passWithNoTests --runInBand --silent",
     "test:watch": "yarn test --watch",
     "test:staged": "yarn test",
-    "test:ci": "yarn test --coverage"
+    "test:ci": "yarn test --coverage",
+    "test:verbose": "jest --passWithNoTests --runInBand --watch"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",

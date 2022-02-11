@@ -2,8 +2,9 @@ import * as React from 'react'
 
 import ChampionshipDriverSelectionContainer from './driver-selection.container'
 
-import { render, waitFor, fireEvent } from '~helpers/test.helpers'
+import { render, waitFor, fireEvent, cleanup } from '~helpers/test.helpers'
 import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
+import mockAxios from 'jest-mock-axios'
 
 describe('Championship Driver Selection', () => {
   const initialState: {
@@ -25,6 +26,11 @@ describe('Championship Driver Selection', () => {
       scoringSystem: []
     }
   }
+
+  afterEach(() => {
+    mockAxios.reset()
+    cleanup()
+  })
 
   it('should render the initial screen (no teams selected)', async () => {
     const { getByText, getByPlaceholderText, queryByPlaceholderText } = render(
@@ -172,5 +178,44 @@ describe('Championship Driver Selection', () => {
     fireEvent.press(getByLabelText(/remove felipe/i))
 
     expect(queryByLabelText(/remove felipe/i)).toBeNull()
+  })
+
+  it('should show an error when trying to add a Driver that was already added', async () => {
+    const {
+      getByPlaceholderText,
+      getByLabelText,
+      getByText,
+      getByDisplayValue,
+      queryAllByLabelText
+    } = render(<ChampionshipDriverSelectionContainer />, {
+      preloadedState: {
+        championshipCreation: {
+          ...initialState,
+          drivers: [
+            {
+              id: '1',
+              userName: 'valid_user_name',
+              isRegistered: true
+            }
+          ],
+          teams: []
+        }
+      }
+    })
+
+    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+
+    await waitFor(async () => getByPlaceholderText(/nome de usuário/i))
+
+    fireEvent.changeText(
+      getByPlaceholderText(/nome de usuário/i),
+      'valid_user_name'
+    )
+
+    await waitFor(async () => getByDisplayValue(/valid_user_name/i))
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(1)
   })
 })
