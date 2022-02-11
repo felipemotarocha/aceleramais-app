@@ -84,4 +84,21 @@ describe('Championship Driver Selection', () => {
 
     await waitFor(async () => getByText(/nome de usuário é obrigatório/i))
   })
+
+  it('should add a team to a driver', async () => {
+    const { getByText, getByPlaceholderText, getByDisplayValue } = render(
+      <ChampionshipDriverSelectionContainer />,
+      { preloadedState: initialState }
+    )
+
+    await waitFor(async () => getByPlaceholderText('Time'))
+
+    fireEvent.press(getByPlaceholderText('Time'))
+
+    await waitFor(async () => getByText(/ferrari/i))
+
+    fireEvent.press(getByText(/ferrari/i))
+
+    await waitFor(async () => getByDisplayValue(/ferrari/i))
+  })
 })
