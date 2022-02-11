@@ -64,4 +64,24 @@ describe('Championship Driver Selection', () => {
 
     await waitFor(async () => getByPlaceholderText('Nome de usuário'))
   })
+
+  it('should show an error if trying to add a driver without providing a name', async () => {
+    const { getByText } = render(<ChampionshipDriverSelectionContainer />)
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(async () => getByText(/o nome e sobrenome são obrigatórios/i))
+  })
+
+  it('should show an error if trying to add a driver without providing an user name', async () => {
+    const { getByText, getByLabelText } = render(
+      <ChampionshipDriverSelectionContainer />
+    )
+
+    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+
+    fireEvent.press(getByText(/adicionar/i))
+
+    await waitFor(async () => getByText(/nome de usuário é obrigatório/i))
+  })
 })
