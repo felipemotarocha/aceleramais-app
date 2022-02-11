@@ -3,6 +3,7 @@ import { Control, Controller, UseFormReset } from 'react-hook-form'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import { useNavigation } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
 
 // Components
 import ChampionshipTeamItem from '~components/championship-team-item/championship-team-item.component'
@@ -16,6 +17,7 @@ import { ChampionshiTeamsScreenNavigationProp } from '~navigators/app/championsh
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import {
+  updateDrivers,
   updateTeams,
   _Team
 } from '~store/championship-creation/championship-creation.slice'
@@ -33,7 +35,9 @@ interface ChampionshipTeamSelectionContainerProps {}
 const ChampionshipTeamSelectionContainer: FunctionComponent<
   ChampionshipTeamSelectionContainerProps
 > = () => {
-  const { teams } = useAppSelector((state) => state.championshipCreation)
+  const { teams, drivers } = useAppSelector(
+    (state) => state.championshipCreation
+  )
 
   const dispatch = useAppDispatch()
 
@@ -91,9 +95,17 @@ const ChampionshipTeamSelectionContainer: FunctionComponent<
       const newTeams = teams.filter((team) => team.id !== teamId)
 
       dispatch(updateTeams(newTeams))
+
+      if (!isEmpty(drivers)) {
+        const newDrivers = drivers.map((driver) =>
+          driver.team?.id === teamId ? { ...driver, team: undefined } : driver
+        )
+
+        dispatch(updateDrivers(newDrivers))
+      }
     },
 
-    [teams, dispatch]
+    [teams, drivers, dispatch]
   )
 
   const renderTeamItem = useCallback(
@@ -105,7 +117,7 @@ const ChampionshipTeamSelectionContainer: FunctionComponent<
         />
       </View>
     ),
-    [teams]
+    [teams, drivers]
   )
 
   const handleSubmit = useCallback(
