@@ -43,7 +43,10 @@ describe('Championship Race Dates Selection', () => {
           isCompleted: false,
           startDate: undefined
         }
-      ]
+      ],
+      drivers: [],
+      scoringSystem: [],
+      teams: []
     }
   }
 
