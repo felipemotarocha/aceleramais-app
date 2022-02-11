@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import ChampionshipDriverSelectionContainer from './driver-selection.container'
 
-import { render, waitFor } from '~helpers/test.helpers'
+import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
 
 describe('Championship Driver Selection', () => {
@@ -52,5 +52,16 @@ describe('Championship Driver Selection', () => {
     getByText(/pular/i)
 
     await waitFor(async () => getByPlaceholderText('Time'))
+  })
+
+  it('should change input if driver has an account', async () => {
+    const { getByLabelText, getByPlaceholderText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      { preloadedState: initialState }
+    )
+
+    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+
+    await waitFor(async () => getByPlaceholderText('Nome de usuário'))
   })
 })
