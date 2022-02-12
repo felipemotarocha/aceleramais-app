@@ -20,6 +20,10 @@ export type _Driver = {
   isRegistered: boolean
   profileImageUrl?: string
 }
+export type _Bonification = {
+  name: string
+  points: number
+}
 
 export type ChampionshipCreationSliceInitialState = {
   basicInfo:
@@ -38,6 +42,7 @@ export type ChampionshipCreationSliceInitialState = {
   scoringSystem: _ScoringSystem[]
   teams: _Team[]
   drivers: _Driver[]
+  bonifications: _Bonification[]
 }
 
 const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
@@ -47,7 +52,8 @@ const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
     races: [],
     scoringSystem: [],
     teams: [],
-    drivers: []
+    drivers: [],
+    bonifications: []
   }
 
 const championshipSlice = createSlice({
@@ -87,6 +93,9 @@ const championshipSlice = createSlice({
     },
     updateDrivers: (state, action: PayloadAction<_Driver[]>) => {
       state.drivers = action.payload
+    },
+    updateBonifications: (state, action: PayloadAction<_Bonification[]>) => {
+      state.bonifications = action.payload
     },
     clear: (state) => {
       state.basicInfo = undefined
