@@ -21,6 +21,7 @@ export type _Driver = {
   profileImageUrl?: string
 }
 export type _Bonification = {
+  id: string
   name: string
   points: number
 }
@@ -113,6 +114,7 @@ export const {
   updateScoringSystem,
   updateTeams,
   updateDrivers,
+  updateBonifications,
   clear
 } = championshipSlice.actions
 
