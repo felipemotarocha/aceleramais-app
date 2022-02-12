@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import ChampionshipDriverSelectionItem from '~components/championship-driver-selection-item/championship-driver-selection-item.component'
@@ -17,6 +18,7 @@ import {
   _Team
 } from '~store/championship-creation/championship-creation.slice'
 import ChampionshipDriverSelectionUtils from './driver-selection.utils'
+import { ChampionshipDriversScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 export type DriverSelectionForm = {
   userName?: string
@@ -34,6 +36,8 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
     (state) => state.championshipCreation
   )
   const dispatch = useAppDispatch()
+
+  const navigation = useNavigation<ChampionshipDriversScreenNavigationProp>()
 
   const teamInputIsToBeShown = teams.length > 0
 
@@ -85,6 +89,11 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
     [dispatch, handleRemovePress]
   )
 
+  const handleSubmit = useCallback(
+    () => navigation.navigate('Championship Bonifications'),
+    [navigation]
+  )
+
   return (
     <FormProvider {...methods}>
       <ChampionshipDriverSelectionScreen
@@ -94,6 +103,7 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
         handleTeamChange={handleTeamChange}
         handleAddPress={handleAddPress}
         renderDriverItem={renderItem}
+        handleSubmit={handleSubmit}
       />
     </FormProvider>
   )

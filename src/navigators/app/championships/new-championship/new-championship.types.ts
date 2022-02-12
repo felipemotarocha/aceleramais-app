@@ -9,6 +9,7 @@ export type NewChampionshipStackParamList = {
   'Championship Teams': undefined
   'Championship Drivers': undefined
   'Championship Bonifications': undefined
+  'Championship Penalties': undefined
 }
 
 export type ChampionshipBasicInfoScreenRouteProp = RouteProp<
@@ -37,6 +38,16 @@ export type ChampionshipDriversScreenNavigationProp = NativeStackNavigationProp<
   NewChampionshipStackParamList,
   'Championship Drivers'
 >
+export type ChampionshipBonificationsScreenNavigationProp =
+  NativeStackNavigationProp<
+    NewChampionshipStackParamList,
+    'Championship Bonifications'
+  >
+export type ChampionshipPenaltiesScreenNavigationProp =
+  NativeStackNavigationProp<
+    NewChampionshipStackParamList,
+    'Championship Penalties'
+  >
 
 export type ChampionshipRaceDatesScreenRouteProp = RouteProp<
   NewChampionshipStackParamList,

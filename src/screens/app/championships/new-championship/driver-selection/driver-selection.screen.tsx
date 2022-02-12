@@ -45,6 +45,7 @@ interface ChampionshipDriverSelectionScreenProps {
   handleTeamChange: (team: _Team) => void
   handleAddPress: (data: DriverSelectionForm) => void
   renderDriverItem: ListRenderItem<_Driver> | null | undefined
+  handleSubmit: () => void
 }
 
 const ChampionshipDriverSelectionScreen: FunctionComponent<
@@ -55,7 +56,8 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
   teamInputIsToBeShown,
   handleTeamChange,
   renderDriverItem,
-  handleAddPress
+  handleAddPress,
+  handleSubmit
 }) => {
   const {
     control,
@@ -206,9 +208,13 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
         />
 
         {isEmpty(drivers) ? (
-          <CustomButton variant="outlined">Pular</CustomButton>
+          <CustomButton variant="outlined" onPress={handleSubmit}>
+            Pular
+          </CustomButton>
         ) : (
-          <CustomButton variant="primary">Avançar</CustomButton>
+          <CustomButton variant="primary" onPress={handleSubmit}>
+            Avançar
+          </CustomButton>
         )}
       </View>
 

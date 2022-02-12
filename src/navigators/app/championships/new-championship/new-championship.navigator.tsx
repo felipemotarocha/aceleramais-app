@@ -8,6 +8,7 @@ import ChampionshipRaceDateSelectionScreen from '~screens/app/championships/new-
 import ChampionshipScoringSystemSelectionScreen from '~screens/app/championships/new-championship/scoring-system-selection/scoring-system-selection.container'
 import ChampionshipTeamSelectionScreen from '~screens/app/championships/new-championship/team-selection/team-selection.container'
 import ChampionshipDriverSelectionScreen from '~screens/app/championships/new-championship/driver-selection/driver-selection.container'
+import ChampionshipBonificationSelectionScreen from '~screens/app/championships/new-championship/bonification-selection/bonification-selection.container'
 
 // Utilities
 import { NewChampionshipStackParamList } from './new-championship.types'
@@ -22,18 +23,10 @@ const NewChampionshipNavigator: FunctionComponent<
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="Championship Teams"
-        component={ChampionshipTeamSelectionScreen}
-      />
-      <Stack.Screen
-        component={ChampionshipDriverSelectionScreen}
-        name="Championship Drivers"
+        component={ChampionshipBonificationSelectionScreen}
+        name="Championship Bonifications"
       />
 
-      <Stack.Screen
-        name="Championship Scoring System"
-        component={ChampionshipScoringSystemSelectionScreen}
-      />
       <Stack.Screen
         name="Championship Basic Info"
         component={ChampionshipBasicInfoScreen}
@@ -45,6 +38,18 @@ const NewChampionshipNavigator: FunctionComponent<
       <Stack.Screen
         name="Championship Race Dates"
         component={ChampionshipRaceDateSelectionScreen}
+      />
+      <Stack.Screen
+        name="Championship Scoring System"
+        component={ChampionshipScoringSystemSelectionScreen}
+      />
+      <Stack.Screen
+        name="Championship Teams"
+        component={ChampionshipTeamSelectionScreen}
+      />
+      <Stack.Screen
+        component={ChampionshipDriverSelectionScreen}
+        name="Championship Drivers"
       />
     </Stack.Navigator>
   )
