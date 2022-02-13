@@ -23,7 +23,8 @@ describe('Championship Driver Selection', () => {
         }
       ],
 
-      scoringSystem: []
+      scoringSystem: [],
+      bonifications: []
     }
   }
 

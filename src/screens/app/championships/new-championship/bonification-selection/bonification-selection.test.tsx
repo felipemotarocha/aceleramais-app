@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { render, fireEvent, waitFor } from '~helpers/test.helpers'
+import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
 import ChampionshipBonificationSelectionContainer from './bonification-selection.container'
 
 describe('Championship Bonifications Selection', () => {
@@ -60,6 +61,7 @@ describe('Championship Bonifications Selection', () => {
       getByText,
       queryByDisplayValue,
       getByPlaceholderText,
+      queryByLabelText,
       getByLabelText,
       getByDisplayValue
     } = render(<ChampionshipBonificationSelectionContainer />)
@@ -81,6 +83,35 @@ describe('Championship Bonifications Selection', () => {
     await waitFor(async () => {
       expect(queryByDisplayValue(/volta mais rápida/i)).toBeNull()
       expect(queryByDisplayValue(/1/i)).toBeNull()
+
+      expect(queryByLabelText(/remove/i)).toBeNull()
     })
+  })
+
+  it('should show default Bonifications from Redux', async () => {
+    const initialState: {
+      championshipCreation: ChampionshipCreationSliceInitialState
+    } = {
+      championshipCreation: {
+        basicInfo: undefined,
+        tracks: [],
+        races: [],
+        drivers: [],
+        teams: [],
+        scoringSystem: [],
+        bonifications: [{ id: '1', name: 'Volta mais rápida', points: 1 }]
+      }
+    }
+
+    const { queryAllByLabelText, getByDisplayValue } = render(
+      <ChampionshipBonificationSelectionContainer />,
+      {
+        preloadedState: initialState
+      }
+    )
+
+    getByDisplayValue('Volta mais rápida')
+    getByDisplayValue('1')
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(1)
   })
 })
