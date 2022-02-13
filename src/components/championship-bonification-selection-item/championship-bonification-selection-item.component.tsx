@@ -29,7 +29,7 @@ const ChampionshipBonificationSelectionItem: FunctionComponent<
           defaultValue={name}
           control={control}
           rules={{ required: true }}
-          name={`${id}/name`}
+          name={`${id}.name`}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
               <CustomInput
@@ -38,7 +38,7 @@ const ChampionshipBonificationSelectionItem: FunctionComponent<
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                hasError={!!formState.errors?.[`${id}/name`]}
+                hasError={!!formState.errors?.[id]?.name}
               />
             )
           }}
@@ -51,7 +51,7 @@ const ChampionshipBonificationSelectionItem: FunctionComponent<
           defaultValue={points.toString()}
           control={control}
           rules={{ required: true }}
-          name={`${id}/points`}
+          name={`${id}.points`}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
               <CustomInput
@@ -62,7 +62,7 @@ const ChampionshipBonificationSelectionItem: FunctionComponent<
                 onChangeText={(value) => onChange(value.replace(/[^0-9]/g, ''))}
                 onBlur={onBlur}
                 value={value}
-                hasError={!!formState.errors?.[`${id}/points`]}
+                hasError={!!formState.errors?.[id]?.points}
               />
             )
           }}

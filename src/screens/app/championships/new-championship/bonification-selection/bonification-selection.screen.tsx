@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useRef } from 'react'
 import {
   Controller,
@@ -31,19 +32,23 @@ interface ChampionshipBonificationSelectionScreenProps {
       name: string
     }>
   ) => void
+  handleAdvancePress: (data: {
+    [key: string]: {
+      name: string
+      points: string
+    }
+  }) => void
 }
 
 const ChampionshipBonificationSelectionScreen: FunctionComponent<
   ChampionshipBonificationSelectionScreenProps
-> = ({ bonifications, handleAddPress, renderItem }) => {
+> = ({ bonifications, handleAddPress, renderItem, handleAdvancePress }) => {
   const { control, formState, reset, handleSubmit } =
     useForm<{ points: string; name: string }>()
 
   const methods = useForm()
 
   const pointsInputRef = useRef<any>()
-
-  console.log(methods.getValues())
 
   return (
     <View style={styles.container}>
@@ -138,14 +143,19 @@ const ChampionshipBonificationSelectionScreen: FunctionComponent<
             contentContainerStyle={{ paddingTop: 20 }}
           />
 
-          <View style={{ marginTop: 20 }}>
+          {isEmpty(bonifications) ? (
+            <CustomButton
+              variant="outlined"
+              onPress={methods.handleSubmit(handleAdvancePress)}>
+              Pular
+            </CustomButton>
+          ) : (
             <CustomButton
               variant="primary"
-              disabled={bonifications.length === 0}
-              onPress={methods.handleSubmit(() => {})}>
+              onPress={methods.handleSubmit(handleAdvancePress)}>
               Avançar
             </CustomButton>
-          </View>
+          )}
         </FormProvider>
       </View>
     </View>

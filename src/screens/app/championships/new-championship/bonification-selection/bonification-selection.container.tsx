@@ -72,11 +72,27 @@ const ChampionshipBonificationSelectionContainer: FunctionComponent<
     [bonifications, dispatch]
   )
 
+  const handleAdvancePress = useCallback(
+    (data: { [key: string]: { name: string; points: string } }) => {
+      const newBonifications: _Bonification[] = Object.keys(data).map(
+        (key) => ({
+          id: key,
+          name: data[key].name,
+          points: parseInt(data[key].points)
+        })
+      )
+
+      dispatch(updateBonifications(newBonifications))
+    },
+    [dispatch, bonifications]
+  )
+
   return (
     <ChampionshipBonificationSelectionScreen
       bonifications={bonifications}
       handleAddPress={handleAddPress}
       renderItem={renderItem}
+      handleAdvancePress={handleAdvancePress}
     />
   )
 }
