@@ -72,7 +72,7 @@ const ChampionshipBonificationSelectionItem: FunctionComponent<
       <Pressable
         style={styles.remove}
         onPress={() => handleRemovePress(id)}
-        accessibilityLabel={`Remove ${name}`}>
+        accessibilityLabel={`Remover ${name}`}>
         <AntDesign
           name="close"
           size={24}
