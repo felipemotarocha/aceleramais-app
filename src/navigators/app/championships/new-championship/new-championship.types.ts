@@ -30,6 +30,11 @@ export type ChampionshipRaceDatesScreenNavigationProp =
     NewChampionshipStackParamList,
     'Championship Race Dates'
   >
+export type ChampionshipScoringSystemScreenNavigationProp =
+  NativeStackNavigationProp<
+    NewChampionshipStackParamList,
+    'Championship Scoring System'
+  >
 export type ChampionshiTeamsScreenNavigationProp = NativeStackNavigationProp<
   NewChampionshipStackParamList,
   'Championship Teams'

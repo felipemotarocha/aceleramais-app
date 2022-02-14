@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useCallback } from 'react'
 import { View } from 'react-native'
 import { UseFormReset, FieldValues, UseFormSetValue } from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native'
 
 // Screen
 import ChampionshipScoringSystemSelectionScreen from './scoring-system-selection.screen'
@@ -17,6 +18,7 @@ import {
 
 // Utilities
 import ChampionshipScoringSystemUtils from './scoring-system-selection.utils'
+import { ChampionshipScoringSystemScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
   const { scoringSystem } = useAppSelector(
@@ -24,6 +26,9 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
   )
 
   const dispatch = useAppDispatch()
+
+  const navigation =
+    useNavigation<ChampionshipScoringSystemScreenNavigationProp>()
 
   const handleAddPress = useCallback(
     async (
@@ -87,8 +92,10 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
       )
 
       dispatch(updateScoringSystem(newScoringSystem))
+
+      navigation.navigate('Championship Drivers')
     },
-    [dispatch]
+    [dispatch, navigation]
   )
 
   return (
