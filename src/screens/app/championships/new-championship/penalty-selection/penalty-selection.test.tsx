@@ -12,7 +12,6 @@ describe('Championship Penalties Selection', () => {
     getByPlaceholderText(/nome/i)
     getByPlaceholderText(/pontos/i)
     getByText('Adicionar')
-    getByText(/pular/i)
 
     expect(queryByLabelText(/remove/i)).toBeNull()
   })
