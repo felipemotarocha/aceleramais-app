@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback } from 'react'
 import { View } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import { UseFormReset } from 'react-hook-form'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 
 // Components
 import ChampionshipPenaltySelectionItem from '~components/championship-bonification-selection-item/championship-bonification-selection-item.component'
@@ -9,8 +10,12 @@ import ChampionshipPenaltySelectionItem from '~components/championship-bonificat
 // Screens
 import ChampionshipPenaltySelectionScreen from './penalty-selection.screen'
 
+// Utilities
+import { showError, showSuccess } from '~helpers/flash-message.helpers'
+
 // Redux
 import {
+  clear,
   updatePenalties,
   _Penalty
 } from '~store/championship-creation/championship-creation.slice'
@@ -29,6 +34,8 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
   const { currentUser } = useAppSelector((state) => state.user)
 
   const dispatch = useAppDispatch()
+
+  const navigation = useNavigation()
 
   const handleAddPress = useCallback(
     (
@@ -85,13 +92,28 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
 
       await dispatch(updatePenalties(newPenalties))
 
-      await dispatch(
-        createChampionship({
-          ...rest,
-          penalties: newPenalties,
-          admins: [{ user: currentUser!.id, isCreator: true }]
-        })
-      )
+      try {
+        await dispatch(
+          createChampionship({
+            ...rest,
+            penalties: newPenalties,
+            admins: [{ user: currentUser!.id, isCreator: true }]
+          })
+        )
+
+        await dispatch(clear())
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'Championship List' }]
+          })
+        )
+
+        showSuccess('O campeonato foi criado com sucesso.')
+      } catch (error) {
+        showError(error as any)
+      }
     },
     [dispatch, penalties, currentUser]
   )

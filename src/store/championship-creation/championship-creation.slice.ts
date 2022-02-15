@@ -129,6 +129,13 @@ const championshipSlice = createSlice({
       state.tracks = []
       state.races = []
       state.scoringSystem = []
+      state.teams = []
+      state.drivers = []
+      state.bonifications = []
+      state.penalties = []
+      state.bonifications = []
+      state.loading = false
+      state.error = undefined
     }
   }
 })
