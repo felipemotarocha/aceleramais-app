@@ -50,6 +50,8 @@ export type ChampionshipCreationSliceInitialState = {
   drivers: _Driver[]
   bonifications: _Bonification[]
   penalties: _Penalty[]
+  loading: boolean
+  error?: string
 }
 
 const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
@@ -61,7 +63,9 @@ const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
     teams: [],
     drivers: [],
     bonifications: [],
-    penalties: []
+    penalties: [],
+    loading: false,
+    error: undefined
   }
 
 const championshipSlice = createSlice({
@@ -108,6 +112,18 @@ const championshipSlice = createSlice({
     updatePenalties: (state, action: PayloadAction<_Penalty[]>) => {
       state.penalties = action.payload
     },
+    createChampionshipStart: (state) => {
+      state.loading = true
+      state.error = undefined
+    },
+    createChampionshipSuccess: (state) => {
+      state.loading = false
+      state.error = undefined
+    },
+    createChampionshipFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false
+      state.error = action.payload
+    },
     clear: (state) => {
       state.basicInfo = undefined
       state.tracks = []
@@ -126,6 +142,9 @@ export const {
   updateDrivers,
   updateBonifications,
   updatePenalties,
+  createChampionshipStart,
+  createChampionshipSuccess,
+  createChampionshipFailure,
   clear
 } = championshipSlice.actions
 

@@ -9,7 +9,7 @@ export type NewChampionshipStackParamList = {
   'Championship Teams': undefined
   'Championship Drivers': undefined
   'Championship Bonifications': undefined
-  'Championship Penalties': undefined
+  'Championship Penalties': { sendToBackendOnSubmit: boolean }
 }
 
 export type ChampionshipBasicInfoScreenRouteProp = RouteProp<
@@ -57,4 +57,9 @@ export type ChampionshipPenaltiesScreenNavigationProp =
 export type ChampionshipRaceDatesScreenRouteProp = RouteProp<
   NewChampionshipStackParamList,
   'Championship Race Dates'
+>
+
+export type ChampionshipPenaltiesScreenRouteProp = RouteProp<
+  NewChampionshipStackParamList,
+  'Championship Penalties'
 >

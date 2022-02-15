@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useRef } from 'react'
 import {
   Controller,
@@ -139,19 +138,11 @@ const ChampionshipPenaltySelectionScreen: FunctionComponent<
             contentContainerStyle={{ paddingTop: 20 }}
           />
 
-          {isEmpty(penalties) ? (
-            <CustomButton
-              variant="outlined"
-              onPress={methods.handleSubmit(handleAdvancePress)}>
-              Pular
-            </CustomButton>
-          ) : (
-            <CustomButton
-              variant="primary"
-              onPress={methods.handleSubmit(handleAdvancePress)}>
-              Avançar
-            </CustomButton>
-          )}
+          <CustomButton
+            variant="primary"
+            onPress={methods.handleSubmit(handleAdvancePress)}>
+            Concluir
+          </CustomButton>
         </FormProvider>
       </View>
     </View>

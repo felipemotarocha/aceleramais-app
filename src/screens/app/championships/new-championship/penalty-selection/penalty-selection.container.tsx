@@ -15,13 +15,18 @@ import {
   _Penalty
 } from '~store/championship-creation/championship-creation.slice'
 import { useAppDispatch, useAppSelector } from '~store'
+import { createChampionship } from '~store/championship-creation/championship-creation.actions'
 
 interface ChampionshipPenaltySelectionContainerProps {}
 
 const ChampionshipPenaltySelectionContainer: FunctionComponent<
   ChampionshipPenaltySelectionContainerProps
 > = () => {
-  const { penalties } = useAppSelector((state) => state.championshipCreation)
+  const { penalties, ...rest } = useAppSelector(
+    (state) => state.championshipCreation
+  )
+
+  const { currentUser } = useAppSelector((state) => state.user)
 
   const dispatch = useAppDispatch()
 
@@ -71,16 +76,24 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
   )
 
   const handleAdvancePress = useCallback(
-    (data: { [key: string]: { name: string; points: string } }) => {
+    async (data: { [key: string]: { name: string; points: string } }) => {
       const newPenalties: _Penalty[] = Object.keys(data).map((key) => ({
         id: key,
         name: data[key].name,
         points: parseInt(data[key].points)
       }))
 
-      dispatch(updatePenalties(newPenalties))
+      await dispatch(updatePenalties(newPenalties))
+
+      await dispatch(
+        createChampionship({
+          ...rest,
+          penalties: newPenalties,
+          admins: [{ user: currentUser!.id, isCreator: true }]
+        })
+      )
     },
-    [dispatch, penalties]
+    [dispatch, penalties, currentUser]
   )
 
   return (

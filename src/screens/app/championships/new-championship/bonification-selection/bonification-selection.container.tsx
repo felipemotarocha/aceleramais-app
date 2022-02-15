@@ -91,7 +91,9 @@ const ChampionshipBonificationSelectionContainer: FunctionComponent<
 
       dispatch(updateBonifications(newBonifications))
 
-      navigation.navigate('Championship Penalties')
+      navigation.navigate('Championship Penalties', {
+        sendToBackendOnSubmit: true
+      })
     },
     [dispatch, bonifications, navigation]
   )

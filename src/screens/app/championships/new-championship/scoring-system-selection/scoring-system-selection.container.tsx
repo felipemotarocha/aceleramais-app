@@ -93,7 +93,7 @@ const ChampionshipScoringSystemSelectionContainer: FunctionComponent = () => {
 
       dispatch(updateScoringSystem(newScoringSystem))
 
-      navigation.navigate('Championship Drivers')
+      navigation.navigate('Championship Teams')
     },
     [dispatch, navigation]
   )
