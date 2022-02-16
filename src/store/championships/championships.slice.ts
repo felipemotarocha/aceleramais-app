@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Championship from '~types/championship.types'
 
-type InitialState = {
+export type ChampionshipsSliceInitialState = {
   championships: Championship[]
+  filterBy?: 'admin' | 'completed'
   error: string | null
   loading: boolean
 }
 
-const championshipsInitialState: InitialState = {
+const championshipsInitialState: ChampionshipsSliceInitialState = {
   championships: [],
+  filterBy: undefined,
   error: null,
   loading: false
 }
@@ -31,6 +33,12 @@ const championshipsSlice = createSlice({
       state.championships = []
       state.loading = false
       state.error = action.payload
+    },
+    updateFilterBy: (
+      state,
+      action: PayloadAction<'admin' | 'completed' | undefined>
+    ) => {
+      state.filterBy = action.payload
     }
   }
 })
@@ -38,7 +46,8 @@ const championshipsSlice = createSlice({
 export const {
   getChampionshipsStart,
   getChampionshipsSuccess,
-  getChampionshipsFailure
+  getChampionshipsFailure,
+  updateFilterBy
 } = championshipsSlice.actions
 
 const championshipsReducer = championshipsSlice.reducer

@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo
+} from 'react'
 import { View } from 'react-native'
 import ChampionshipItem from '~components/championship-item/championship-item.component'
 import { useAppDispatch, useAppSelector } from '~store'
@@ -13,7 +18,7 @@ const ChampionshipListContainer: FunctionComponent<
   ChampionshipListContainerProps
 > = () => {
   const { currentUser } = useAppSelector((state) => state.user)
-  const { championships, loading } = useAppSelector(
+  const { championships, filterBy, loading } = useAppSelector(
     (state) => state.championships
   )
 
@@ -27,6 +32,23 @@ const ChampionshipListContainer: FunctionComponent<
     fetchChampionships()
   }, [])
 
+  const filteredChampionships = useMemo(() => {
+    if (!filterBy) return championships
+
+    if (filterBy === 'admin') {
+      return championships.filter((championship) =>
+        championship.admins.some((admin) => admin.user === currentUser!.id)
+      )
+    }
+
+    if (filterBy === 'completed') {
+      // TODO: filter by "isCompleted" field
+      return []
+    }
+
+    return championships
+  }, [championships, currentUser, filterBy])
+
   const renderItem = useCallback(
     ({ item }: { item: Championship }) => (
       <View style={{ marginVertical: 10 }}>
@@ -38,7 +60,7 @@ const ChampionshipListContainer: FunctionComponent<
 
   return (
     <ChampionshipListScreen
-      championships={championships}
+      championships={filteredChampionships}
       loading={loading}
       renderItem={renderItem}
       fetchChampionships={fetchChampionships}

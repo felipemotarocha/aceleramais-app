@@ -11,9 +11,97 @@ import TextBold from '~components/common/text-bold/text-bold.component'
 import Colors from '~constants/colors.constants'
 
 // Redux
-import { useAppSelector } from '~store'
+import { useAppDispatch, useAppSelector } from '~store'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
+import { updateFilterBy } from '~store/championships/championships.slice'
+
+interface ChampionshipsHeaderProps {}
+
+const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
+  const insets = useSafeAreaInsets()
+
+  const { currentUser } = useAppSelector((state) => state.user)
+  const { filterBy } = useAppSelector((state) => state.championships)
+
+  const dispatch = useAppDispatch()
+
+  const navigation = useNavigation<ChampionshipListScreenNavigationProp>()
+
+  const handlePlusPress = useCallback(
+    () => navigation.navigate('New Championship'),
+    [navigation]
+  )
+
+  const handleCreatedByYouPress = useCallback(() => {
+    if (filterBy === 'admin') {
+      return dispatch(updateFilterBy(undefined))
+    }
+
+    dispatch(updateFilterBy('admin'))
+  }, [filterBy, dispatch])
+
+  const handleCompletedPress = useCallback(() => {
+    if (filterBy === 'completed') {
+      return dispatch(updateFilterBy(undefined))
+    }
+
+    dispatch(updateFilterBy('completed'))
+  }, [filterBy, dispatch])
+
+  return (
+    <View
+      style={{
+        paddingTop: Platform.OS === 'android' ? insets.top : insets.top + 25,
+        ...styles.container
+      }}>
+      <View style={styles.top}>
+        <View style={styles.topLeft}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: currentUser?.profileImageUrl! }}
+              style={styles.image}
+            />
+          </View>
+          <TextBold style={{ fontSize: 16 }}>Seus Campeonatos</TextBold>
+        </View>
+
+        <Pressable style={styles.right} onPress={handlePlusPress}>
+          <Ionicons name="add-sharp" size={32} color={Colors.textSecondary} />
+        </Pressable>
+      </View>
+
+      <View style={styles.bottom}>
+        <Pressable
+          style={[styles.button, filterBy === 'admin' && styles.pressedButton]}
+          onPress={handleCreatedByYouPress}>
+          <TextMedium
+            style={{
+              fontSize: 10,
+              color: filterBy === 'admin' ? Colors.text : Colors.primary
+            }}>
+            Criados por você
+          </TextMedium>
+        </Pressable>
+
+        <Pressable
+          style={[
+            { ...styles.button, marginLeft: 16 },
+            filterBy === 'completed' && styles.pressedButton
+          ]}
+          onPress={handleCompletedPress}>
+          <TextMedium
+            style={{
+              fontSize: 10,
+              color: filterBy === 'completed' ? Colors.text : Colors.primary
+            }}>
+            Finalizados
+          </TextMedium>
+        </Pressable>
+      </View>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -76,64 +164,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginTop: 15
+  },
+  pressedButton: {
+    backgroundColor: Colors.primary
   }
 })
-
-interface ChampionshipsHeaderProps {}
-
-const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
-  const insets = useSafeAreaInsets()
-
-  const { currentUser } = useAppSelector((state) => state.user)
-
-  const navigation = useNavigation<ChampionshipListScreenNavigationProp>()
-
-  const handlePlusPress = useCallback(
-    () => navigation.navigate('New Championship'),
-    [navigation]
-  )
-
-  return (
-    <View
-      style={{
-        paddingTop: Platform.OS === 'android' ? insets.top : insets.top + 25,
-        ...styles.container
-      }}>
-      <View style={styles.top}>
-        <View style={styles.topLeft}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: currentUser?.profileImageUrl! }}
-              style={styles.image}
-            />
-          </View>
-          <TextBold style={{ fontSize: 16 }}>Seus Campeonatos</TextBold>
-        </View>
-
-        <Pressable style={styles.right} onPress={handlePlusPress}>
-          <Ionicons name="add-sharp" size={32} color={Colors.textSecondary} />
-        </Pressable>
-      </View>
-
-      <View style={styles.bottom}>
-        <Pressable style={styles.button}>
-          <TextMedium style={{ fontSize: 10, color: Colors.primary }}>
-            Criados por você
-          </TextMedium>
-        </Pressable>
-
-        <Pressable style={{ ...styles.button, marginLeft: 16 }}>
-          <TextMedium
-            style={{
-              fontSize: 10,
-              color: Colors.primary
-            }}>
-            Finalizados
-          </TextMedium>
-        </Pressable>
-      </View>
-    </View>
-  )
-}
 
 export default ChampionshipsHeader
