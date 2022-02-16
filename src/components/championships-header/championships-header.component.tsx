@@ -73,6 +73,7 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
 
       <View style={styles.bottom}>
         <Pressable
+          accessibilityLabel="Criados por você"
           style={[styles.button, filterBy === 'admin' && styles.pressedButton]}
           onPress={handleCreatedByYouPress}>
           <TextMedium
@@ -85,6 +86,7 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
         </Pressable>
 
         <Pressable
+          accessibilityLabel="Finalizados"
           style={[
             { ...styles.button, marginLeft: 16 },
             filterBy === 'completed' && styles.pressedButton

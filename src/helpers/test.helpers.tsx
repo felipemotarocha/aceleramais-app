@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import userReducer from '~store/user/user.slice'
 import { NavigationContainer } from '@react-navigation/native'
 import championshipCreationReducer from '~store/championship-creation/championship-creation.slice'
+import championshipsReducer from '~store/championships/championships.slice'
 
 function render(
   ui,
@@ -17,7 +18,8 @@ function render(
     store = configureStore({
       reducer: {
         user: userReducer,
-        championshipCreation: championshipCreationReducer
+        championshipCreation: championshipCreationReducer,
+        championships: championshipsReducer
       },
       preloadedState
     }),
