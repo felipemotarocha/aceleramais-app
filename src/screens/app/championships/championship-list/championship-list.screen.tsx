@@ -9,7 +9,7 @@ import Colors from '~constants/colors.constants'
 
 interface CHampionshipListScreenProps {}
 
-const CHampionshipListScreen: FunctionComponent<
+const ChampionshipListScreen: FunctionComponent<
   CHampionshipListScreenProps
 > = () => {
   return (
@@ -19,4 +19,4 @@ const CHampionshipListScreen: FunctionComponent<
   )
 }
 
-export default CHampionshipListScreen
+export default ChampionshipListScreen
