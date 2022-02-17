@@ -5,12 +5,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import userReducer from './user/user.slice'
 import championshipCreationReducer from './championship-creation/championship-creation.slice'
 import championshipsReducer from './championships/championships.slice'
+import championshipDetailsReducer from './championship-details/championship-details.slice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     championshipCreation: championshipCreationReducer,
-    championships: championshipsReducer
+    championships: championshipsReducer,
+    championshipDetails: championshipDetailsReducer
   }
 })
 
