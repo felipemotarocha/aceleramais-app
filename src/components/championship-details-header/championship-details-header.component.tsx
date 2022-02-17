@@ -48,7 +48,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
             Descrição
           </TextSemiBold>
 
-          <TextRegular style={{ fontSize: 12 }} numberOfLines={5}>
+          <TextRegular style={{ fontSize: 12, marginTop: 5 }} numberOfLines={5}>
             {description}
           </TextRegular>
         </View>

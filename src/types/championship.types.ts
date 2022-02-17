@@ -1,4 +1,6 @@
 import Race from './race.types'
+import Team from './team.types'
+import User from './user.types'
 
 export interface ChampionshipDriver {
   user?: string
@@ -22,6 +24,21 @@ export interface ChampionshipAdmin {
   isCreator: boolean
 }
 
+export interface ChampionshipDriverStandings {
+  id: string
+  championship: string
+  standings: {
+    user?: User
+    id?: string
+    firstName?: string
+    lastName?: string
+    team?: Team
+    position: number
+    points: number
+    isRegistered: boolean
+  }[]
+}
+
 interface Championship {
   id: string
   avatarImageUrl: string
@@ -32,7 +49,7 @@ interface Championship {
   races: string[]
   teams: string[]
   drivers: ChampionshipDriver[]
-  driverStandings: string
+  driverStandings: ChampionshipDriverStandings
   teamStandings: string
   scoringSystem: string
   bonifications: string[]
