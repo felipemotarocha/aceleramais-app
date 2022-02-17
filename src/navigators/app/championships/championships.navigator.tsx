@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Screen
 import ChampionshipListScreen from '~screens/app/championships/championship-list/championship-list.container'
+import ChampionshipDetailsScreen from '~screens/app/championships/championship-details/championship-details.container'
 
 // Navigators
 import NewChampionshipNavigator from './new-championship/new-championship.navigator'
@@ -26,6 +27,10 @@ const ChampionshipsNavigator: FunctionComponent<
       <Stack.Screen
         name="New Championship"
         component={NewChampionshipNavigator}
+      />
+      <Stack.Screen
+        name="Championship Details"
+        component={ChampionshipDetailsScreen}
       />
     </Stack.Navigator>
   )

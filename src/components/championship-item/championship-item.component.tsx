@@ -1,16 +1,19 @@
+import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
-import React, { FunctionComponent } from 'react'
-import { View, StyleSheet, Image } from 'react-native'
+import React, { FunctionComponent, useCallback } from 'react'
+import { View, StyleSheet, Image, Pressable } from 'react-native'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 // Utilities
 import Race from '~types/race.types'
 
 interface ChampionshipItemProps {
+  id: string
   name: string
   platform: string
   nextRace: Race
@@ -18,13 +21,20 @@ interface ChampionshipItemProps {
 }
 
 const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
+  id,
   name,
   platform,
   nextRace,
   avatarImageUrl
 }) => {
+  const navigation = useNavigation<ChampionshipListScreenNavigationProp>()
+
+  const handlePress = useCallback(
+    () => navigation.navigate('Championship Details', { championship: id }),
+    [navigation]
+  )
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={handlePress}>
       <View style={styles.imageContainer}>
         <Image
           style={{ flex: 1, borderRadius: 75 }}
@@ -51,7 +61,7 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
           {format(new Date(nextRace.startDate), 'dd/MM/yyyy, HH:mm')}
         </TextRegular>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
