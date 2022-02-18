@@ -41,4 +41,51 @@ describe('Championship Details', () => {
       getByText(/ver todas as corridas/i)
     })
   })
+
+  it('should show the leading drivers', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: ChampionshipDetailsStubs.validResponse
+    })
+
+    const { getByText, queryAllByText } = render(
+      <ChampionshipDetailsContainer />
+    )
+
+    await waitFor(async () => {
+      getByText(/felipe/i)
+      getByText(/25 pontos/i)
+
+      getByText(/gustavo/i)
+      getByText(/20 pontos/i)
+
+      expect(queryAllByText(/rocha/i)).toHaveLength(2)
+
+      getByText(/max/i)
+      getByText(/verstappen/i)
+      getByText(/18 pontos/i)
+
+      getByText(/ver classificação completa/i)
+    })
+  })
+
+  it('should show an warning if there is no leading drivers', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: {
+        ...ChampionshipDetailsStubs.validResponse,
+        driverStandings: {
+          standings: []
+        }
+      }
+    })
+
+    const { getByText, queryByText } = render(<ChampionshipDetailsContainer />)
+
+    await waitFor(async () => {
+      getByText(
+        /os líderes ficarão disponíveis após a primeira corrida ser concluida./i
+      )
+
+      expect(queryByText(/ver classificação completa/i)).toBeNull()
+    })
+  })
 })
