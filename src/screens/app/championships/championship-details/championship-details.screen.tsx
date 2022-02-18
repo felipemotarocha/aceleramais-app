@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 // Components
 import ChampionshipDetailsHeaderContainer from '~components/championship-details-header/championship-details-header.container'
 import ChampionshipLeadingDrivers from '~components/championship-leading-drivers/championship-leading-drivers.component'
+import ChampionshipNextRaceItem from '~components/championship-next-race-item/championship-next-race-item.component'
 import Header from '~components/common/header/header.component'
 
 import Colors from '~constants/colors.constants'
@@ -26,6 +27,12 @@ const ChampionshipDetailsScreen: FunctionComponent<
             platform={championshipDetails.platform}
             description={championshipDetails.description}
             avatarImageUrl={championshipDetails?.avatarImageUrl}
+          />
+
+          <ChampionshipNextRaceItem
+            startDate={championshipDetails.nextRace.startDate}
+            trackCountryCode={championshipDetails.nextRace.track.countryCode}
+            trackName={championshipDetails.nextRace.track.name}
           />
 
           <ChampionshipLeadingDrivers

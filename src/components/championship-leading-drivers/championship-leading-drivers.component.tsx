@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
@@ -18,26 +19,34 @@ const ChampionshipLeadingDrivers: FunctionComponent<
   ChampionshipLeadingDriversProps
 > = ({ driverStandings }) => {
   const firstDriver = driverStandings.standings[0]
-  const secondDriver = driverStandings.standings[1]
-  const thirdDriver = driverStandings.standings[2]
-  const fourthDriver = driverStandings.standings[3]
+  const secondDriver = driverStandings.standings?.[1]
+  const thirdDriver = driverStandings.standings?.[2]
 
-  const renderImage = useCallback((profileImageUrl) => {
+  const renderImage = useCallback((driver: typeof firstDriver) => {
+    if (!driver) return null
+
     return (
-      <View style={styles.imageContainer}>
-        <Image
-          style={{ flex: 1, borderRadius: 45 }}
-          source={{
-            uri:
-              profileImageUrl ||
-              'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
-          }}
-        />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TextSemiBold style={{ fontSize: 14, marginRight: 8, width: 15 }}>
+          {driver?.position}º
+        </TextSemiBold>
+        <View style={styles.imageContainer}>
+          <Image
+            style={{ flex: 1, borderRadius: 45 }}
+            source={{
+              uri:
+                driver?.user?.profileImageUrl ||
+                'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+            }}
+          />
+        </View>
       </View>
     )
   }, [])
 
   const renderDriverInfo = useCallback((driver: typeof firstDriver) => {
+    if (!driver) return null
+
     return (
       <View>
         <View
@@ -79,7 +88,7 @@ const ChampionshipLeadingDrivers: FunctionComponent<
 
   return (
     <View style={styles.container}>
-      <TextSemiBold style={{ fontSize: 14, marginTop: 20, marginBottom: 5 }}>
+      <TextSemiBold style={{ fontSize: 14, marginTop: 20, marginBottom: 10 }}>
         Líderes
       </TextSemiBold>
       {isEmpty(driverStandings.standings) ? (
@@ -90,27 +99,26 @@ const ChampionshipLeadingDrivers: FunctionComponent<
         <>
           <View>
             <View style={styles.driverItem}>
-              {renderImage(firstDriver?.user?.profileImageUrl)}
+              {renderImage(firstDriver)}
               <View>{renderDriverInfo(firstDriver)}</View>
             </View>
 
             <View style={styles.driverItem}>
-              {renderImage(secondDriver?.user?.profileImageUrl)}
+              {renderImage(secondDriver)}
               <View>{renderDriverInfo(secondDriver)}</View>
             </View>
           </View>
 
           <View>
             <View style={styles.driverItem}>
-              {renderImage(thirdDriver?.user?.profileImageUrl)}
+              {renderImage(thirdDriver)}
               <View>{renderDriverInfo(thirdDriver)}</View>
             </View>
-
-            <View style={styles.driverItem}>
-              {renderImage(fourthDriver?.user?.profileImageUrl)}
-              <View>{renderDriverInfo(fourthDriver)}</View>
-            </View>
           </View>
+
+          <CustomButton variant="outlined">
+            Ver Classificação Completa
+          </CustomButton>
         </>
       )}
     </View>

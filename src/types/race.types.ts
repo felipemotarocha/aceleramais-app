@@ -1,6 +1,8 @@
+import Track from './track.types'
+
 interface Race {
   id: string
-  track: string
+  track: Track
   championship: string
   startDate: string
   isCompleted: boolean
