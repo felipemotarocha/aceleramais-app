@@ -1,13 +1,14 @@
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 import { StyleSheet, View } from 'react-native'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
+// Utilities
 import { ChampionshipTeamStandings } from '~types/championship.types'
 
 interface ChampionshipLeadingTeamsProps {
@@ -68,10 +69,12 @@ const ChampionshipLeadingTeams: FunctionComponent<
           {renderItem(firstTeam)}
           {renderItem(secondTeam)}
           {renderItem(thirdTeam)}
+
+          <CustomButton variant="outlined">
+            Ver Classificação Completa
+          </CustomButton>
         </>
       )}
-
-      <CustomButton variant="outlined">Ver Todos os Times</CustomButton>
     </>
   )
 }

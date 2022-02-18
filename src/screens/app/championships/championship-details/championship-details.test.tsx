@@ -44,7 +44,10 @@ describe('Championship Details', () => {
 
   it('should show the leading drivers', async () => {
     ;(axiosMock.get as any).mockResolvedValue({
-      data: ChampionshipDetailsStubs.validResponse
+      data: {
+        ...ChampionshipDetailsStubs.validResponse,
+        teamStandings: { standings: [] }
+      }
     })
 
     const { getByText, queryAllByText } = render(
@@ -52,6 +55,8 @@ describe('Championship Details', () => {
     )
 
     await waitFor(async () => {
+      getByText(/líderes/i)
+
       getByText(/felipe/i)
       getByText(/25 pontos/i)
 
@@ -74,6 +79,9 @@ describe('Championship Details', () => {
         ...ChampionshipDetailsStubs.validResponse,
         driverStandings: {
           standings: []
+        },
+        teamStandings: {
+          standings: []
         }
       }
     })
@@ -83,6 +91,48 @@ describe('Championship Details', () => {
     await waitFor(async () => {
       getByText(
         /os líderes ficarão disponíveis após a primeira corrida ser concluida./i
+      )
+
+      expect(queryByText(/ver classificação completa/i)).toBeNull()
+    })
+  })
+
+  it('should show the leading teams', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: {
+        ...ChampionshipDetailsStubs.validResponse,
+        driverStandings: { standings: [] }
+      }
+    })
+
+    const { getByText } = render(<ChampionshipDetailsContainer />)
+
+    await waitFor(async () => {
+      getByText(/mercedes/i)
+      getByText(/81 pontos/i)
+
+      getByText(/ver classificação completa/i)
+    })
+  })
+
+  it('should show an warning if there is no leading teams', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: {
+        ...ChampionshipDetailsStubs.validResponse,
+        driverStandings: {
+          standings: []
+        },
+        teamStandings: {
+          standings: []
+        }
+      }
+    })
+
+    const { getByText, queryByText } = render(<ChampionshipDetailsContainer />)
+
+    await waitFor(async () => {
+      getByText(
+        /os times ficarão disponíveis após a primeira corrida ser concluida./i
       )
 
       expect(queryByText(/ver classificação completa/i)).toBeNull()
