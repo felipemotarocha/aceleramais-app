@@ -64,7 +64,7 @@ interface Championship {
   scoringSystem: string
   bonifications: string[]
   penalties: string[]
-  nextRace: Race
+  nextRaces: Race[]
 }
 
 export default Championship

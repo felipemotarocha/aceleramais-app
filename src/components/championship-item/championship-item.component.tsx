@@ -56,10 +56,12 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
           {platform}
         </TextRegular>
 
-        <TextRegular style={{ fontSize: 12, flex: 1 }}>
-          <TextMedium style={{ fontSize: 12 }}>Próxima Corrida: </TextMedium>{' '}
-          {format(new Date(nextRace.startDate), 'dd/MM/yyyy, HH:mm')}
-        </TextRegular>
+        {nextRace && (
+          <TextRegular style={{ fontSize: 12, flex: 1 }}>
+            <TextMedium style={{ fontSize: 12 }}>Próxima Corrida: </TextMedium>{' '}
+            {format(new Date(nextRace.startDate), 'dd/MM/yyyy, HH:mm')}
+          </TextRegular>
+        )}
       </View>
     </Pressable>
   )

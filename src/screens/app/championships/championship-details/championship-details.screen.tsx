@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import ChampionshipDetailsHeaderContainer from '~components/championship-details-header/championship-details-header.container'
 import ChampionshipLeadingDrivers from '~components/championship-leading-drivers/championship-leading-drivers.component'
 import ChampionshipLeadingTeams from '~components/championship-leading-teams/championship-leading-teams.component'
-import ChampionshipNextRaceItem from '~components/championship-next-race-item/championship-next-race-item.component'
+import ChampionshipNextRaces from '~components/championship-next-race-item/championship-next-race-item.component'
 import Header from '~components/common/header/header.component'
 
 import Colors from '~constants/colors.constants'
@@ -30,11 +30,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
             avatarImageUrl={championshipDetails?.avatarImageUrl}
           />
 
-          <ChampionshipNextRaceItem
-            startDate={championshipDetails.nextRace.startDate}
-            trackCountryCode={championshipDetails.nextRace.track.countryCode}
-            trackName={championshipDetails.nextRace.track.name}
-          />
+          <ChampionshipNextRaces nextRaces={championshipDetails.nextRaces} />
 
           <ChampionshipLeadingDrivers
             driverStandings={championshipDetails.driverStandings}

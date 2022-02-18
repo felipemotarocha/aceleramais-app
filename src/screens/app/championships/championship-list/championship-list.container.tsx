@@ -52,7 +52,7 @@ const ChampionshipListContainer: FunctionComponent<
   const renderItem = useCallback(
     ({ item }: { item: Championship }) => (
       <View style={{ marginVertical: 10 }}>
-        <ChampionshipItem {...item} />
+        <ChampionshipItem {...item} nextRace={item.nextRaces?.[0]} />
       </View>
     ),
     []
