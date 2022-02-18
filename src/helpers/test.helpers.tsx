@@ -9,6 +9,7 @@ import userReducer from '~store/user/user.slice'
 import { NavigationContainer } from '@react-navigation/native'
 import championshipCreationReducer from '~store/championship-creation/championship-creation.slice'
 import championshipsReducer from '~store/championships/championships.slice'
+import championshipDetailsReducer from '~store/championship-details/championship-details.slice'
 
 function render(
   ui,
@@ -19,7 +20,8 @@ function render(
       reducer: {
         user: userReducer,
         championshipCreation: championshipCreationReducer,
-        championships: championshipsReducer
+        championships: championshipsReducer,
+        championshipDetails: championshipDetailsReducer
       },
       preloadedState
     }),

@@ -10,3 +10,15 @@ jest.mock('react-native-keyboard-aware-scroll-view', () => {
 
   return { KeyboardAwareScrollView, KeyboardAwareFlatList }
 })
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native')
+  return {
+    ...actualNav,
+    useRoute: () => ({
+      params: {
+        championship: '620d62cb4e71a03355490930'
+      }
+    })
+  }
+})
