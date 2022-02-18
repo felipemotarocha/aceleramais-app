@@ -76,7 +76,6 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
       <KeyboardAwareScrollView
         enableAutomaticScroll={Platform.OS === 'ios'}
         enableOnAndroid
-        bounces={false}
         showsVerticalScrollIndicator={false}>
         <DismissKeyboard>
           <View style={styles.content}>

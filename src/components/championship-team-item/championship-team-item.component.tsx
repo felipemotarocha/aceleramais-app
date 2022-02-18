@@ -11,27 +11,6 @@ import { _Team } from '~store/championship-creation/championship-creation.slice'
 // Utilities
 import Colors from '~constants/colors.constants'
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  circle: {
-    width: 45,
-    height: 45,
-    borderRadius: 45,
-    borderWidth: 3
-  },
-  colorLine: {
-    borderRadius: 5,
-    borderWidth: 2,
-    marginHorizontal: 8,
-    height: 15
-  }
-})
-
 interface ChampionshipTeamItemProps {
   team: _Team
   handleRemovePress: (id: string) => void
@@ -61,5 +40,26 @@ const ChampionshipTeamItem: FunctionComponent<ChampionshipTeamItemProps> = ({
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  circle: {
+    width: 45,
+    height: 45,
+    borderRadius: 45,
+    borderWidth: 3
+  },
+  colorLine: {
+    borderRadius: 5,
+    borderWidth: 2,
+    marginHorizontal: 8,
+    height: 15
+  }
+})
 
 export default ChampionshipTeamItem

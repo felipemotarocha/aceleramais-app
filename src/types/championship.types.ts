@@ -39,6 +39,16 @@ export interface ChampionshipDriverStandings {
   }[]
 }
 
+export interface ChampionshipTeamStandings {
+  id: string
+  championship: string
+  standings: {
+    team: Team
+    position: number
+    points: number
+  }[]
+}
+
 interface Championship {
   id: string
   avatarImageUrl: string
@@ -50,7 +60,7 @@ interface Championship {
   teams: string[]
   drivers: ChampionshipDriver[]
   driverStandings: ChampionshipDriverStandings
-  teamStandings: string
+  teamStandings: ChampionshipTeamStandings
   scoringSystem: string
   bonifications: string[]
   penalties: string[]

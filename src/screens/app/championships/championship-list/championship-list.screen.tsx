@@ -28,7 +28,7 @@ const ChampionshipListScreen: FunctionComponent<
         refreshing={loading}
         renderItem={renderItem}
         refetch={fetchChampionships}
-        refetchInterval={30}
+        refetchInterval={1}
         contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 10 }}
       />
     </View>

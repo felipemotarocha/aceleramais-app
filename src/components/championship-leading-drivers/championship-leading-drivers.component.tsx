@@ -97,24 +97,26 @@ const ChampionshipLeadingDrivers: FunctionComponent<
         </TextRegular>
       ) : (
         <>
-          <View>
+          {firstDriver && (
             <View style={styles.driverItem}>
               {renderImage(firstDriver)}
               <View>{renderDriverInfo(firstDriver)}</View>
             </View>
+          )}
 
+          {secondDriver && (
             <View style={styles.driverItem}>
               {renderImage(secondDriver)}
               <View>{renderDriverInfo(secondDriver)}</View>
             </View>
-          </View>
+          )}
 
-          <View>
+          {thirdDriver && (
             <View style={styles.driverItem}>
               {renderImage(thirdDriver)}
               <View>{renderDriverInfo(thirdDriver)}</View>
             </View>
-          </View>
+          )}
 
           <CustomButton variant="outlined">
             Ver Classificação Completa
