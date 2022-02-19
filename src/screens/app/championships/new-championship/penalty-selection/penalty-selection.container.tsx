@@ -124,6 +124,7 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
       handleAddPress={handleAddPress}
       renderItem={renderItem}
       handleAdvancePress={handleAdvancePress}
+      loading={rest.loading}
     />
   )
 }

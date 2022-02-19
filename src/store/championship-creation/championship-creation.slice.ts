@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import Championship from '~types/championship.types'
 
 import Track from '~types/track.types'
 
@@ -116,7 +117,7 @@ const championshipSlice = createSlice({
       state.loading = true
       state.error = undefined
     },
-    createChampionshipSuccess: (state) => {
+    createChampionshipSuccess: (state, action: PayloadAction<Championship>) => {
       state.loading = false
       state.error = undefined
     },

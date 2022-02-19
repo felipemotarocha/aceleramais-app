@@ -60,6 +60,8 @@ export const createChampionship = (
         admins
       }
 
+      console.log(JSON.stringify(payload))
+
       const formData = new FormData()
 
       formData.append('data', JSON.stringify(payload))
@@ -73,12 +75,12 @@ export const createChampionship = (
       }
 
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/championship`, {
+      const response = await fetch(`${API_URL}/api/championship`, {
         body: formData as any,
         method: 'POST'
       })
 
-      return dispatch(createChampionshipSuccess())
+      return dispatch(createChampionshipSuccess(response))
     } catch (error) {
       return dispatch(createChampionshipFailure(error as any))
     }
