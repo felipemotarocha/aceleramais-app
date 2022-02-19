@@ -30,7 +30,10 @@ const ChampionshipDetailsScreen: FunctionComponent<
             avatarImageUrl={championshipDetails?.avatarImageUrl}
           />
 
-          <ChampionshipNextRaces nextRaces={championshipDetails.nextRaces} />
+          <ChampionshipNextRaces
+            championship={championshipDetails.id}
+            nextRaces={championshipDetails.nextRaces}
+          />
 
           <ChampionshipLeadingDrivers
             driverStandings={championshipDetails.driverStandings}

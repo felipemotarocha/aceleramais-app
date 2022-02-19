@@ -6,13 +6,15 @@ import userReducer from './user/user.slice'
 import championshipCreationReducer from './championship-creation/championship-creation.slice'
 import championshipsReducer from './championships/championships.slice'
 import championshipDetailsReducer from './championship-details/championship-details.slice'
+import championshipRacesReducer from './championship-races/championship-races.slice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     championshipCreation: championshipCreationReducer,
     championships: championshipsReducer,
-    championshipDetails: championshipDetailsReducer
+    championshipDetails: championshipDetailsReducer,
+    championshipRaces: championshipRacesReducer
   }
 })
 

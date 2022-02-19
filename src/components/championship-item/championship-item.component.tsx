@@ -52,13 +52,13 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
         </TextSemiBold>
 
         <TextRegular style={{ fontSize: 12, flex: 1 }}>
-          <TextMedium style={{ fontSize: 12 }}>Plataforma: </TextMedium>{' '}
+          <TextMedium style={{ fontSize: 12 }}>Plataforma:</TextMedium>{' '}
           {platform}
         </TextRegular>
 
         {nextRace && (
           <TextRegular style={{ fontSize: 12, flex: 1 }}>
-            <TextMedium style={{ fontSize: 12 }}>Próxima Corrida: </TextMedium>{' '}
+            <TextMedium style={{ fontSize: 12 }}>Próxima Corrida:</TextMedium>{' '}
             {format(new Date(nextRace.startDate), 'dd/MM/yyyy, HH:mm')}
           </TextRegular>
         )}

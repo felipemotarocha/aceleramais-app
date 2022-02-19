@@ -2,6 +2,7 @@ import * as React from 'react'
 import { format } from 'date-fns'
 import { StyleSheet, View } from 'react-native'
 import CountryFlag from 'react-native-country-flag'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
@@ -11,17 +12,29 @@ import CustomButton from '~components/common/custom-button/custom-button.compone
 
 // Utilities
 import Race from '~types/race.types'
+import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 interface ChampionshipNextRacesProps {
+  championship: string
   nextRaces: Race[]
 }
 
 const ChampionshipNextRaces: React.FunctionComponent<
   ChampionshipNextRacesProps
-> = ({ nextRaces }) => {
+> = ({ championship, nextRaces }) => {
+  const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
+
   const firstRace = nextRaces?.[0]
   const secondRace = nextRaces?.[1]
   const thirdRace = nextRaces?.[2]
+
+  const handleSeeAllRacesPress = React.useCallback(
+    () =>
+      navigation.navigate('Championship Races', {
+        championship
+      }),
+    [navigation, championship]
+  )
 
   const renderItem = React.useCallback((race: Race) => {
     if (!race) return null
@@ -39,7 +52,7 @@ const ChampionshipNextRaces: React.FunctionComponent<
             {race.track.name}
           </TextMedium>
           <TextRegular style={{ fontSize: 12 }} numberOfLines={1}>
-            <TextMedium style={{ fontSize: 12 }}>Data: </TextMedium>{' '}
+            <TextMedium style={{ fontSize: 12 }}>Data:</TextMedium>{' '}
             {format(new Date(race.startDate), 'dd/MM/yyyy, HH:mm')}
           </TextRegular>
         </View>
@@ -56,7 +69,9 @@ const ChampionshipNextRaces: React.FunctionComponent<
       {renderItem(secondRace)}
       {renderItem(thirdRace)}
 
-      <CustomButton variant="outlined">Ver Todas as Corridas</CustomButton>
+      <CustomButton variant="outlined" onPress={handleSeeAllRacesPress}>
+        Ver Todas as Corridas
+      </CustomButton>
     </>
   )
 }
