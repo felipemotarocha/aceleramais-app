@@ -19,6 +19,7 @@ import { getChampionshipRaces } from '~store/championship-races/championship-rac
 import { ChampionshipRacesScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
 import Race from '~types/race.types'
 import Colors from '~constants/colors.constants'
+import { clear } from '~store/championship-races/championship-races.slice'
 
 interface ChampionshipRacesContainerProps {}
 
@@ -35,8 +36,11 @@ const ChampionshipRacesContainer: FunctionComponent<
     (state) => state.championshipRaces
   )
 
+  // @ts-ignore
   useEffect(() => {
     dispatch(getChampionshipRaces(championship))
+
+    return () => dispatch(clear())
   }, [championship, dispatch])
 
   const renderItem = useCallback(

@@ -1,7 +1,7 @@
 import React from 'react'
-import mockAxios from 'jest-mock-axios'
+import axiosMock from 'axios'
 
-import { render, waitFor, fireEvent, cleanup } from '~helpers/test.helpers'
+import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import ChampionshipTrackSelectionContainer from './track-selection.container'
 
 describe('Championship Tracks Selection', () => {
@@ -27,34 +27,29 @@ describe('Championship Tracks Selection', () => {
     }
   }
 
-  afterEach(() => {
-    mockAxios.reset()
-    cleanup()
-  })
-
   it('should render all the Tracks', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: initialState.championshipCreation.tracks
+    })
+
     const { getByText } = render(
       <ChampionshipTrackSelectionContainer />,
       initialState as any
     )
-
-    const response = { data: initialState.championshipCreation.tracks }
-
-    mockAxios.mockResponse(response)
 
     await waitFor(async () => getByText(/autódromo josé carlos pace/i))
     await waitFor(async () => getByText(/circuit de barcelona-catalunya/i))
   })
 
   it('should select an unselected Track on press', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: initialState.championshipCreation.tracks
+    })
+
     const { getByText, getByLabelText } = render(
       <ChampionshipTrackSelectionContainer />,
       initialState as any
     )
-
-    const response = { data: initialState.championshipCreation.tracks }
-
-    mockAxios.mockResponse(response)
 
     await waitFor(async () => getByText(/autódromo josé carlos pace/i))
 
@@ -64,14 +59,14 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should filter the Tracks by Country Name based on the search input', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: initialState.championshipCreation.tracks
+    })
+
     const { getByText, queryByText, getByPlaceholderText } = render(
       <ChampionshipTrackSelectionContainer />,
       initialState as any
     )
-
-    const response = { data: initialState.championshipCreation.tracks }
-
-    mockAxios.mockResponse(response)
 
     await waitFor(() => getByText(/autódromo josé carlos pace/i))
     await waitFor(() => getByText(/circuit de barcelona-catalunya/i))
@@ -83,14 +78,14 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should filter the Tracks by Name based on the search input', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: initialState.championshipCreation.tracks
+    })
+
     const { getByText, queryByText, getByPlaceholderText } = render(
       <ChampionshipTrackSelectionContainer />,
       initialState as any
     )
-
-    const response = { data: initialState.championshipCreation.tracks }
-
-    mockAxios.mockResponse(response)
 
     await waitFor(() => getByText(/autódromo josé carlos pace/i))
     await waitFor(() => getByText(/circuit de barcelona-catalunya/i))
@@ -105,14 +100,14 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should show an error on submit if no Track is selected', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: initialState.championshipCreation.tracks
+    })
+
     const { getByText } = render(
       <ChampionshipTrackSelectionContainer />,
       initialState as any
     )
-
-    const response = { data: initialState.championshipCreation.tracks }
-
-    mockAxios.mockResponse(response)
 
     await waitFor(() => getByText(/autódromo josé carlos pace/i))
     await waitFor(() => getByText(/circuit de barcelona-catalunya/i))

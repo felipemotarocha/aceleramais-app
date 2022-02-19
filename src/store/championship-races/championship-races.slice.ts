@@ -31,6 +31,11 @@ const championshipRacesSlice = createSlice({
       state.championshipRaces = []
       state.loading = false
       state.error = action.payload
+    },
+    clear(state) {
+      state.championshipRaces = []
+      state.error = null
+      state.loading = false
     }
   }
 })
@@ -38,7 +43,8 @@ const championshipRacesSlice = createSlice({
 export const {
   getChampionshipRacesStart,
   getChampionshipRacesSuccess,
-  getChampionshipRacesFailure
+  getChampionshipRacesFailure,
+  clear
 } = championshipRacesSlice.actions
 
 const championshipRacesReducer = championshipRacesSlice.reducer

@@ -15,7 +15,7 @@ describe('Custom Button', () => {
 
     expect(buttonElement).toBeDefined()
     expect(buttonElement).toHaveStyle({
-      fontSize: 12
+      fontSize: 10
     })
 
     const pressableElement = getByLabelText('Press the button')
@@ -39,7 +39,7 @@ describe('Custom Button', () => {
 
     expect(buttonElement).toBeDefined()
     expect(buttonElement).toHaveStyle({
-      fontSize: 12
+      fontSize: 10
     })
 
     const pressableElement = getByLabelText('Press the button')
