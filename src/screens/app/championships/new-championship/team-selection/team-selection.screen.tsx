@@ -152,15 +152,16 @@ const ChampionshipTeamSelectionScreen: FunctionComponent<
           </CustomButton>
         </View>
 
-        <View style={{ flex: 1, marginTop: 20 }}>
+        <View style={{ flex: 1 }}>
           <FlatList
             data={teams}
             renderItem={renderTeamItem}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingTop: 20 }}
           />
         </View>
 
-        <View style={{ marginVertical: 20 }}>
+        <View style={{ marginBottom: 20 }}>
           {isEmpty(teams) ? (
             <CustomButton variant="outlined" onPress={handleSubmit}>
               Pular

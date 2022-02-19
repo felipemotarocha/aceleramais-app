@@ -100,7 +100,7 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
 
         <CustomButton
           variant="outlined"
-          style={{ marginVertical: 20 }}
+          style={{ marginTop: 20 }}
           onPress={_handleAddPress((data) => {
             handleAddPress(data, reset)
           })}>
@@ -116,16 +116,15 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.position}
             enableAutomaticScroll={Platform.OS === 'ios'}
+            contentContainerStyle={{ paddingTop: 20 }}
           />
 
-          <View style={{ marginTop: 20 }}>
-            <CustomButton
-              variant="primary"
-              disabled={scoringSystem.length === 0}
-              onPress={methods.handleSubmit(handleSubmit)}>
-              Avançar
-            </CustomButton>
-          </View>
+          <CustomButton
+            variant="primary"
+            disabled={scoringSystem.length === 0}
+            onPress={methods.handleSubmit(handleSubmit)}>
+            Avançar
+          </CustomButton>
         </FormProvider>
       </View>
     </View>
