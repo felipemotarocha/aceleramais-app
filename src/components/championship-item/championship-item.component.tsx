@@ -18,6 +18,7 @@ interface ChampionshipItemProps {
   platform: string
   nextRace: Race
   avatarImageUrl?: string
+  goToDetailsOnPress: boolean
 }
 
 const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
@@ -25,7 +26,8 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
   name,
   platform,
   nextRace,
-  avatarImageUrl
+  avatarImageUrl,
+  goToDetailsOnPress
 }) => {
   const navigation = useNavigation<ChampionshipListScreenNavigationProp>()
 
@@ -34,7 +36,9 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
     [navigation]
   )
   return (
-    <Pressable style={styles.container} onPress={handlePress}>
+    <Pressable
+      style={styles.container}
+      onPress={goToDetailsOnPress ? handlePress : () => {}}>
       <View style={styles.imageContainer}>
         <Image
           style={{ flex: 1, borderRadius: 75 }}

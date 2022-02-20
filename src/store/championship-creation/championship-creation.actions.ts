@@ -60,8 +60,6 @@ export const createChampionship = (
         admins
       }
 
-      console.log(JSON.stringify(payload))
-
       const formData = new FormData()
 
       formData.append('data', JSON.stringify(payload))

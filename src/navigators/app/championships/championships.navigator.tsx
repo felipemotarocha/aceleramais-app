@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ChampionshipListScreen from '~screens/app/championships/championship-list/championship-list.container'
 import ChampionshipDetailsScreen from '~screens/app/championships/championship-details/championship-details.container'
 import ChampionshipRacesScreen from '~screens/app/championships/championship-races/championship-races.container'
+import ChampionshipDriverStandingsScreen from '~screens/app/championships/championship-driver-standings/championship-driver-standings.container'
 
 // Navigators
 import NewChampionshipNavigator from './new-championship/new-championship.navigator'
@@ -36,6 +37,10 @@ const ChampionshipsNavigator: FunctionComponent<
       <Stack.Screen
         name="Championship Races"
         component={ChampionshipRacesScreen}
+      />
+      <Stack.Screen
+        name="Championship Driver Standings"
+        component={ChampionshipDriverStandingsScreen}
       />
     </Stack.Navigator>
   )

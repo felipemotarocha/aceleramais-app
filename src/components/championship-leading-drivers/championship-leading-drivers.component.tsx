@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
@@ -7,17 +8,21 @@ import CustomButton from '~components/common/custom-button/custom-button.compone
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 // Utilities
 import { ChampionshipDriverStandings } from '~types/championship.types'
 
 interface ChampionshipLeadingDriversProps {
+  championship: string
   driverStandings: ChampionshipDriverStandings
 }
 
 const ChampionshipLeadingDrivers: FunctionComponent<
   ChampionshipLeadingDriversProps
-> = ({ driverStandings }) => {
+> = ({ championship, driverStandings }) => {
+  const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
+
   const firstDriver = driverStandings.standings[0]
   const secondDriver = driverStandings.standings?.[1]
   const thirdDriver = driverStandings.standings?.[2]
@@ -86,6 +91,12 @@ const ChampionshipLeadingDrivers: FunctionComponent<
     )
   }, [])
 
+  const handleSeeStandingsPress = useCallback(
+    () =>
+      navigation.navigate('Championship Driver Standings', { championship }),
+    [navigation, championship]
+  )
+
   return (
     <View style={styles.container}>
       <TextSemiBold style={{ fontSize: 14, marginTop: 20, marginBottom: 10 }}>
@@ -118,7 +129,7 @@ const ChampionshipLeadingDrivers: FunctionComponent<
             </View>
           )}
 
-          <CustomButton variant="outlined">
+          <CustomButton variant="outlined" onPress={handleSeeStandingsPress}>
             Ver Classificação Completa
           </CustomButton>
         </>
@@ -130,8 +141,6 @@ const ChampionshipLeadingDrivers: FunctionComponent<
 const styles = StyleSheet.create({
   container: {
     width: '100%'
-    // flexDirection: 'row',
-    // alignItems: 'center'
   },
   driverItem: {
     flex: 1,

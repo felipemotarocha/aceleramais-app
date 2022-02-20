@@ -36,6 +36,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
           />
 
           <ChampionshipLeadingDrivers
+            championship={championshipDetails.id}
             driverStandings={championshipDetails.driverStandings}
           />
 

@@ -7,6 +7,7 @@ import championshipCreationReducer from './championship-creation/championship-cr
 import championshipsReducer from './championships/championships.slice'
 import championshipDetailsReducer from './championship-details/championship-details.slice'
 import championshipRacesReducer from './championship-races/championship-races.slice'
+import championshipDriverStandingsReducer from './championship-driver-standings/championship-driver-standings.slice'
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ const store = configureStore({
     championshipCreation: championshipCreationReducer,
     championships: championshipsReducer,
     championshipDetails: championshipDetailsReducer,
-    championshipRaces: championshipRacesReducer
+    championshipRaces: championshipRacesReducer,
+    championshipDriverStandings: championshipDriverStandingsReducer
   }
 })
 

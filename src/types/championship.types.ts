@@ -24,19 +24,21 @@ export interface ChampionshipAdmin {
   isCreator: boolean
 }
 
+export interface ChampionshipDriverStandingsItem {
+  user?: User
+  id?: string
+  firstName?: string
+  lastName?: string
+  team?: Team
+  position: number
+  points: number
+  isRegistered: boolean
+}
+
 export interface ChampionshipDriverStandings {
   id: string
   championship: string
-  standings: {
-    user?: User
-    id?: string
-    firstName?: string
-    lastName?: string
-    team?: Team
-    position: number
-    points: number
-    isRegistered: boolean
-  }[]
+  standings: ChampionshipDriverStandingsItem[]
 }
 
 export interface ChampionshipTeamStandings {
