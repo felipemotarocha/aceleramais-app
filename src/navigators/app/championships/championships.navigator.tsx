@@ -6,6 +6,7 @@ import ChampionshipListScreen from '~screens/app/championships/championship-list
 import ChampionshipDetailsScreen from '~screens/app/championships/championship-details/championship-details.container'
 import ChampionshipRacesScreen from '~screens/app/championships/championship-races/championship-races.container'
 import ChampionshipDriverStandingsScreen from '~screens/app/championships/championship-driver-standings/championship-driver-standings.container'
+import ChampionshipTeamStandingsScreen from '~screens/app/championships/championship-team-standings/championship-team-standings.container'
 
 // Navigators
 import NewChampionshipNavigator from './new-championship/new-championship.navigator'
@@ -41,6 +42,10 @@ const ChampionshipsNavigator: FunctionComponent<
       <Stack.Screen
         name="Championship Driver Standings"
         component={ChampionshipDriverStandingsScreen}
+      />
+      <Stack.Screen
+        name="Championship Team Standings"
+        component={ChampionshipTeamStandingsScreen}
       />
     </Stack.Navigator>
   )

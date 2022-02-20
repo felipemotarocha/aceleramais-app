@@ -41,6 +41,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
           />
 
           <ChampionshipLeadingTeams
+            championship={championshipDetails.id}
             teamStandings={championshipDetails.teamStandings}
           />
         </ScrollView>

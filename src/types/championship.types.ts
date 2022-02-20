@@ -35,6 +35,12 @@ export interface ChampionshipDriverStandingsItem {
   isRegistered: boolean
 }
 
+export interface ChampionshipTeamStandingsItem {
+  team: Team
+  position: number
+  points: number
+}
+
 export interface ChampionshipDriverStandings {
   id: string
   championship: string
@@ -44,11 +50,7 @@ export interface ChampionshipDriverStandings {
 export interface ChampionshipTeamStandings {
   id: string
   championship: string
-  standings: {
-    team: Team
-    position: number
-    points: number
-  }[]
+  standings: ChampionshipTeamStandingsItem[]
 }
 
 interface Championship {

@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
@@ -10,14 +11,18 @@ import CustomButton from '~components/common/custom-button/custom-button.compone
 
 // Utilities
 import { ChampionshipTeamStandings } from '~types/championship.types'
+import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 interface ChampionshipLeadingTeamsProps {
+  championship: string
   teamStandings: ChampionshipTeamStandings
 }
 
 const ChampionshipLeadingTeams: FunctionComponent<
   ChampionshipLeadingTeamsProps
-> = ({ teamStandings }) => {
+> = ({ championship, teamStandings }) => {
+  const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
+
   const firstTeam = teamStandings.standings[0]
   const secondTeam = teamStandings.standings?.[1]
   const thirdTeam = teamStandings.standings?.[2]
@@ -54,6 +59,11 @@ const ChampionshipLeadingTeams: FunctionComponent<
     )
   }, [])
 
+  const handleSeeStandingsPress = useCallback(
+    () => navigation.navigate('Championship Team Standings', { championship }),
+    [navigation, championship]
+  )
+
   return (
     <>
       <TextSemiBold style={{ fontSize: 14, marginBottom: 10, marginTop: 20 }}>
@@ -70,7 +80,7 @@ const ChampionshipLeadingTeams: FunctionComponent<
           {renderItem(secondTeam)}
           {renderItem(thirdTeam)}
 
-          <CustomButton variant="outlined">
+          <CustomButton variant="outlined" onPress={handleSeeStandingsPress}>
             Ver Classificação Completa
           </CustomButton>
         </>
