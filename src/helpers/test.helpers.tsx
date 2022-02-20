@@ -12,6 +12,7 @@ import championshipsReducer from '~store/championships/championships.slice'
 import championshipDetailsReducer from '~store/championship-details/championship-details.slice'
 import championshipRacesReducer from '~store/championship-races/championship-races.slice'
 import championshipDriverStandingsReducer from '~store/championship-driver-standings/championship-driver-standings.slice'
+import championshipTeamStandingsReducer from '~store/championship-team-standings/championship-team-standings.slice'
 
 function render(
   ui,
@@ -25,7 +26,8 @@ function render(
         championships: championshipsReducer,
         championshipDetails: championshipDetailsReducer,
         championshipRaces: championshipRacesReducer,
-        championshipDriverStandings: championshipDriverStandingsReducer
+        championshipDriverStandings: championshipDriverStandingsReducer,
+        championshipTeamStandings: championshipTeamStandingsReducer
       },
       preloadedState
     }),
