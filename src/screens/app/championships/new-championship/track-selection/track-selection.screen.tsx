@@ -58,7 +58,7 @@ const ChampionshipTrackSelectionScreen: FunctionComponent<
     <View style={styles.container}>
       <Header showBack>Selecionar Circuitos</Header>
 
-      <View style={{ paddingHorizontal: 20, paddingTop: 20, marginBottom: 20 }}>
+      <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         <Controller
           control={control}
           rules={{
@@ -92,11 +92,12 @@ const ChampionshipTrackSelectionScreen: FunctionComponent<
         data={isEmpty(filteredTracks) ? tracks : filteredTracks}
         contentContainerStyle={{
           paddingHorizontal: 20,
-          paddingBottom: 20
+          paddingBottom: 10,
+          paddingTop: 10
         }}
       />
 
-      <View style={{ paddingHorizontal: 20, paddingBottom: 20, marginTop: 10 }}>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
         <CustomButton
           variant="primary"
           onPress={_handleSubmit(handleSubmit as any)}>
