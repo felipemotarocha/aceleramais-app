@@ -10,6 +10,7 @@ import Championship, {
 } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
 import ChampionshipItem from '~components/championship-item/championship-item.component'
+import { isEmpty } from 'lodash'
 
 interface ChampionshipDriverStandingsScreenProps {
   championship?: Championship
@@ -51,7 +52,9 @@ const ChampionshipDriverStandingsScreen: FunctionComponent<
         data={championshipDriverStandings?.standings}
         refetch={fetch}
         refetchInterval={1}
-        refreshing={loading}
+        refreshing={
+          isEmpty(championshipDriverStandings?.standings) ? false : loading
+        }
         renderItem={renderItem}
         contentContainerStyle={{
           paddingHorizontal: 20,

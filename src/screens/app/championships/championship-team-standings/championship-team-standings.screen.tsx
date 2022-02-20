@@ -12,6 +12,7 @@ import Championship, {
   ChampionshipTeamStandingsItem
 } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
+import { isEmpty } from 'lodash'
 
 interface ChampionshipTeamStandingsScreenProps {
   championship?: Championship
@@ -49,7 +50,9 @@ const ChampionshipTeamStandingsScreen: FunctionComponent<
         data={championshipTeamStandings?.standings}
         refetch={fetch}
         refetchInterval={1}
-        refreshing={loading}
+        refreshing={
+          isEmpty(championshipTeamStandings?.standings) ? false : loading
+        }
         renderItem={renderItem}
         contentContainerStyle={{
           paddingHorizontal: 20,
