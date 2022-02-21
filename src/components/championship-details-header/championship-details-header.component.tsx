@@ -5,17 +5,25 @@ import { StyleSheet, View, Image } from 'react-native'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 interface ChampionshipDetailsHeaderProps {
   name: string
   platform: string
   description?: string
   avatarImageUrl?: string
+  editButtonIsToBeShown: boolean
 }
 
 const ChampionshipDetailsHeader: FunctionComponent<
   ChampionshipDetailsHeaderProps
-> = ({ name, description, platform, avatarImageUrl }) => {
+> = ({
+  name,
+  description,
+  platform,
+  avatarImageUrl,
+  editButtonIsToBeShown
+}) => {
   return (
     <View>
       <View style={styles.top}>
@@ -39,6 +47,20 @@ const ChampionshipDetailsHeader: FunctionComponent<
             <TextMedium style={{ fontSize: 12 }}>Plataforma: </TextMedium>
             {platform}
           </TextRegular>
+
+          {editButtonIsToBeShown && (
+            <CustomButton
+              variant="primary"
+              style={{
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                alignItems: 'flex-start',
+                alignSelf: 'flex-start',
+                marginTop: 5
+              }}>
+              Editar
+            </CustomButton>
+          )}
         </View>
       </View>
 

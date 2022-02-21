@@ -28,6 +28,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
             platform={championshipDetails.platform}
             description={championshipDetails.description}
             avatarImageUrl={championshipDetails?.avatarImageUrl}
+            admins={championshipDetails.admins}
           />
 
           <ChampionshipNextRaces
