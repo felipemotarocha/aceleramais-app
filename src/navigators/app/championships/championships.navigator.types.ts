@@ -8,6 +8,7 @@ export type ChampionshipsStackParamList = {
   'Championship Races': { championship: string }
   'Championship Driver Standings': { championship: string }
   'Championship Team Standings': { championship: string }
+  'Championship Edition': { championship: string }
 }
 
 export type ChampionshipListScreenRouteProp = RouteProp<
@@ -33,6 +34,10 @@ export type ChampionshipDriverStandingsScreenRouteProp = RouteProp<
 export type ChampionshipTeamStandingsScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Championship Team Standings'
+>
+export type ChampionshipEditionScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'Championship Edition'
 >
 
 export type ChampionshipListScreenNavigationProp = NativeStackNavigationProp<
@@ -61,3 +66,7 @@ export type ChampionshipTeamStandingsScreenNavigationProp =
     ChampionshipsStackParamList,
     'Championship Team Standings'
   >
+export type ChampionshipEditionScreenNavigationProp = NativeStackNavigationProp<
+  ChampionshipsStackParamList,
+  'Championship Edition'
+>
