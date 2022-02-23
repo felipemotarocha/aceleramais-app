@@ -1,5 +1,5 @@
-import { useRoute } from '@react-navigation/native'
-import { StyleSheet, View } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
 import { format } from 'date-fns'
 import CountryFlag from 'react-native-country-flag'
@@ -17,7 +17,10 @@ import { getChampionshipRaces } from '~store/championship-races/championship-rac
 import { clear } from '~store/championship-races/championship-races.slice'
 
 // Utilities
-import { ChampionshipRaceSelectionScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
+import {
+  ChampionshipRaceSelectionNavigationProp,
+  ChampionshipRaceSelectionScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 import Race from '~types/race.types'
 import Colors from '~constants/colors.constants'
 
@@ -32,6 +35,8 @@ const ChampionshipRaceSelectionContainer: FunctionComponent<
 
   const dispatch = useAppDispatch()
 
+  const navigation = useNavigation<ChampionshipRaceSelectionNavigationProp>()
+
   const { championshipRaces } = useAppSelector(
     (state) => state.championshipRaces
   )
@@ -44,9 +49,17 @@ const ChampionshipRaceSelectionContainer: FunctionComponent<
     }
   }, [championship, dispatch])
 
+  const handleItemPress = useCallback(
+    (race: string) =>
+      navigation.navigate('Race Classification Edition', { race }),
+    [navigation]
+  )
+
   const renderItem = useCallback(
     ({ item }: { item: Race }) => (
-      <View style={styles.raceItem}>
+      <Pressable
+        style={styles.raceItem}
+        onPress={() => handleItemPress(item.id)}>
         <CountryFlag
           isoCode={item.track.countryCode}
           size={28}
@@ -79,7 +92,7 @@ const ChampionshipRaceSelectionContainer: FunctionComponent<
             {item.isCompleted && ' (concluída)'}
           </TextRegular>
         </View>
-      </View>
+      </Pressable>
     ),
     []
   )

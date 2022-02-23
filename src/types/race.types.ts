@@ -9,4 +9,20 @@ interface Race {
   classification: string
 }
 
+export interface RaceClassificationItem {
+  position: number
+  user?: string
+  id?: string
+  firstName?: string
+  lastName?: string
+  team?: string
+  isRegistered: boolean
+}
+
+export interface RaceClassification {
+  id: string
+  race: Race
+  classification: RaceClassificationItem[]
+}
+
 export default Race
