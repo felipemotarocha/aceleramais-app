@@ -5,7 +5,7 @@ import React, { FunctionComponent, useEffect } from 'react'
 import RaceClassificationEditionScreen from './race-classification-edition.screen'
 
 // Redux
-import { useAppDispatch } from '~store'
+import { useAppDispatch, useAppSelector } from '~store'
 import { getRaceClassification } from '~store/race-classification/race-classification.actions'
 import { clear } from '~store/race-classification/race-classification.slice'
 
@@ -21,6 +21,10 @@ const RaceClassificationEditionContainer: FunctionComponent<
     params: { race }
   } = useRoute<RaceClassificationEditionScreenRouteProp>()
 
+  const { raceClassification } = useAppSelector(
+    (state) => state.raceClassificationReducer
+  )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -31,7 +35,9 @@ const RaceClassificationEditionContainer: FunctionComponent<
     }
   }, [race, dispatch])
 
-  return <RaceClassificationEditionScreen />
+  return (
+    <RaceClassificationEditionScreen raceClassification={raceClassification} />
+  )
 }
 
 export default RaceClassificationEditionContainer
