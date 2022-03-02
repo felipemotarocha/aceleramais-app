@@ -1,4 +1,5 @@
 import Track from './track.types'
+import User from './user.types'
 
 interface Race {
   id: string
@@ -11,7 +12,7 @@ interface Race {
 
 export interface RaceClassificationItem {
   position: number
-  user?: string
+  user?: User
   id?: string
   firstName?: string
   lastName?: string
@@ -22,6 +23,7 @@ export interface RaceClassificationItem {
 export interface RaceClassification {
   id: string
   race: Race
+  championship: string
   classification: RaceClassificationItem[]
 }
 

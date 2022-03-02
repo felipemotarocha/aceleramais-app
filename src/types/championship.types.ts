@@ -3,7 +3,7 @@ import Team from './team.types'
 import User from './user.types'
 
 export interface ChampionshipDriver {
-  user?: string
+  user?: User
   id?: string
   firstName?: string
   lastName?: string
@@ -20,7 +20,7 @@ export interface ChampionshipDriver {
 }
 
 export interface ChampionshipAdmin {
-  user: string
+  user: User
   isCreator: boolean
 }
 

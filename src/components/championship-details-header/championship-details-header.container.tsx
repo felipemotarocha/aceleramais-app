@@ -27,7 +27,7 @@ const ChampionshipDetailsHeaderContainer: FunctionComponent<
   const { currentUser } = useAppSelector((state) => state.user)
 
   const editButtonIsToBeShown = useMemo(
-    () => admins.some((admin) => admin.user === currentUser?.id),
+    () => admins.some((admin) => admin.user.id === currentUser?.id),
     [admins, currentUser]
   )
 

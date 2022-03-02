@@ -1,5 +1,10 @@
 import { useRoute } from '@react-navigation/native'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 
 // Screens
 import RaceClassificationEditionScreen from './race-classification-edition.screen'
@@ -21,6 +26,9 @@ const RaceClassificationEditionContainer: FunctionComponent<
     params: { race }
   } = useRoute<RaceClassificationEditionScreenRouteProp>()
 
+  const [driversSelectionModalIsVisible, setDriversSelectionModalIsVisible] =
+    useState(false)
+
   const { raceClassification } = useAppSelector(
     (state) => state.raceClassificationReducer
   )
@@ -35,8 +43,18 @@ const RaceClassificationEditionContainer: FunctionComponent<
     }
   }, [race, dispatch])
 
+  const handleEditDriversPress = useCallback(
+    () => setDriversSelectionModalIsVisible((prevState) => !prevState),
+    []
+  )
+
   return (
-    <RaceClassificationEditionScreen raceClassification={raceClassification} />
+    <RaceClassificationEditionScreen
+      raceClassification={raceClassification}
+      driversSelectionModalIsVisible={driversSelectionModalIsVisible}
+      setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
+      handleEditDriversPress={handleEditDriversPress}
+    />
   )
 }
 

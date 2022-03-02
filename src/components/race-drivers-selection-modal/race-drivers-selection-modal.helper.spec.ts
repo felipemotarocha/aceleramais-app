@@ -3,7 +3,7 @@ import RaceDriversSelectionModalHelper from './race-drivers-selection-modal.help
 describe('Race Drivers Selection Modal Helper', () => {
   it('should correctly generate the drivers when a driver is already on the race classification', () => {
     expect(
-      RaceDriversSelectionModalHelper.generateDriversAvailableForSelection(
+      RaceDriversSelectionModalHelper.generateInitialSelectedDrivers(
         [
           {
             id: '1',
@@ -54,7 +54,7 @@ describe('Race Drivers Selection Modal Helper', () => {
 
   it('should correctly generate the drivers when all drivers are in the race classification', () => {
     expect(
-      RaceDriversSelectionModalHelper.generateDriversAvailableForSelection(
+      RaceDriversSelectionModalHelper.generateInitialSelectedDrivers(
         [
           {
             id: '1',

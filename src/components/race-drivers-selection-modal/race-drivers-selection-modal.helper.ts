@@ -2,7 +2,7 @@ import { ChampionshipDriver } from '~types/championship.types'
 import { RaceClassificationItem } from '~types/race.types'
 
 const RaceDriversSelectionModalHelper = {
-  generateDriversAvailableForSelection: (
+  generateInitialSelectedDrivers: (
     championshipDrivers: ChampionshipDriver[],
     raceClassification: RaceClassificationItem[]
   ) => {

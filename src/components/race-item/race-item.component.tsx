@@ -60,8 +60,7 @@ const RaceItem: FunctionComponent<RaceItemProps> = ({ race, handlePress }) => {
 const styles = StyleSheet.create({
   raceItem: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20
+    alignItems: 'center'
   }
 })
 
