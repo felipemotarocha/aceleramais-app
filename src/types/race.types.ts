@@ -1,3 +1,4 @@
+import Team from './team.types'
 import Track from './track.types'
 import User from './user.types'
 
@@ -16,7 +17,7 @@ export interface RaceClassificationItem {
   id?: string
   firstName?: string
   lastName?: string
-  team?: string
+  team?: Team
   isRegistered: boolean
 }
 
