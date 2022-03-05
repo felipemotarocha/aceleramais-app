@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { FlatList, View } from 'react-native'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import CustomModal from '~components/common/custom-modal/custom-modal.component'
@@ -9,7 +10,8 @@ import { RaceClassificationItem } from '~types/race.types'
 
 interface RaceDriversSelectionModalProps {
   isVisible: boolean
-  selectedDrivers: RaceClassificationItem[]
+  availableDrivers: RaceClassificationItem[]
+  handleSelectAllPress: () => void
   // eslint-disable-next-line no-undef
   renderItem: ({ item }: { item: RaceClassificationItem }) => JSX.Element
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,18 +19,34 @@ interface RaceDriversSelectionModalProps {
 
 const RaceDriversSelectionModal: FunctionComponent<
   RaceDriversSelectionModalProps
-> = ({ isVisible, selectedDrivers, setIsVisible, renderItem }) => {
+> = ({
+  isVisible,
+  availableDrivers,
+  handleSelectAllPress,
+  setIsVisible,
+  renderItem
+}) => {
   return (
     <CustomModal
       title="Selecionar Pilotos"
       isVisible={isVisible}
       setIsVisible={setIsVisible}>
-      <View>
+      <View style={{ flex: 1 }}>
         <FlatList
+          contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
           renderItem={renderItem}
-          data={selectedDrivers}
+          data={availableDrivers}
           keyExtractor={(item) => item?.id || item?.user?.id || ''}
         />
+      </View>
+
+      <View style={{ paddingHorizontal: 20, paddingBottom: 15 }}>
+        <CustomButton variant="outlined" onPress={handleSelectAllPress}>
+          Selecionar Todos
+        </CustomButton>
+        <CustomButton variant="primary" style={{ marginTop: 15 }}>
+          Salvar
+        </CustomButton>
       </View>
     </CustomModal>
   )

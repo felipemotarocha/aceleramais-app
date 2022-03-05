@@ -2,11 +2,12 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
+  useMemo,
   useState
 } from 'react'
 import axios from 'axios'
 import { isEmpty } from 'lodash'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Pressable } from 'react-native'
 
 // Components
 import RaceDriversSelectionModal from './race-drivers-selection-modal.component'
@@ -30,37 +31,83 @@ interface RaceDriversSelectionModalContainerProps {
 const RaceDriversSelectionModalContainer: FunctionComponent<
   RaceDriversSelectionModalContainerProps
 > = ({ championship, raceClassification, isVisible, setIsVisible }) => {
-  const [selectedDrivers, setSelectedDrivers] = useState<
+  const [availableDrivers, setAvailableDrivers] = useState<
     RaceClassificationItem[]
   >([])
 
   useEffect(() => {
-    const generateInitialSelectedDrivers = async () => {
+    const generateInitialAvailableDrivers = async () => {
       const { data }: { data: Championship } = await axios.get(
         `${API_URL}/api/championship/${championship}`
       )
 
-      const _selectedDrivers =
-        RaceDriversSelectionModalHelper.generateInitialSelectedDrivers(
+      const _availableDrivers =
+        RaceDriversSelectionModalHelper.generateInitialAvailableDrivers(
           data.drivers,
           raceClassification
         )
 
-      setSelectedDrivers(_selectedDrivers)
+      setAvailableDrivers(_availableDrivers)
     }
 
-    if (isEmpty(selectedDrivers)) {
-      generateInitialSelectedDrivers()
+    if (isEmpty(availableDrivers)) {
+      generateInitialAvailableDrivers()
     }
-  }, [selectedDrivers])
+  }, [availableDrivers])
+
+  const selectedDrivers = useMemo(() => {
+    return availableDrivers.filter((driver) => driver.position !== 0)
+  }, [availableDrivers])
+
+  const handleDriverPress = useCallback(
+    (driver: RaceClassificationItem) => {
+      const driverIsBeingUnselected = driver.position !== 0
+
+      const newAvailableDrivers = availableDrivers.map((_driver) => {
+        if (driver?.isRegistered && _driver?.user?.id !== driver?.user?.id) {
+          if (_driver.position > driver.position && driverIsBeingUnselected) {
+            return { ..._driver, position: _driver.position - 1 }
+          }
+
+          return _driver
+        }
+
+        if (!driver?.isRegistered && _driver?.id !== driver?.id) {
+          if (_driver.position > driver.position && driverIsBeingUnselected) {
+            return { ..._driver, position: _driver.position - 1 }
+          }
+
+          return _driver
+        }
+
+        return {
+          ..._driver,
+          position: _driver.position === 0 ? selectedDrivers.length + 1 : 0
+        }
+      })
+
+      setAvailableDrivers(newAvailableDrivers)
+    },
+    [availableDrivers, selectedDrivers]
+  )
+
+  const handleSelectAllPress = useCallback(() => {
+    const newAvailableDrivers = availableDrivers.map((driver, index) => ({
+      ...driver,
+      position: index + 1
+    }))
+
+    setAvailableDrivers(newAvailableDrivers)
+  }, [availableDrivers])
 
   const renderItem = useCallback(
     ({ item }: { item: RaceClassificationItem }) => {
       return (
-        <View
+        <Pressable
+          onPress={() => handleDriverPress(item)}
           style={[
             styles.itemContainer,
-            item.position === 0 && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
+            item.position !== 0 && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
           ]}>
           <View style={styles.left}>
             {item.position !== 0 && (
@@ -93,16 +140,17 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
           </View>
 
           <View style={styles.right}></View>
-        </View>
+        </Pressable>
       )
     },
-    []
+    [availableDrivers, selectedDrivers]
   )
 
   return (
     <RaceDriversSelectionModal
       isVisible={isVisible}
-      selectedDrivers={selectedDrivers}
+      availableDrivers={availableDrivers}
+      handleSelectAllPress={handleSelectAllPress}
       setIsVisible={setIsVisible}
       renderItem={renderItem}
     />
@@ -115,7 +163,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    padding: 8,
+    paddingHorizontal: 8,
     marginBottom: 15,
     borderRadius: 10
   },
