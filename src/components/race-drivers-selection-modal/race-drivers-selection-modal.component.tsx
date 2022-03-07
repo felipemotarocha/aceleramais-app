@@ -11,7 +11,9 @@ import { RaceClassificationItem } from '~types/race.types'
 interface RaceDriversSelectionModalProps {
   isVisible: boolean
   availableDrivers: RaceClassificationItem[]
+  handleDismiss: () => void
   handleSelectAllPress: () => void
+  handleSavePress: () => void
   // eslint-disable-next-line no-undef
   renderItem: ({ item }: { item: RaceClassificationItem }) => JSX.Element
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -23,6 +25,8 @@ const RaceDriversSelectionModal: FunctionComponent<
   isVisible,
   availableDrivers,
   handleSelectAllPress,
+  handleSavePress,
+  handleDismiss,
   setIsVisible,
   renderItem
 }) => {
@@ -30,7 +34,8 @@ const RaceDriversSelectionModal: FunctionComponent<
     <CustomModal
       title="Selecionar Pilotos"
       isVisible={isVisible}
-      setIsVisible={setIsVisible}>
+      setIsVisible={setIsVisible}
+      onDismiss={handleDismiss}>
       <View style={{ flex: 1 }}>
         <FlatList
           contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
@@ -44,7 +49,10 @@ const RaceDriversSelectionModal: FunctionComponent<
         <CustomButton variant="outlined" onPress={handleSelectAllPress}>
           Selecionar Todos
         </CustomButton>
-        <CustomButton variant="primary" style={{ marginTop: 15 }}>
+        <CustomButton
+          variant="primary"
+          style={{ marginTop: 15, marginBottom: 15 }}
+          onPress={handleSavePress}>
           Salvar
         </CustomButton>
       </View>

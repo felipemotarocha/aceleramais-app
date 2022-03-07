@@ -64,7 +64,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
 
           <RaceDriversSelectionModalContainer
             championship={raceClassification.race.championship}
-            raceClassification={raceClassification.classification}
+            raceClassification={raceClassification}
             isVisible={driversSelectionModalIsVisible}
             setIsVisible={setDriversSelectionModalIsVisible}
           />

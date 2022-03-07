@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, View, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Modal from 'react-native-modal'
+import Modal, { ModalProps } from 'react-native-modal'
 import { AntDesign } from '@expo/vector-icons'
 
 // Components
@@ -10,7 +10,7 @@ import TextBold from '../text-bold/text-bold.component'
 // Utilities
 import Colors from '~constants/colors.constants'
 
-interface CustomModalProps {
+interface CustomModalProps extends Partial<ModalProps> {
   title: string
   isVisible: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -20,12 +20,14 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
   children,
   title,
   isVisible,
-  setIsVisible
+  setIsVisible,
+  ...rest
 }) => {
   const insets = useSafeAreaInsets()
 
   return (
     <Modal
+      {...rest}
       animationIn={'slideInUp'}
       style={{
         margin: 0,

@@ -8,6 +8,7 @@ import React, {
 import axios from 'axios'
 import { isEmpty } from 'lodash'
 import { StyleSheet, View, Image, Pressable } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 // Components
 import RaceDriversSelectionModal from './race-drivers-selection-modal.component'
@@ -17,13 +18,16 @@ import TextRegular from '~components/common/text-regular/text-regular.component'
 
 // Utilities
 import Championship from '~types/championship.types'
-import { RaceClassificationItem } from '~types/race.types'
+import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import RaceDriversSelectionModalHelper from './race-drivers-selection-modal.helper'
 import { API_URL } from '~constants/config.constants'
 
+// Redux
+import { updateRaceClassification } from '~store/race-classification/race-classification.slice'
+
 interface RaceDriversSelectionModalContainerProps {
   championship: string
-  raceClassification: RaceClassificationItem[]
+  raceClassification: RaceClassification
   isVisible: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -35,6 +39,8 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     RaceClassificationItem[]
   >([])
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const generateInitialAvailableDrivers = async () => {
       const { data }: { data: Championship } = await axios.get(
@@ -44,7 +50,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
       const _availableDrivers =
         RaceDriversSelectionModalHelper.generateInitialAvailableDrivers(
           data.drivers,
-          raceClassification
+          raceClassification.classification
         )
 
       setAvailableDrivers(_availableDrivers)
@@ -100,6 +106,21 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     setAvailableDrivers(newAvailableDrivers)
   }, [availableDrivers])
 
+  const handleSavePress = useCallback(() => {
+    const newRaceClassification: RaceClassification = {
+      ...raceClassification,
+      classification: selectedDrivers.sort((a, b) => a.position - b.position)
+    }
+
+    dispatch(updateRaceClassification(newRaceClassification))
+
+    setIsVisible(false)
+  }, [dispatch, selectedDrivers])
+
+  const handleDismiss = useCallback(() => {
+    setAvailableDrivers([])
+  }, [setAvailableDrivers])
+
   const renderItem = useCallback(
     ({ item }: { item: RaceClassificationItem }) => {
       return (
@@ -153,6 +174,8 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
       handleSelectAllPress={handleSelectAllPress}
       setIsVisible={setIsVisible}
       renderItem={renderItem}
+      handleSavePress={handleSavePress}
+      handleDismiss={handleDismiss}
     />
   )
 }

@@ -54,6 +54,7 @@ export const {
   getRaceClassificationStart,
   getRaceClassificationSuccess,
   getRaceClassificationFailure,
+  updateRaceClassification,
   clear
 } = raceClassificationSlice.actions
 

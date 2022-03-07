@@ -7,7 +7,7 @@ export interface ChampionshipDriver {
   id?: string
   firstName?: string
   lastName?: string
-  team?: string
+  team?: Team
   isRegistered: boolean
   bonifications?: {
     bonification: string
