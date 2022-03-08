@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { View, StyleSheet, Pressable } from 'react-native'
+import { View, StyleSheet, Pressable, FlatList } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 // Components
@@ -10,7 +10,7 @@ import CustomButton from '~components/common/custom-button/custom-button.compone
 
 // Utilities
 import Colors from '~constants/colors.constants'
-import { RaceClassification } from '~types/race.types'
+import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import RaceDriversSelectionModalContainer from '~components/race-drivers-selection-modal/race-drivers-selection-modal.container'
 
 interface RaceClassificationEditionScreenProps {
@@ -20,6 +20,8 @@ interface RaceClassificationEditionScreenProps {
     React.SetStateAction<boolean>
   >
   raceClassification: RaceClassification | undefined
+  // eslint-disable-next-line no-undef
+  renderItem: ({ item }: { item: RaceClassificationItem }) => JSX.Element
 }
 
 const RaceClassificationEditionScreen: FunctionComponent<
@@ -28,7 +30,8 @@ const RaceClassificationEditionScreen: FunctionComponent<
   driversSelectionModalIsVisible,
   raceClassification,
   handleEditDriversPress,
-  setDriversSelectionModalIsVisible
+  setDriversSelectionModalIsVisible,
+  renderItem
 }) => {
   return (
     <View style={styles.container}>
@@ -52,7 +55,14 @@ const RaceClassificationEditionScreen: FunctionComponent<
             <Feather name="edit" size={22} color={Colors.textSecondary} />
           </Pressable>
 
-          <View style={{ flex: 1 }}></View>
+          <View style={{ flex: 1 }}>
+            <FlatList
+              renderItem={renderItem}
+              data={raceClassification?.classification}
+              keyExtractor={(item) => item?.id || item?.user?.id || ''}
+              style={{ paddingHorizontal: 20, paddingVertical: 15 }}
+            />
+          </View>
 
           <View
             style={{ paddingTop: 5, paddingHorizontal: 20, paddingBottom: 20 }}>
