@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useCallback, useEffect } from 'react'
 
 // Screens
 import ChampionshipDetailsScreen from './championship-details.screen'
@@ -22,15 +22,23 @@ const ChampionshipDetailsContainer: FunctionComponent<
 
   const dispatch = useAppDispatch()
 
-  const { championshipDetails } = useAppSelector(
+  const { championshipDetails, loading } = useAppSelector(
     (state) => state.championshipDetails
   )
 
-  useEffect(() => {
+  const fetchChampionshipDetails = useCallback(() => {
     dispatch(getChampionshipDetails(championship))
   }, [dispatch])
 
-  return <ChampionshipDetailsScreen championshipDetails={championshipDetails} />
+  useEffect(() => fetchChampionshipDetails(), [fetchChampionshipDetails])
+
+  return (
+    <ChampionshipDetailsScreen
+      championshipDetails={championshipDetails}
+      refreshing={loading}
+      refetch={fetchChampionshipDetails}
+    />
+  )
 }
 
 export default ChampionshipDetailsContainer
