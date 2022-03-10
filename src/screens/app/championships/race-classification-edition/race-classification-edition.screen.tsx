@@ -60,6 +60,13 @@ const RaceClassificationEditionScreen: FunctionComponent<
           <View style={{ flex: 1 }}>
             <FlatList
               renderItem={renderItem}
+              ListEmptyComponent={
+                <CustomButton
+                  variant="outlined"
+                  onPress={handleEditDriversPress}>
+                  Adicionar Pilotos
+                </CustomButton>
+              }
               data={raceClassification?.classification}
               keyExtractor={(item) => item?.id || item?.user?.id || ''}
               style={{ paddingHorizontal: 20, paddingVertical: 15 }}
