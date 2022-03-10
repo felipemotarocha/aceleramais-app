@@ -22,6 +22,7 @@ import {
   submitRaceClassificationEdit
 } from '~store/race-classification/race-classification.actions'
 import { clear } from '~store/race-classification/race-classification.slice'
+import { getChampionshipRaces } from '~store/championship-races/championship-races.actions'
 
 // Utilities
 import {
@@ -65,8 +66,10 @@ const RaceClassificationEditionContainer: FunctionComponent<
     []
   )
 
-  const handleSavePress = useCallback(() => {
-    dispatch(submitRaceClassificationEdit(raceClassification!))
+  const handleSavePress = useCallback(async () => {
+    await dispatch(submitRaceClassificationEdit(raceClassification!))
+
+    await dispatch(getChampionshipRaces(raceClassification!.race.championship!))
 
     navigation.goBack()
 
