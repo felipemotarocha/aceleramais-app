@@ -36,6 +36,21 @@ const raceClassificationSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    submitRaceClassificationEditStart: (state) => {
+      state.loading = true
+      state.error = null
+    },
+    submitRaceClassificationEditSuccess: (state) => {
+      state.loading = false
+      state.error = null
+    },
+    submitRaceClassificationEditFailure: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.loading = false
+      state.error = action.payload
+    },
     updateRaceClassification: (
       state,
       action: PayloadAction<RaceClassification>
@@ -54,6 +69,9 @@ export const {
   getRaceClassificationStart,
   getRaceClassificationSuccess,
   getRaceClassificationFailure,
+  submitRaceClassificationEditStart,
+  submitRaceClassificationEditSuccess,
+  submitRaceClassificationEditFailure,
   updateRaceClassification,
   clear
 } = raceClassificationSlice.actions

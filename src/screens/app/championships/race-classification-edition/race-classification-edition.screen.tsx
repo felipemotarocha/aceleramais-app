@@ -22,6 +22,7 @@ interface RaceClassificationEditionScreenProps {
   raceClassification: RaceClassification | undefined
   // eslint-disable-next-line no-undef
   renderItem: ({ item }: { item: RaceClassificationItem }) => JSX.Element
+  handleSavePress: () => void
 }
 
 const RaceClassificationEditionScreen: FunctionComponent<
@@ -31,7 +32,8 @@ const RaceClassificationEditionScreen: FunctionComponent<
   raceClassification,
   handleEditDriversPress,
   setDriversSelectionModalIsVisible,
-  renderItem
+  renderItem,
+  handleSavePress
 }) => {
   return (
     <View style={styles.container}>
@@ -69,7 +71,9 @@ const RaceClassificationEditionScreen: FunctionComponent<
             <CustomButton variant="outlined" style={{ marginVertical: 15 }}>
               Penalizações e Bonificações
             </CustomButton>
-            <CustomButton variant="primary">Salvar</CustomButton>
+            <CustomButton variant="primary" onPress={handleSavePress}>
+              Salvar
+            </CustomButton>
           </View>
 
           <RaceDriversSelectionModalContainer

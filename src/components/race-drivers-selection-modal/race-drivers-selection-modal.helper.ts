@@ -17,14 +17,12 @@ const RaceDriversSelectionModalHelper = {
 
       if (driverOnRaceClassification) {
         drivers.push(driverOnRaceClassification)
-
-        continue
+      } else {
+        drivers.push({
+          ...driver,
+          position: 0
+        })
       }
-
-      drivers.push({
-        ...driver,
-        position: 0
-      })
     }
 
     return drivers.sort((a, b) => {

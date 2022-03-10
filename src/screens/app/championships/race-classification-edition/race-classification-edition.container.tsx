@@ -10,18 +10,23 @@ import { StyleSheet, View, Image } from 'react-native'
 // Screens
 import RaceClassificationEditionScreen from './race-classification-edition.screen'
 
+// Components
+import TextRegular from '~components/common/text-regular/text-regular.component'
+import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import DriverName from '~components/driver-name/driver-name.component'
+
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { getRaceClassification } from '~store/race-classification/race-classification.actions'
+import {
+  getRaceClassification,
+  submitRaceClassificationEdit
+} from '~store/race-classification/race-classification.actions'
 import { clear } from '~store/race-classification/race-classification.slice'
 
 // Utilities
 import { RaceClassificationEditionScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
 import { RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
-import TextRegular from '~components/common/text-regular/text-regular.component'
-import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
-import DriverName from '~components/driver-name/driver-name.component'
 
 interface RaceClassificationEditionContainerProps {}
 
@@ -53,6 +58,10 @@ const RaceClassificationEditionContainer: FunctionComponent<
     () => setDriversSelectionModalIsVisible((prevState) => !prevState),
     []
   )
+
+  const handleSavePress = useCallback(() => {
+    dispatch(submitRaceClassificationEdit(raceClassification!))
+  }, [dispatch, raceClassification])
 
   const renderItem = useCallback(
     ({ item }: { item: RaceClassificationItem }) => (
@@ -94,6 +103,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
       setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
       handleEditDriversPress={handleEditDriversPress}
       renderItem={renderItem}
+      handleSavePress={handleSavePress}
     />
   )
 }
