@@ -33,7 +33,6 @@ export const submitRaceClassificationEdit = (
   return async (dispatch: Dispatch) => {
     await dispatch(submitRaceClassificationEditStart())
 
-    console.log({ raceClassification })
     try {
       const payload = raceClassification.classification.map((item) => ({
         position: item.position,

@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, {
   FunctionComponent,
   useCallback,
@@ -24,9 +24,13 @@ import {
 import { clear } from '~store/race-classification/race-classification.slice'
 
 // Utilities
-import { RaceClassificationEditionScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
+import {
+  RaceClassificationEditionNavigationProp,
+  RaceClassificationEditionScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 import { RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
+import { showSuccess } from '~helpers/flash-message.helpers'
 
 interface RaceClassificationEditionContainerProps {}
 
@@ -36,6 +40,8 @@ const RaceClassificationEditionContainer: FunctionComponent<
   const {
     params: { race }
   } = useRoute<RaceClassificationEditionScreenRouteProp>()
+
+  const navigation = useNavigation<RaceClassificationEditionNavigationProp>()
 
   const [driversSelectionModalIsVisible, setDriversSelectionModalIsVisible] =
     useState(false)
@@ -61,6 +67,10 @@ const RaceClassificationEditionContainer: FunctionComponent<
 
   const handleSavePress = useCallback(() => {
     dispatch(submitRaceClassificationEdit(raceClassification!))
+
+    navigation.goBack()
+
+    showSuccess('Os resultados foram salvos com sucesso!')
   }, [dispatch, raceClassification])
 
   const renderItem = useCallback(
