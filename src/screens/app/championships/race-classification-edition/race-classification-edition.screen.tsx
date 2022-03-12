@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import { View, StyleSheet, Pressable, FlatList } from 'react-native'
+import { View, StyleSheet, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import DraggableFlatList, { RenderItem } from 'react-native-draggable-flatlist'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -20,8 +21,9 @@ interface RaceClassificationEditionScreenProps {
     React.SetStateAction<boolean>
   >
   raceClassification: RaceClassification | undefined
+  handleDragEnd: (data: any) => void
   // eslint-disable-next-line no-undef
-  renderItem: ({ item }: { item: RaceClassificationItem }) => JSX.Element
+  renderItem: RenderItem<RaceClassificationItem>
   handleSavePress: () => void
 }
 
@@ -33,7 +35,8 @@ const RaceClassificationEditionScreen: FunctionComponent<
   handleEditDriversPress,
   setDriversSelectionModalIsVisible,
   renderItem,
-  handleSavePress
+  handleSavePress,
+  handleDragEnd
 }) => {
   return (
     <View style={styles.container}>
@@ -58,7 +61,8 @@ const RaceClassificationEditionScreen: FunctionComponent<
           </Pressable>
 
           <View style={{ flex: 1 }}>
-            <FlatList
+            <DraggableFlatList
+              onDragEnd={handleDragEnd}
               renderItem={renderItem}
               ListEmptyComponent={
                 <CustomButton
@@ -75,7 +79,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
 
           <View
             style={{ paddingTop: 5, paddingHorizontal: 20, paddingBottom: 20 }}>
-            <CustomButton variant="outlined" style={{ marginVertical: 15 }}>
+            <CustomButton variant="outlined" style={{ marginBottom: 15 }}>
               Penalizações e Bonificações
             </CustomButton>
             <CustomButton variant="primary" onPress={handleSavePress}>

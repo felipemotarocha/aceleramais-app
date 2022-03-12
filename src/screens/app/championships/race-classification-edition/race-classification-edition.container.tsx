@@ -5,7 +5,8 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Pressable } from 'react-native'
+import { ScaleDecorator } from 'react-native-draggable-flatlist'
 
 // Screens
 import RaceClassificationEditionScreen from './race-classification-edition.screen'
@@ -21,7 +22,10 @@ import {
   getRaceClassification,
   submitRaceClassificationEdit
 } from '~store/race-classification/race-classification.actions'
-import { clear } from '~store/race-classification/race-classification.slice'
+import {
+  clear,
+  updateRaceClassification
+} from '~store/race-classification/race-classification.slice'
 import { getChampionshipRaces } from '~store/championship-races/championship-races.actions'
 
 // Utilities
@@ -29,7 +33,7 @@ import {
   RaceClassificationEditionNavigationProp,
   RaceClassificationEditionScreenRouteProp
 } from '~navigators/app/championships/championships.navigator.types'
-import { RaceClassificationItem } from '~types/race.types'
+import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
 import { showSuccess } from '~helpers/flash-message.helpers'
 
@@ -77,36 +81,68 @@ const RaceClassificationEditionContainer: FunctionComponent<
   }, [dispatch, raceClassification])
 
   const renderItem = useCallback(
-    ({ item }: { item: RaceClassificationItem }) => (
-      <View style={styles.itemContainer}>
-        <View style={styles.left}>
-          <TextSemiBold style={{ fontSize: 14, width: 25 }} numberOfLines={1}>
-            {item.position}º
-          </TextSemiBold>
+    ({
+      item,
+      drag,
+      isActive
+    }: {
+      item: RaceClassificationItem
+      drag: any
+      isActive: any
+    }) => (
+      <ScaleDecorator>
+        <Pressable
+          style={styles.itemContainer}
+          onLongPress={drag}
+          disabled={isActive}>
+          <View style={styles.left}>
+            <TextSemiBold style={{ fontSize: 14, width: 25 }} numberOfLines={1}>
+              {item.position}º
+            </TextSemiBold>
 
-          <View style={styles.imageContainer}>
-            <Image
-              style={{ flex: 1, borderRadius: 30 }}
-              source={{
-                uri:
-                  item?.user?.profileImageUrl ||
-                  'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
-              }}
-            />
-          </View>
+            <View style={styles.imageContainer}>
+              <Image
+                style={{ flex: 1, borderRadius: 30 }}
+                source={{
+                  uri:
+                    item?.user?.profileImageUrl ||
+                    'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                }}
+              />
+            </View>
 
-          <View>
-            <DriverName driver={item} fontSize={12} />
-            {item.isRegistered && (
-              <TextRegular style={{ fontSize: 10 }}>
-                @{item.user?.userName}
-              </TextRegular>
-            )}
+            <View>
+              <DriverName driver={item} fontSize={12} />
+              {item.isRegistered && (
+                <TextRegular style={{ fontSize: 10 }}>
+                  @{item.user?.userName}
+                </TextRegular>
+              )}
+            </View>
           </View>
-        </View>
-      </View>
+        </Pressable>
+      </ScaleDecorator>
     ),
     []
+  )
+
+  const handleDragEnd = useCallback(
+    ({ data }: { data: RaceClassification['classification'] }) => {
+      if (!raceClassification) return
+
+      const newClassification = data.map((item, index) => ({
+        ...item,
+        position: index + 1
+      }))
+
+      dispatch(
+        updateRaceClassification({
+          ...raceClassification,
+          classification: newClassification
+        })
+      )
+    },
+    [dispatch, raceClassification]
   )
 
   return (
@@ -116,6 +152,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
       setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
       handleEditDriversPress={handleEditDriversPress}
       renderItem={renderItem}
+      handleDragEnd={handleDragEnd}
       handleSavePress={handleSavePress}
     />
   )
