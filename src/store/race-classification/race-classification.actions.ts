@@ -37,6 +37,7 @@ export const submitRaceClassificationEdit = (
       const payload = raceClassification.classification.map((item) => ({
         position: item.position,
         user: item?.user?.id,
+        id: item?.id,
         firstName: item?.firstName,
         lastName: item?.lastName,
         isRegistered: item?.isRegistered,
