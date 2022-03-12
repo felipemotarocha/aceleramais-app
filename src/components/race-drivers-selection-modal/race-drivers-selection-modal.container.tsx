@@ -69,28 +69,35 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     (driver: RaceClassificationItem) => {
       const driverIsBeingUnselected = driver.position !== 0
 
-      const newAvailableDrivers = availableDrivers.map((_driver) => {
-        if (driver?.isRegistered && _driver?.user?.id !== driver?.user?.id) {
-          if (_driver.position > driver.position && driverIsBeingUnselected) {
-            return { ..._driver, position: _driver.position - 1 }
+      const newAvailableDrivers = availableDrivers
+        .map((_driver) => {
+          if (driver?.isRegistered && _driver?.user?.id !== driver?.user?.id) {
+            if (_driver.position > driver.position && driverIsBeingUnselected) {
+              return { ..._driver, position: _driver.position - 1 }
+            }
+
+            return _driver
           }
 
-          return _driver
-        }
+          if (!driver?.isRegistered && _driver?.id !== driver?.id) {
+            if (_driver.position > driver.position && driverIsBeingUnselected) {
+              return { ..._driver, position: _driver.position - 1 }
+            }
 
-        if (!driver?.isRegistered && _driver?.id !== driver?.id) {
-          if (_driver.position > driver.position && driverIsBeingUnselected) {
-            return { ..._driver, position: _driver.position - 1 }
+            return _driver
           }
 
-          return _driver
-        }
+          return {
+            ..._driver,
+            position: _driver.position === 0 ? selectedDrivers.length + 1 : 0
+          }
+        })
+        .sort((a, b) => {
+          if (a.position === 0) return 1
+          if (b.position === 0) return -1
 
-        return {
-          ..._driver,
-          position: _driver.position === 0 ? selectedDrivers.length + 1 : 0
-        }
-      })
+          return a.position - b.position
+        })
 
       setAvailableDrivers(newAvailableDrivers)
     },
