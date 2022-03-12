@@ -192,4 +192,37 @@ describe('Race Drivers Selection Modal', () => {
       expect(queryByText('2º')).toBeNull()
     })
   })
+
+  it('should select all drivers', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: {
+        drivers
+      }
+    })
+
+    const { getByText } = render(
+      <RaceDriversSelectionModalContainer
+        championship="622bedfbe669549ffd44d2ba"
+        isVisible
+        raceClassification={{ classification: [] } as any}
+        setIsVisible={() => {}}
+      />
+    )
+
+    await waitFor(async () => {
+      getByText('Felipe')
+      getByText('ROCHA')
+      getByText(/@felipe.rocha/i)
+
+      getByText('Max')
+      getByText('VERSTAPPEN')
+    })
+
+    await fireEvent.press(getByText(/selecionar todos/i))
+
+    await waitFor(async () => {
+      getByText('1º')
+      getByText('2º')
+    })
+  })
 })
