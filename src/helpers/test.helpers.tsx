@@ -4,15 +4,16 @@ import { render as rtlRender } from '@testing-library/react-native'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { NavigationContainer } from '@react-navigation/native'
 
 import userReducer from '~store/user/user.slice'
-import { NavigationContainer } from '@react-navigation/native'
 import championshipCreationReducer from '~store/championship-creation/championship-creation.slice'
 import championshipsReducer from '~store/championships/championships.slice'
 import championshipDetailsReducer from '~store/championship-details/championship-details.slice'
 import championshipRacesReducer from '~store/championship-races/championship-races.slice'
 import championshipDriverStandingsReducer from '~store/championship-driver-standings/championship-driver-standings.slice'
 import championshipTeamStandingsReducer from '~store/championship-team-standings/championship-team-standings.slice'
+import raceClassificationReducer from '~store/race-classification/race-classification.slice'
 
 function render(
   ui,
@@ -27,7 +28,8 @@ function render(
         championshipDetails: championshipDetailsReducer,
         championshipRaces: championshipRacesReducer,
         championshipDriverStandings: championshipDriverStandingsReducer,
-        championshipTeamStandings: championshipTeamStandingsReducer
+        championshipTeamStandings: championshipTeamStandingsReducer,
+        raceClassificationReducer: raceClassificationReducer
       },
       preloadedState
     }),
