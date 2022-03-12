@@ -28,15 +28,22 @@ export const createChampionship = (
 
       const drivers = data.drivers.map((item) =>
         item.isRegistered
-          ? { user: item.id, isRegistered: true }
+          ? {
+              user: item.id,
+              isRegistered: true,
+              team: item.team?.id
+            }
           : {
+              id: item.id,
               firstName: item.firstName,
               lastName: item.lastName,
-              isRegistered: false
+              isRegistered: false,
+              team: item.team?.id
             }
       )
 
       const teams = data.teams.map((item) => ({
+        id: item.id,
         color: item.color,
         name: item.name
       }))
