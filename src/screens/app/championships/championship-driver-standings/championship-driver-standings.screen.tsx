@@ -61,7 +61,7 @@ const ChampionshipDriverStandingsScreen: FunctionComponent<
           paddingTop: 20,
           paddingBottom: 5
         }}
-        keyExtractor={(item) => item.id || item.user.id}
+        keyExtractor={(item) => item?.id || item?.user?.id || ''}
       />
     </View>
   )
