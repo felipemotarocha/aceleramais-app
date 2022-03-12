@@ -27,7 +27,6 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
 
   return (
     <Modal
-      {...rest}
       animationIn={'slideInUp'}
       style={{
         margin: 0,
@@ -40,7 +39,8 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
       backdropOpacity={0.3}
       onBackdropPress={() => setIsVisible(false)}
       onBackButtonPress={() => setIsVisible(false)}
-      isVisible={isVisible}>
+      isVisible={isVisible}
+      {...rest}>
       <View style={styles.container}>
         <View style={styles.header}>
           <AntDesign
@@ -48,7 +48,10 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
             name="close"
             size={25}
             color={Colors.text}
-            onPress={() => setIsVisible(false)}
+            onPress={() => {
+              setIsVisible(false)
+              rest?.onDismiss && rest.onDismiss()
+            }}
           />
 
           <TextBold style={{ fontSize: 16, alignSelf: 'center' }}>
