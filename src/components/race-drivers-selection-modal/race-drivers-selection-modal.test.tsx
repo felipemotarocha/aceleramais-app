@@ -1,7 +1,7 @@
 import React from 'react'
 import axiosMock from 'axios'
 
-import { render, waitFor } from '~helpers/test.helpers'
+import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import RaceDriversSelectionModalContainer from './race-drivers-selection-modal.container'
 
 describe('Race Drivers Selection Modal', () => {
@@ -145,6 +145,51 @@ describe('Race Drivers Selection Modal', () => {
       getByText('Max')
       getByText('VERSTAPPEN')
       getByText('2º')
+    })
+  })
+
+  it('should update the driver position on press', async () => {
+    ;(axiosMock.get as any).mockResolvedValue({
+      data: {
+        drivers
+      }
+    })
+
+    const { getByText, queryByText } = render(
+      <RaceDriversSelectionModalContainer
+        championship="622bedfbe669549ffd44d2ba"
+        isVisible
+        raceClassification={{ classification: [] } as any}
+        setIsVisible={() => {}}
+      />
+    )
+
+    await waitFor(async () => {
+      getByText('Felipe')
+      getByText('ROCHA')
+      getByText(/@felipe.rocha/i)
+
+      getByText('Max')
+      getByText('VERSTAPPEN')
+    })
+
+    await fireEvent.press(getByText(/@felipe.rocha/i))
+
+    await waitFor(async () => {
+      getByText('1º')
+      expect(queryByText('2º')).toBeNull()
+    })
+
+    await fireEvent.press(getByText('VERSTAPPEN'))
+
+    await waitFor(async () => {
+      getByText('2º')
+    })
+
+    await fireEvent.press(getByText(/@felipe.rocha/i))
+
+    await waitFor(async () => {
+      expect(queryByText('2º')).toBeNull()
     })
   })
 })
