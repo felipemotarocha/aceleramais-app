@@ -70,6 +70,15 @@ const RaceClassificationEditionContainer: FunctionComponent<
     []
   )
 
+  const handlePenaltiesAndBonificationsPress = useCallback(() => {
+    if (!raceClassification?.race.championship) return
+
+    return navigation.navigate('Race Penalties and Bonifications Edition', {
+      race,
+      championship: raceClassification.race.championship
+    })
+  }, [navigation, raceClassification])
+
   const handleSavePress = useCallback(async () => {
     await dispatch(submitRaceClassificationEdit(raceClassification!))
 
@@ -151,6 +160,9 @@ const RaceClassificationEditionContainer: FunctionComponent<
       driversSelectionModalIsVisible={driversSelectionModalIsVisible}
       setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
       handleEditDriversPress={handleEditDriversPress}
+      handlePenaltiesAndBonificationsPress={
+        handlePenaltiesAndBonificationsPress
+      }
       renderItem={renderItem}
       handleDragEnd={handleDragEnd}
       handleSavePress={handleSavePress}

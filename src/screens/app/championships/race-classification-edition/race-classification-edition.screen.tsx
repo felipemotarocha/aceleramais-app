@@ -17,6 +17,7 @@ import RaceDriversSelectionModalContainer from '~components/race-drivers-selecti
 interface RaceClassificationEditionScreenProps {
   driversSelectionModalIsVisible: boolean
   handleEditDriversPress: () => void
+  handlePenaltiesAndBonificationsPress: () => void
   setDriversSelectionModalIsVisible: React.Dispatch<
     React.SetStateAction<boolean>
   >
@@ -33,6 +34,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
   driversSelectionModalIsVisible,
   raceClassification,
   handleEditDriversPress,
+  handlePenaltiesAndBonificationsPress,
   setDriversSelectionModalIsVisible,
   renderItem,
   handleSavePress,
@@ -79,7 +81,10 @@ const RaceClassificationEditionScreen: FunctionComponent<
 
           <View
             style={{ paddingTop: 5, paddingHorizontal: 20, paddingBottom: 20 }}>
-            <CustomButton variant="outlined" style={{ marginBottom: 15 }}>
+            <CustomButton
+              variant="outlined"
+              style={{ marginBottom: 15 }}
+              onPress={handlePenaltiesAndBonificationsPress}>
               Penalizações e Bonificações
             </CustomButton>
             <CustomButton variant="primary" onPress={handleSavePress}>

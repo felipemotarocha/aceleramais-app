@@ -10,6 +10,7 @@ import ChampionshipTeamStandingsScreen from '~screens/app/championships/champion
 import ChampionshipEditionScreen from '~screens/app/championships/championship-edition/championship-edition.screen'
 import ChampionshipRaceSelectionScreen from '~screens/app/championships/championship-race-selection/championship-race-selection.container'
 import RaceClassificationEditionScreen from '~screens/app/championships/race-classification-edition/race-classification-edition.container'
+import RacePenaltiesAndBonificationsEditionScreen from '~screens/app/championships/race-penalties-and-bonifications-edition/race-penalties-and-bonifications-edition.container'
 
 // Navigators
 import NewChampionshipNavigator from './new-championship/new-championship.navigator'
@@ -61,6 +62,10 @@ const ChampionshipsNavigator: FunctionComponent<
       <Stack.Screen
         name="Race Classification Edition"
         component={RaceClassificationEditionScreen}
+      />
+      <Stack.Screen
+        name="Race Penalties and Bonifications Edition"
+        component={RacePenaltiesAndBonificationsEditionScreen}
       />
     </Stack.Navigator>
   )
