@@ -11,6 +11,10 @@ export type ChampionshipsStackParamList = {
   'Championship Edition': { championship: string }
   'Championship Race Selection': { championship: string }
   'Race Classification Edition': { race: string }
+  'Race Penalties and Bonifications Edition': {
+    championship: string
+    race: string
+  }
 }
 
 export type ChampionshipListScreenRouteProp = RouteProp<
@@ -48,6 +52,10 @@ export type ChampionshipRaceSelectionScreenRouteProp = RouteProp<
 export type RaceClassificationEditionScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Race Classification Edition'
+>
+export type RacePenaltiesAndBonificationsEditionScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'Race Penalties and Bonifications Edition'
 >
 
 export type ChampionshipListScreenNavigationProp = NativeStackNavigationProp<
@@ -88,3 +96,8 @@ export type RaceClassificationEditionNavigationProp = NativeStackNavigationProp<
   ChampionshipsStackParamList,
   'Race Classification Edition'
 >
+export type RacePenaltiesAndBonificationsEditionScreenNavigationProp =
+  NativeStackNavigationProp<
+    ChampionshipsStackParamList,
+    'Race Penalties and Bonifications Edition'
+  >
