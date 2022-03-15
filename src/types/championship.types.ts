@@ -10,11 +10,11 @@ export interface ChampionshipDriver {
   team?: Team
   isRegistered: boolean
   bonifications?: {
-    bonification: string
+    bonification: Bonification
     race: string
   }[]
   penalties?: {
-    bonification: string
+    penalty: Penalty
     race: string
   }[]
 }
@@ -69,6 +69,18 @@ interface Championship {
   bonifications: string[]
   penalties: string[]
   nextRaces: Race[]
+}
+
+export interface Bonification {
+  id: string
+  name: string
+  points: number
+}
+
+export interface Penalty {
+  id: string
+  name: string
+  points: number
 }
 
 export default Championship

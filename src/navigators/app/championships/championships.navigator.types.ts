@@ -53,7 +53,7 @@ export type RaceClassificationEditionScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Race Classification Edition'
 >
-export type RacePenaltiesAndBonificationsEditionScreenRouteProp = RouteProp<
+export type RacePenaltiesAndBonificationsScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Race Penalties and Bonifications Edition'
 >
@@ -96,7 +96,7 @@ export type RaceClassificationEditionNavigationProp = NativeStackNavigationProp<
   ChampionshipsStackParamList,
   'Race Classification Edition'
 >
-export type RacePenaltiesAndBonificationsEditionScreenNavigationProp =
+export type RacePenaltiesAndBonificationsScreenNavigationProp =
   NativeStackNavigationProp<
     ChampionshipsStackParamList,
     'Race Penalties and Bonifications Edition'

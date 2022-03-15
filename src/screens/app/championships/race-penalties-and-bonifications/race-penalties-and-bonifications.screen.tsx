@@ -9,7 +9,7 @@ import Colors from '~constants/colors.constants'
 
 interface PenaltiesAndBonificationsScreenProps {}
 
-const RacePenaltiesAndBonificationsEditionScreen: FunctionComponent<
+const RacePenaltiesAndBonificationsScreen: FunctionComponent<
   PenaltiesAndBonificationsScreenProps
 > = () => {
   return (
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RacePenaltiesAndBonificationsEditionScreen
+export default RacePenaltiesAndBonificationsScreen
