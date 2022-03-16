@@ -14,6 +14,7 @@ import RacePenaltiesAndBonificationsScreen from './race-penalties-and-bonificati
 
 // Components
 import DriverBonificationAndPenaltyItem from '~components/driver-bonification-and-penalty-item/driver-bonification-and-penalty-item.component'
+import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 
 // Utilities
 import { RacePenaltiesAndBonificationsScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
@@ -22,6 +23,7 @@ import {
   ChampionshipDriver,
   Penalty
 } from '~types/championship.types'
+import Colors from '~constants/colors.constants'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -29,8 +31,6 @@ import {
   getChampionshipDrivers,
   getRace
 } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
-import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
-import Colors from '~constants/colors.constants'
 
 interface PenaltiesAndBonificationsContainerProps {}
 

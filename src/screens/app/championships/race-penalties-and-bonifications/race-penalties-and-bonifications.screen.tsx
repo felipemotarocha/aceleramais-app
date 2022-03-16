@@ -88,6 +88,7 @@ const RacePenaltiesAndBonificationsScreen: FunctionComponent<
           sections={data}
           renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
+          stickySectionHeadersEnabled={false}
           keyExtractor={(item) =>
             item.driver.isRegistered
               ? item.driver.user!.id
