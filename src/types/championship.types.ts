@@ -29,6 +29,7 @@ export interface ChampionshipDriverStandingsItem {
   id?: string
   firstName?: string
   lastName?: string
+  profileImageUrl?: string
   team?: Team
   position: number
   points: number

@@ -9,7 +9,7 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 import { ChampionshipDriverStandingsItem } from '~types/championship.types'
 
 interface DriverNameProps {
-  driver: Omit<ChampionshipDriverStandingsItem, 'points'>
+  driver: Omit<ChampionshipDriverStandingsItem, 'points' | 'position'>
   fontSize: number
 }
 
