@@ -4,6 +4,7 @@ import Race from '~types/race.types'
 
 export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
   championshipDrivers: ChampionshipDriver[]
+  selectedDriver?: ChampionshipDriver
   race: Race | undefined
   error: string | null
   loading: boolean
@@ -12,6 +13,7 @@ export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
 const racePenaltiesAndBonificationsInitialState: RacePenaltiesAndBonificationsEditionSliceInitialState =
   {
     championshipDrivers: [],
+    selectedDriver: undefined,
     race: undefined,
     error: null,
     loading: false
@@ -69,7 +71,14 @@ const racePenaltiesAndBonificationsSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
-
+    updateSelectedDriver: (
+      state,
+      action: PayloadAction<ChampionshipDriver | undefined>
+    ) => {
+      state.selectedDriver = action.payload
+      state.loading = false
+      state.error = null
+    },
     clear(state) {
       state.championshipDrivers = []
       state.error = null
@@ -88,6 +97,7 @@ export const {
   submitRacePenaltiesAndBonificationsEditStart,
   submitRacePenaltiesAndBonificationsEditSuccess,
   submitRacePenaltiesAndBonificationsEditFailure,
+  updateSelectedDriver,
   clear
 } = racePenaltiesAndBonificationsSlice.actions
 

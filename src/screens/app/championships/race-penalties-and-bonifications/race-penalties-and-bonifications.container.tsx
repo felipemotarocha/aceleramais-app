@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useMemo
 } from 'react'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
 import { Pressable, SectionListData, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -17,7 +17,10 @@ import DriverBonificationAndPenaltyItem from '~components/driver-bonification-an
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 
 // Utilities
-import { RacePenaltiesAndBonificationsScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
+import {
+  RacePenaltiesAndBonificationsScreenNavigationProp,
+  RacePenaltiesAndBonificationsScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 import {
   Bonification,
   ChampionshipDriver,
@@ -40,6 +43,8 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
   const dispatch = useAppDispatch()
 
   const route = useRoute<RacePenaltiesAndBonificationsScreenRouteProp>()
+  const navigation =
+    useNavigation<RacePenaltiesAndBonificationsScreenNavigationProp>()
 
   const { championshipDrivers, race } = useAppSelector(
     (state) => state.racePenaltiesAndBonifications
@@ -144,7 +149,9 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     []
   )
 
-  const handleNewPress = (type: 'bonification' | 'penalty') => {}
+  const handleNewPress = (type: 'bonification' | 'penalty') => {
+    navigation.navigate('Penalty or Bonification Driver Selection', { type })
+  }
 
   const renderSectionHeader = useCallback(
     ({
