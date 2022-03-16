@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import { StyleSheet, View, Image, Pressable } from 'react-native'
 import { ScaleDecorator } from 'react-native-draggable-flatlist'
+import { useDispatch } from 'react-redux'
 
 // Screens
 import RaceClassificationEditionScreen from './race-classification-edition.screen'
@@ -17,7 +18,7 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 import DriverName from '~components/driver-name/driver-name.component'
 
 // Redux
-import { useAppDispatch, useAppSelector } from '~store'
+import { useAppSelector } from '~store'
 import {
   getRaceClassification,
   submitRaceClassificationEdit
@@ -55,7 +56,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
     (state) => state.raceClassificationReducer
   )
 
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getRaceClassification(race))

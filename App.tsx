@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
 import React from 'react'
+
+import 'react-native-gesture-handler'
+import 'react-native-reanimated'
+
 import AppLoading from 'expo-app-loading'
 import {
   useFonts,

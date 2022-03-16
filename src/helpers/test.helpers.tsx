@@ -14,6 +14,7 @@ import championshipRacesReducer from '~store/championship-races/championship-rac
 import championshipDriverStandingsReducer from '~store/championship-driver-standings/championship-driver-standings.slice'
 import championshipTeamStandingsReducer from '~store/championship-team-standings/championship-team-standings.slice'
 import raceClassificationReducer from '~store/race-classification/race-classification.slice'
+import racePenaltiesAndBonificationsReducer from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
 
 function render(
   ui,
@@ -29,7 +30,8 @@ function render(
         championshipRaces: championshipRacesReducer,
         championshipDriverStandings: championshipDriverStandingsReducer,
         championshipTeamStandings: championshipTeamStandingsReducer,
-        raceClassificationReducer: raceClassificationReducer
+        raceClassificationReducer: raceClassificationReducer,
+        racePenaltiesAndBonifications: racePenaltiesAndBonificationsReducer
       },
       preloadedState
     }),
