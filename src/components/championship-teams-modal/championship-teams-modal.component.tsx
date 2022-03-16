@@ -60,6 +60,7 @@ const ChampionshipTeamsModal: FunctionComponent<
     <CustomModal
       isVisible={isVisible}
       setIsVisible={setIsVisible}
+      showHeader
       title="Selecionar Time">
       <View style={styles.container}>
         <Controller

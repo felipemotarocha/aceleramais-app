@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { useRoute } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
-import { SectionListData, View } from 'react-native'
+import { Pressable, SectionListData, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 // Screens
@@ -144,6 +144,8 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     []
   )
 
+  const handleNewPress = (type: 'bonification' | 'penalty') => {}
+
   const renderSectionHeader = useCallback(
     ({
       section
@@ -175,9 +177,15 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
             {section.title}
           </TextSemiBold>
           {canEdit && (
-            <View style={{ flex: 1 }}>
+            <Pressable
+              style={{ flex: 1 }}
+              onPress={
+                section.title === 'Bonificações'
+                  ? () => handleNewPress('bonification')
+                  : () => handleNewPress('penalty')
+              }>
               <AntDesign name="plus" size={20} color={Colors.textSecondary} />
-            </View>
+            </Pressable>
           )}
         </View>
       )
@@ -201,12 +209,14 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
   }, [])
 
   return (
-    <RacePenaltiesAndBonificationsScreen
-      race={race}
-      data={data}
-      renderItem={renderItem}
-      renderSectionHeader={renderSectionHeader}
-    />
+    <>
+      <RacePenaltiesAndBonificationsScreen
+        race={race}
+        data={data}
+        renderItem={renderItem}
+        renderSectionHeader={renderSectionHeader}
+      />
+    </>
   )
 }
 

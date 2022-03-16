@@ -33,6 +33,7 @@ const RaceDriversSelectionModal: FunctionComponent<
   return (
     <CustomModal
       title="Selecionar Pilotos"
+      showHeader
       isVisible={isVisible}
       setIsVisible={setIsVisible}
       onDismiss={handleDismiss}>

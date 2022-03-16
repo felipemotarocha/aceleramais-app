@@ -11,6 +11,8 @@ import ChampionshipEditionScreen from '~screens/app/championships/championship-e
 import ChampionshipRaceSelectionScreen from '~screens/app/championships/championship-race-selection/championship-race-selection.container'
 import RaceClassificationEditionScreen from '~screens/app/championships/race-classification-edition/race-classification-edition.container'
 import RacePenaltiesAndBonificationsScreen from '~screens/app/championships/race-penalties-and-bonifications/race-penalties-and-bonifications.container'
+import PenaltyOrBonificationDriverSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/driver-selection/driver-selection.container'
+import PenaltyOrBonificationSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/penalty-or-bonification-selection/penalty-or-bonification-selection.container'
 
 // Navigators
 import NewChampionshipNavigator from './new-championship/new-championship.navigator'
@@ -66,6 +68,14 @@ const ChampionshipsNavigator: FunctionComponent<
       <Stack.Screen
         name="Race Penalties and Bonifications Edition"
         component={RacePenaltiesAndBonificationsScreen}
+      />
+      <Stack.Screen
+        name="Penalty or Bonification Driver Selection"
+        component={PenaltyOrBonificationDriverSelectionScreen}
+      />
+      <Stack.Screen
+        name="Penalty or Bonification Selection"
+        component={PenaltyOrBonificationSelectionScreen}
       />
     </Stack.Navigator>
   )

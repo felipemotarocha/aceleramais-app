@@ -77,7 +77,7 @@ const RacePenaltiesAndBonificationsScreen: FunctionComponent<
 > = ({ data, race, renderItem, renderSectionHeader }) => {
   return (
     <View style={styles.container}>
-      <Header showBack>Adicionar Bonificação</Header>
+      <Header showBack>Penalizações e Bonificações</Header>
 
       <View style={{ padding: 20, paddingBottom: 15 }}>
         {race && <RaceItem race={race} />}

@@ -15,6 +15,12 @@ export type ChampionshipsStackParamList = {
     championship: string
     race: string
   }
+  'Penalty or Bonification Driver Selection': {
+    type: 'penalty' | 'bonification'
+  }
+  'Penalty or Bonification Selection': {
+    type: 'penalty' | 'bonification'
+  }
 }
 
 export type ChampionshipListScreenRouteProp = RouteProp<
@@ -56,6 +62,14 @@ export type RaceClassificationEditionScreenRouteProp = RouteProp<
 export type RacePenaltiesAndBonificationsScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Race Penalties and Bonifications Edition'
+>
+export type PenaltyOrBonificationDriverSelectionScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'Penalty or Bonification Driver Selection'
+>
+export type PenaltyOrBonificationSelectionScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'Penalty or Bonification Selection'
 >
 
 export type ChampionshipListScreenNavigationProp = NativeStackNavigationProp<
@@ -100,4 +114,14 @@ export type RacePenaltiesAndBonificationsScreenNavigationProp =
   NativeStackNavigationProp<
     ChampionshipsStackParamList,
     'Race Penalties and Bonifications Edition'
+  >
+export type PenaltyOrBonificationDriverSelectionScreenNavigationProp =
+  NativeStackNavigationProp<
+    ChampionshipsStackParamList,
+    'Penalty or Bonification Driver Selection'
+  >
+export type PenaltyOrBonificationSelectionScreenNavigationProp =
+  NativeStackNavigationProp<
+    ChampionshipsStackParamList,
+    'Penalty or Bonification Selection'
   >

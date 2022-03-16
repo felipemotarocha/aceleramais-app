@@ -11,8 +11,9 @@ import TextBold from '../text-bold/text-bold.component'
 import Colors from '~constants/colors.constants'
 
 interface CustomModalProps extends Partial<ModalProps> {
-  title: string
+  title?: string
   isVisible: boolean
+  showHeader: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -20,6 +21,7 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
   children,
   title,
   isVisible,
+  showHeader,
   setIsVisible,
   ...rest
 }) => {
@@ -42,24 +44,26 @@ const CustomModal: FunctionComponent<CustomModalProps> = ({
       isVisible={isVisible}
       {...rest}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <AntDesign
-            accessibilityLabel="Back"
-            name="close"
-            size={25}
-            color={Colors.text}
-            onPress={() => {
-              setIsVisible(false)
-              rest?.onDismiss && rest.onDismiss()
-            }}
-          />
+        {showHeader && (
+          <View style={styles.header}>
+            <AntDesign
+              accessibilityLabel="Back"
+              name="close"
+              size={25}
+              color={Colors.text}
+              onPress={() => {
+                setIsVisible(false)
+                rest?.onDismiss && rest.onDismiss()
+              }}
+            />
 
-          <TextBold style={{ fontSize: 16, alignSelf: 'center' }}>
-            {title}
-          </TextBold>
+            <TextBold style={{ fontSize: 16, alignSelf: 'center' }}>
+              {title}
+            </TextBold>
 
-          <View></View>
-        </View>
+            <View></View>
+          </View>
+        )}
         {children}
       </View>
     </Modal>
