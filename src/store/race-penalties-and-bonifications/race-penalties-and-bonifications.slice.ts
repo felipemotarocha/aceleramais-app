@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ChampionshipDriver } from '~types/championship.types'
+import Race from '~types/race.types'
 
 export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
   championshipDrivers: ChampionshipDriver[]
+  race: Race | undefined
   error: string | null
   loading: boolean
 }
@@ -10,6 +12,7 @@ export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
 const racePenaltiesAndBonificationsInitialState: RacePenaltiesAndBonificationsEditionSliceInitialState =
   {
     championshipDrivers: [],
+    race: undefined,
     error: null,
     loading: false
   }
@@ -33,6 +36,21 @@ const racePenaltiesAndBonificationsSlice = createSlice({
     },
     getChampionshipDriversFailure: (state, action: PayloadAction<string>) => {
       state.championshipDrivers = []
+      state.loading = false
+      state.error = action.payload
+    },
+    getRaceStart: (state) => {
+      state.race = undefined
+      state.loading = true
+      state.error = null
+    },
+    getRaceSuccess: (state, action: PayloadAction<Race>) => {
+      state.race = action.payload
+      state.loading = false
+      state.error = null
+    },
+    getRaceFailure: (state, action: PayloadAction<string>) => {
+      state.race = undefined
       state.loading = false
       state.error = action.payload
     },
@@ -64,6 +82,9 @@ export const {
   getChampionshipDriversStart,
   getChampionshipDriversSuccess,
   getChampionshipDriversFailure,
+  getRaceStart,
+  getRaceSuccess,
+  getRaceFailure,
   submitRacePenaltiesAndBonificationsEditStart,
   submitRacePenaltiesAndBonificationsEditSuccess,
   submitRacePenaltiesAndBonificationsEditFailure,

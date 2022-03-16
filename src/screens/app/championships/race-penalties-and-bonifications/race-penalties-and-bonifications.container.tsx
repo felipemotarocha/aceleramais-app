@@ -1,9 +1,19 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo
+} from 'react'
 import { useRoute } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
+import { SectionListData, View } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
 
 // Screens
 import RacePenaltiesAndBonificationsScreen from './race-penalties-and-bonifications.screen'
+
+// Components
+import DriverBonificationAndPenaltyItem from '~components/driver-bonification-and-penalty-item/driver-bonification-and-penalty-item.component'
 
 // Utilities
 import { RacePenaltiesAndBonificationsScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
@@ -15,7 +25,12 @@ import {
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { getChampionshipDrivers } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
+import {
+  getChampionshipDrivers,
+  getRace
+} from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
+import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
+import Colors from '~constants/colors.constants'
 
 interface PenaltiesAndBonificationsContainerProps {}
 
@@ -26,13 +41,28 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
 
   const route = useRoute<RacePenaltiesAndBonificationsScreenRouteProp>()
 
-  const { championshipDrivers } = useAppSelector(
+  const { championshipDrivers, race } = useAppSelector(
     (state) => state.racePenaltiesAndBonifications
   )
 
-  const fetchChampionshipDrivers = async () => {
+  const { championshipDetails } = useAppSelector(
+    (state) => state.championshipDetails
+  )
+
+  const { currentUser } = useAppSelector((state) => state.user)
+
+  const fetchChampionshipDriversAndRace = async () => {
+    await dispatch(getRace(route.params.race))
     await dispatch(getChampionshipDrivers(route.params.championship))
   }
+
+  const canEdit = useMemo(
+    () =>
+      championshipDetails?.admins.some(
+        (admin) => admin.user.id === currentUser!.id
+      ) || false,
+    [championshipDetails, currentUser]
+  )
 
   const bonifications = useMemo(() => {
     const race = route.params.race
@@ -88,13 +118,96 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     return _penalties
   }, [championshipDrivers, route])
 
-  console.log({ penalties, bonifications })
+  const renderItem = useCallback(
+    ({
+      item
+    }: {
+      item: {
+        driver: ChampionshipDriver
+        penalty?: Penalty
+        bonification?: Bonification
+      }
+    }) => {
+      return (
+        <View style={{ marginBottom: 15 }}>
+          <DriverBonificationAndPenaltyItem
+            driver={item.driver}
+            type={item.bonification ? 'bonification' : 'penalty'}
+            bonification={item.bonification}
+            penalty={item.penalty}
+            editable={canEdit}
+            handleRemovePress={() => {}}
+          />
+        </View>
+      )
+    },
+    []
+  )
+
+  const renderSectionHeader = useCallback(
+    ({
+      section
+    }: {
+      section: SectionListData<
+        {
+          driver: ChampionshipDriver
+          bonification?: Bonification | undefined
+          penalty?: Penalty | undefined
+        },
+        {
+          title: string
+          data: {
+            driver: ChampionshipDriver
+            bonification?: Bonification
+            penalty?: Penalty
+          }[]
+        }
+      >
+    }) => {
+      return (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 15
+          }}>
+          <TextSemiBold style={{ fontSize: 16, width: 115 }}>
+            {section.title}
+          </TextSemiBold>
+          {canEdit && (
+            <View style={{ flex: 1 }}>
+              <AntDesign name="plus" size={20} color={Colors.textSecondary} />
+            </View>
+          )}
+        </View>
+      )
+    },
+    [canEdit]
+  )
+
+  const data = [
+    {
+      title: 'Bonificações',
+      data: bonifications
+    },
+    {
+      title: 'Penalizações',
+      data: penalties
+    }
+  ]
 
   useEffect(() => {
-    fetchChampionshipDrivers()
+    fetchChampionshipDriversAndRace()
   }, [])
 
-  return <RacePenaltiesAndBonificationsScreen />
+  return (
+    <RacePenaltiesAndBonificationsScreen
+      race={race}
+      data={data}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
+    />
+  )
 }
 
 export default RacePenaltiesAndBonificationsContainer
