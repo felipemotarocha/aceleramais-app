@@ -91,7 +91,12 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
   const handleSavePress = useCallback(() => {
     const newChampionshipDrivers = championshipDrivers.map((driver) => {
-      if (driver.id !== selectedDriver?.id) return driver
+      const driverId = driver.isRegistered ? driver.user!.id : driver.id
+      const selectedDriverId = selectedDriver?.isRegistered
+        ? selectedDriver.user!.id
+        : selectedDriver!.id!
+
+      if (driverId !== selectedDriverId) return driver
 
       if (type === 'bonification') {
         const bonificationWasAlreadyAdded = driver.bonifications?.some(
@@ -139,10 +144,11 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
     navigation.goBack()
     navigation.goBack()
   }, [
-    championshipDrivers,
     race,
+    championshipDrivers,
     selectedBonification,
     selectedPenalty,
+    selectedDriver,
     dispatch
   ])
 

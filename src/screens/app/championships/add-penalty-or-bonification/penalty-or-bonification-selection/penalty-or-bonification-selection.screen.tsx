@@ -85,7 +85,7 @@ const PenaltyOrBonificationSelectionScreen: FunctionComponent<
           variant="primary"
           disabled={!selectedBonification && !selectedPenalty}
           onPress={handleSavePress}>
-          Salvar
+          Adicionar
         </CustomButton>
       </View>
     </View>
