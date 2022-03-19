@@ -5,6 +5,7 @@ import React, {
   useMemo
 } from 'react'
 import { View } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 // Screens
 import PenaltyOrBonificationDriverSelectionScreen from './driver-selection.screen'
@@ -14,16 +15,29 @@ import ChampionshipDriverItem from '~components/championship-driver-item/champio
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { updateSelectedDriver } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
+import {
+  updateSelectedDriver,
+  clear
+} from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
 
 // Utilities
 import { ChampionshipDriver } from '~types/championship.types'
+import {
+  PenaltyOrBonificationDriverSelectionScreenNavigationProp,
+  PenaltyOrBonificationSelectionScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 
 interface PenaltyOrBonificationDriverSelectionContainerProps {}
 
 const PenaltyOrBonificationDriverSelectionContainer: FunctionComponent<
   PenaltyOrBonificationDriverSelectionContainerProps
 > = () => {
+  const navigation =
+    useNavigation<PenaltyOrBonificationDriverSelectionScreenNavigationProp>()
+  const {
+    params: { type }
+  } = useRoute<PenaltyOrBonificationSelectionScreenRouteProp>()
+
   const { championshipDrivers, selectedDriver } = useAppSelector(
     (state) => state.racePenaltiesAndBonifications
   )
@@ -31,7 +45,7 @@ const PenaltyOrBonificationDriverSelectionContainer: FunctionComponent<
 
   useEffect(() => {
     return () => {
-      dispatch(updateSelectedDriver(undefined))
+      dispatch(clear())
     }
   }, [])
 
@@ -72,6 +86,7 @@ const PenaltyOrBonificationDriverSelectionContainer: FunctionComponent<
             driver={item}
             profileImageSize={45}
             handlePress={handleDriverPress}
+            isSelectable
           />
         </View>
       )
@@ -79,10 +94,16 @@ const PenaltyOrBonificationDriverSelectionContainer: FunctionComponent<
     []
   )
 
+  const handleAdvancePress = useCallback(
+    () => navigation.navigate('Penalty or Bonification Selection', { type }),
+    [navigation, type]
+  )
+
   return (
     <PenaltyOrBonificationDriverSelectionScreen
       championshipDrivers={_championshipDrivers}
       selectedDriver={selectedDriver}
+      handleAdvancePress={handleAdvancePress}
       renderItem={renderItem}
     />
   )

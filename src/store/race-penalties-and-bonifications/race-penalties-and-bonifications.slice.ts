@@ -1,10 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ChampionshipDriver } from '~types/championship.types'
+import {
+  Bonification,
+  ChampionshipDriver,
+  Penalty
+} from '~types/championship.types'
 import Race from '~types/race.types'
 
 export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
   championshipDrivers: ChampionshipDriver[]
+  bonifications: Bonification[]
+  penalties: Penalty[]
   selectedDriver?: ChampionshipDriver
+  selectedBonification?: Bonification
+  selectedPenalty?: Penalty
   race: Race | undefined
   error: string | null
   loading: boolean
@@ -13,7 +21,11 @@ export type RacePenaltiesAndBonificationsEditionSliceInitialState = {
 const racePenaltiesAndBonificationsInitialState: RacePenaltiesAndBonificationsEditionSliceInitialState =
   {
     championshipDrivers: [],
+    bonifications: [],
+    penalties: [],
     selectedDriver: undefined,
+    selectedBonification: undefined,
+    selectedPenalty: undefined,
     race: undefined,
     error: null,
     loading: false
@@ -56,6 +68,36 @@ const racePenaltiesAndBonificationsSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    getBonificationsStart: (state) => {
+      state.bonifications = []
+      state.loading = true
+      state.error = null
+    },
+    getBonificationsSuccess: (state, action: PayloadAction<Bonification[]>) => {
+      state.bonifications = action.payload
+      state.loading = false
+      state.error = null
+    },
+    getBonificationsFailure: (state, action: PayloadAction<string>) => {
+      state.bonifications = []
+      state.loading = false
+      state.error = action.payload
+    },
+    getPenaltiesStart: (state) => {
+      state.penalties = []
+      state.loading = true
+      state.error = null
+    },
+    getPenaltiesSuccess: (state, action: PayloadAction<Penalty[]>) => {
+      state.penalties = action.payload
+      state.loading = false
+      state.error = null
+    },
+    getPenaltiesFailure: (state, action: PayloadAction<string>) => {
+      state.penalties = []
+      state.loading = false
+      state.error = action.payload
+    },
     submitRacePenaltiesAndBonificationsEditStart: (state) => {
       state.loading = true
       state.error = null
@@ -79,8 +121,26 @@ const racePenaltiesAndBonificationsSlice = createSlice({
       state.loading = false
       state.error = null
     },
+    updateSelectedBonification: (
+      state,
+      action: PayloadAction<Bonification | undefined>
+    ) => {
+      state.selectedBonification = action.payload
+      state.loading = false
+      state.error = null
+    },
+    updateSelectedPenalty: (
+      state,
+      action: PayloadAction<Penalty | undefined>
+    ) => {
+      state.selectedPenalty = action.payload
+      state.loading = false
+      state.error = null
+    },
     clear(state) {
-      state.championshipDrivers = []
+      state.selectedDriver = undefined
+      state.bonifications = []
+      state.penalties = []
       state.error = null
       state.loading = false
     }
@@ -94,10 +154,18 @@ export const {
   getRaceStart,
   getRaceSuccess,
   getRaceFailure,
+  getBonificationsStart,
+  getBonificationsSuccess,
+  getBonificationsFailure,
+  getPenaltiesStart,
+  getPenaltiesSuccess,
+  getPenaltiesFailure,
   submitRacePenaltiesAndBonificationsEditStart,
   submitRacePenaltiesAndBonificationsEditSuccess,
   submitRacePenaltiesAndBonificationsEditFailure,
   updateSelectedDriver,
+  updateSelectedBonification,
+  updateSelectedPenalty,
   clear
 } = racePenaltiesAndBonificationsSlice.actions
 

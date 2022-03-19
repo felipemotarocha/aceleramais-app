@@ -15,7 +15,8 @@ import { ChampionshipDriver } from '~types/championship.types'
 
 interface PenaltyOrBonificationDriverSelectionScreenProps {
   championshipDrivers: ChampionshipDriver[] & { selected?: boolean }
-  selectedDriver: ChampionshipDriver
+  selectedDriver: ChampionshipDriver | undefined
+  handleAdvancePress: () => void
   renderItem: ({
     item
   }: {
@@ -28,7 +29,12 @@ interface PenaltyOrBonificationDriverSelectionScreenProps {
 
 const PenaltyOrBonificationDriverSelectionScreen: FunctionComponent<
   PenaltyOrBonificationDriverSelectionScreenProps
-> = ({ championshipDrivers, selectedDriver, renderItem }) => {
+> = ({
+  championshipDrivers,
+  selectedDriver,
+  handleAdvancePress,
+  renderItem
+}) => {
   const {
     params: { type }
   } = useRoute<PenaltyOrBonificationDriverSelectionScreenRouteProp>()
@@ -51,7 +57,10 @@ const PenaltyOrBonificationDriverSelectionScreen: FunctionComponent<
       />
 
       <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
-        <CustomButton variant="primary" disabled={!selectedDriver}>
+        <CustomButton
+          variant="primary"
+          disabled={!selectedDriver}
+          onPress={handleAdvancePress}>
           Avançar
         </CustomButton>
       </View>

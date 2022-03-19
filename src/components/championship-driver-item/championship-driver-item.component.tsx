@@ -15,6 +15,7 @@ interface ChampionshipDriverItemProps {
   profileImageSize?: number
   nameTextSize?: number
   userNameTextSize?: number
+  isSelectable?: boolean
   handlePress?: (driver: ChampionshipDriver) => void
 }
 
@@ -25,6 +26,7 @@ const ChampionshipDriverItem: FunctionComponent<
   profileImageSize = 35,
   nameTextSize = 12,
   userNameTextSize = 10,
+  isSelectable = false,
   handlePress
 }) => {
   return (
@@ -32,7 +34,8 @@ const ChampionshipDriverItem: FunctionComponent<
       onPress={handlePress ? () => handlePress(driver) : () => {}}
       style={[
         styles.itemContainer,
-        driver?.isSelected && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
+        isSelectable &&
+          driver?.isSelected && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
       ]}>
       <View style={styles.left}>
         <View
@@ -65,7 +68,7 @@ const ChampionshipDriverItem: FunctionComponent<
       </View>
 
       <View style={styles.right}>
-        {driver?.isSelected && (
+        {isSelectable && driver?.isSelected && (
           <MaterialIcons name="done" size={24} color={Colors.primary} />
         )}
       </View>

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { RaceClassification } from '~types/race.types'
 
 export type RaceClassificationEditionSliceInitialState = {
@@ -36,6 +37,7 @@ const raceClassificationSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+
     submitRaceClassificationEditStart: (state) => {
       state.loading = true
       state.error = null
