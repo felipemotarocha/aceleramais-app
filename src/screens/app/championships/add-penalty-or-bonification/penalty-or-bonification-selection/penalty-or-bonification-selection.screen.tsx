@@ -37,6 +37,7 @@ interface PenaltyOrBonificationSelectionScreenProps {
         })
     // eslint-disable-next-line no-undef
   }) => JSX.Element
+  handleSavePress: () => void
 }
 
 const PenaltyOrBonificationSelectionScreen: FunctionComponent<
@@ -46,7 +47,8 @@ const PenaltyOrBonificationSelectionScreen: FunctionComponent<
   selectedDriver,
   selectedBonification,
   selectedPenalty,
-  renderItem
+  renderItem,
+  handleSavePress
 }) => {
   const {
     params: { type }
@@ -81,7 +83,8 @@ const PenaltyOrBonificationSelectionScreen: FunctionComponent<
       <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
         <CustomButton
           variant="primary"
-          disabled={!selectedBonification && !selectedPenalty}>
+          disabled={!selectedBonification && !selectedPenalty}
+          onPress={handleSavePress}>
           Salvar
         </CustomButton>
       </View>

@@ -5,7 +5,7 @@ import React, {
   useMemo
 } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 // Screens
@@ -17,6 +17,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import {
+  updateChampionshipDrivers,
   updateSelectedBonification,
   updateSelectedPenalty
 } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
@@ -37,7 +38,11 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
   const dispatch = useAppDispatch()
 
+  const navigation = useNavigation()
+
   const {
+    race,
+    championshipDrivers,
     selectedDriver,
     bonifications,
     penalties,
@@ -83,6 +88,63 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
         : { ...item, isSelected: false }
     )
   }, [penalties, selectedPenalty])
+
+  const handleSavePress = useCallback(() => {
+    const newChampionshipDrivers = championshipDrivers.map((driver) => {
+      if (driver.id !== selectedDriver?.id) return driver
+
+      if (type === 'bonification') {
+        const bonificationWasAlreadyAdded = driver.bonifications?.some(
+          (item) => item.bonification.id === selectedBonification?.id
+        )
+
+        if (bonificationWasAlreadyAdded) return driver
+
+        return {
+          ...driver,
+          bonifications: [
+            ...(driver.bonifications || []),
+            {
+              race: race!.id,
+              bonification: selectedBonification!
+            }
+          ]
+        }
+      }
+
+      if (type === 'penalty') {
+        const penaltyWasAlreadyAdded = driver.penalties?.some(
+          (item) => item.penalty.id === selectedPenalty?.id
+        )
+
+        if (penaltyWasAlreadyAdded) return driver
+
+        return {
+          ...driver,
+          penalties: [
+            ...(driver.penalties || []),
+            {
+              race: race!.id,
+              penalty: selectedPenalty!
+            }
+          ]
+        }
+      }
+
+      return driver
+    })
+
+    dispatch(updateChampionshipDrivers(newChampionshipDrivers))
+
+    navigation.goBack()
+    navigation.goBack()
+  }, [
+    championshipDrivers,
+    race,
+    selectedBonification,
+    selectedPenalty,
+    dispatch
+  ])
 
   const handleItemPress = useCallback(
     (item: Bonification | Penalty) => {
@@ -143,6 +205,7 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
       selectedPenalty={selectedPenalty}
       data={(type === 'bonification' ? _bonifications : _penalties) as any}
       renderItem={renderItem}
+      handleSavePress={handleSavePress}
     />
   )
 }

@@ -113,6 +113,14 @@ const racePenaltiesAndBonificationsSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    updateChampionshipDrivers: (
+      state,
+      action: PayloadAction<ChampionshipDriver[]>
+    ) => {
+      state.championshipDrivers = action.payload
+      state.loading = false
+      state.error = null
+    },
     updateSelectedDriver: (
       state,
       action: PayloadAction<ChampionshipDriver | undefined>
@@ -163,6 +171,7 @@ export const {
   submitRacePenaltiesAndBonificationsEditStart,
   submitRacePenaltiesAndBonificationsEditSuccess,
   submitRacePenaltiesAndBonificationsEditFailure,
+  updateChampionshipDrivers,
   updateSelectedDriver,
   updateSelectedBonification,
   updateSelectedPenalty,
