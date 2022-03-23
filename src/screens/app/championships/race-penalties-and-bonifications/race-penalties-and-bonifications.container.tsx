@@ -34,6 +34,7 @@ import {
   getChampionshipDrivers,
   getRace
 } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
+import { updateChampionshipDrivers } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
 
 interface PenaltiesAndBonificationsContainerProps {}
 
@@ -123,6 +124,48 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     return _penalties
   }, [championshipDrivers, route])
 
+  const handleRemovePress = useCallback(
+    ({
+      driver,
+      penalty,
+      bonification
+    }: {
+      driver: ChampionshipDriver
+      penalty?: Penalty
+      bonification?: Bonification
+    }) => {
+      const newChampionshipDrivers = championshipDrivers.map((_driver) => {
+        const _driverId = _driver.isRegistered ? _driver.user!.id : _driver.id
+        const driverId = driver.isRegistered ? driver.user!.id : driver.id
+
+        if (_driverId !== driverId) return _driver
+
+        if (bonification) {
+          return {
+            ..._driver,
+            bonifications: _driver.bonifications?.filter(
+              (item) => item.bonification.id !== bonification.id
+            )
+          }
+        }
+
+        if (penalty) {
+          return {
+            ..._driver,
+            penalties: _driver.penalties?.filter(
+              (item) => item.penalty.id !== penalty.id
+            )
+          }
+        }
+
+        return driver
+      })
+
+      dispatch(updateChampionshipDrivers(newChampionshipDrivers))
+    },
+    [championshipDrivers, dispatch]
+  )
+
   const renderItem = useCallback(
     ({
       item
@@ -141,12 +184,12 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
             bonification={item.bonification}
             penalty={item.penalty}
             editable={canEdit}
-            handleRemovePress={() => {}}
+            handleRemovePress={() => handleRemovePress(item)}
           />
         </View>
       )
     },
-    []
+    [handleRemovePress, canEdit]
   )
 
   const handleNewPress = (type: 'bonification' | 'penalty') => {

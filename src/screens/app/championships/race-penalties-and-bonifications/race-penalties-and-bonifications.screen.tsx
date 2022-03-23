@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 
 // Components
+import CustomButton from '~components/common/custom-button/custom-button.component'
 import Header from '~components/common/header/header.component'
 import RaceItem from '~components/race-item/race-item.component'
 
@@ -96,6 +97,11 @@ const RacePenaltiesAndBonificationsScreen: FunctionComponent<
           }
           style={{ paddingHorizontal: 20 }}
         />
+      </View>
+
+      <View
+        style={{ paddingBottom: 20, paddingHorizontal: 20, paddingTop: 15 }}>
+        <CustomButton variant="primary">Salvar</CustomButton>
       </View>
     </View>
   )
