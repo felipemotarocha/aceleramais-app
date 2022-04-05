@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '~api/axios.api'
 
 import { API_URL } from '~constants/config.constants'
 import Championship, { Bonification, Penalty } from '~types/championship.types'
@@ -16,6 +16,7 @@ import {
   getPenaltiesStart,
   getPenaltiesSuccess,
   getRaceFailure,
+  getRaceStart,
   getRaceSuccess
 } from './race-penalties-and-bonifications.slice'
 
@@ -24,7 +25,7 @@ export const getChampionshipDrivers = (championship: string) => {
     await dispatch(getChampionshipDriversStart())
 
     try {
-      const { data }: { data: Championship } = await axios.get(
+      const { data }: { data: Championship } = await api.get(
         `${API_URL}/api/championship/${championship}`
       )
 
@@ -40,7 +41,7 @@ export const getBonifications = (championship: string) => {
     await dispatch(getBonificationsStart())
 
     try {
-      const { data: bonifications }: { data: Bonification[] } = await axios.get(
+      const { data: bonifications }: { data: Bonification[] } = await api.get(
         `${API_URL}/api/bonification?championship=${championship}`
       )
 
@@ -56,7 +57,7 @@ export const getPenalties = (championship: string) => {
     await dispatch(getPenaltiesStart())
 
     try {
-      const { data: penalties }: { data: Penalty[] } = await axios.get(
+      const { data: penalties }: { data: Penalty[] } = await api.get(
         `${API_URL}/api/penalty?championship=${championship}`
       )
 
@@ -69,12 +70,14 @@ export const getPenalties = (championship: string) => {
 
 export const getRace = (race: string) => {
   return async (dispatch: Dispatch) => {
-    await dispatch(getChampionshipDriversStart())
+    await dispatch(getRaceStart())
 
     try {
-      const { data }: { data: Race } = await axios.get(
+      const { data }: { data: Race } = await api.get(
         `${API_URL}/api/race/${race}`
       )
+
+      console.log({ data })
 
       await dispatch(getRaceSuccess(data))
     } catch (error: any) {

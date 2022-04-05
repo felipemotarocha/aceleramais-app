@@ -1,5 +1,4 @@
 {
   "preset": "jest-expo",
-  "setupFilesAfterEnv": ["./jest.setup-env.js"],
-  "setupFiles": ["./jest.setup.js"]
+  "setupFilesAfterEnv": ["./jest.setup-env.js"]
 }

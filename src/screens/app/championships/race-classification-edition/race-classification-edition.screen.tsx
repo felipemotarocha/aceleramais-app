@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import DraggableFlatList, { RenderItem } from 'react-native-draggable-flatlist'
+import { RenderItem } from 'react-native-draggable-flatlist'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -63,7 +63,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
           </Pressable>
 
           <View style={{ flex: 1 }}>
-            <DraggableFlatList
+            {/* <DraggableFlatList
               onDragEnd={handleDragEnd}
               renderItem={renderItem}
               ListEmptyComponent={
@@ -76,7 +76,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
               data={raceClassification?.classification}
               keyExtractor={(item) => item?.id || item?.user?.id || ''}
               style={{ paddingHorizontal: 20, paddingVertical: 15 }}
-            />
+            /> */}
           </View>
 
           <View
