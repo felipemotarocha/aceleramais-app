@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Colors from '~constants/colors.constants'
 
 import { fireEvent, render, waitFor } from '~helpers/test.helpers'
 import PenaltyOrBonificationDriverSelectionContainer from './driver-selection.container'
@@ -17,7 +16,7 @@ jest.mock('@react-navigation/native', () => {
 })
 
 describe('Penalty or Bonification Driver Selection Screen', () => {
-  it('should render', async () => {
+  it('should render and select a driver', async () => {
     const initialState = {
       racePenaltiesAndBonifications: {
         championshipDrivers: [

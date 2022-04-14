@@ -69,9 +69,9 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
   const _bonifications = useMemo(() => {
     if (!selectedBonification)
-      return bonifications.map((item) => ({ ...item, isSelected: false }))
+      return bonifications?.map((item) => ({ ...item, isSelected: false }))
 
-    return bonifications.map((item) =>
+    return bonifications?.map((item) =>
       item.id === selectedBonification.id
         ? { ...item, isSelected: true }
         : { ...item, isSelected: false }
@@ -80,9 +80,9 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
   const _penalties = useMemo(() => {
     if (!selectedPenalty)
-      return penalties.map((item) => ({ ...item, isSelected: false }))
+      return penalties?.map((item) => ({ ...item, isSelected: false }))
 
-    return penalties.map((item) =>
+    return penalties?.map((item) =>
       item.id === selectedPenalty.id
         ? { ...item, isSelected: true }
         : { ...item, isSelected: false }
@@ -196,7 +196,12 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
         {item?.isSelected && (
           <View>
-            <MaterialIcons name="done" size={24} color={Colors.primary} />
+            <MaterialIcons
+              name="done"
+              size={24}
+              color={Colors.primary}
+              accessibilityLabel="selected"
+            />
           </View>
         )}
       </Pressable>
