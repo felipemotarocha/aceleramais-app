@@ -7,7 +7,7 @@ export const getEnvironment = () => {
 
   return {
     env: 'DEVELOPMENT',
-    API_URL: 'http://192.168.15.124:5050',
+    API_URL: 'http://192.168.15.19:5050',
     GOOGLE_EXPO_CLIENT_ID:
       '277005183601-g1nih0lq8jfsnrc6letqt93u4d8jel9b.apps.googleusercontent.com'
   }
