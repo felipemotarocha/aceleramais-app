@@ -69,7 +69,12 @@ const ChampionshipDriverItem: FunctionComponent<
 
       <View style={styles.right}>
         {isSelectable && driver?.isSelected && (
-          <MaterialIcons name="done" size={24} color={Colors.primary} />
+          <MaterialIcons
+            name="done"
+            size={24}
+            color={Colors.primary}
+            accessibilityLabel="selected"
+          />
         )}
       </View>
     </Pressable>
