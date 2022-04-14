@@ -77,8 +77,6 @@ export const getRace = (race: string) => {
         `${API_URL}/api/race/${race}`
       )
 
-      console.log({ data })
-
       await dispatch(getRaceSuccess(data))
     } catch (error: any) {
       await dispatch(getRaceFailure(error?.message))

@@ -62,8 +62,6 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     await dispatch(getChampionshipDrivers(route.params.championship))
   }
 
-  console.log({ race })
-
   const canEdit = useMemo(
     () =>
       championshipDetails?.admins.some(

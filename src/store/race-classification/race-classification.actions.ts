@@ -20,8 +20,6 @@ export const getRaceClassification = (race: string) => {
       const { data: raceClassification }: { data: RaceClassification } =
         await axios.get(`${API_URL}/api/raceClassification?race=${race}`)
 
-      console.log({ raceClassification })
-
       await dispatch(getRaceClassificationSuccess(raceClassification))
     } catch (error: any) {
       await dispatch(getRaceClassificationFailure(error?.message))
