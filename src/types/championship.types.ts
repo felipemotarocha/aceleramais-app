@@ -61,17 +61,22 @@ interface Championship {
   description: string
   platform: string
   admins: ChampionshipAdmin[]
-  races: string[]
-  teams: string[]
+  races: string[] | Race[]
+  teams: string[] | Team[]
   drivers: ChampionshipDriver[]
   driverStandings: ChampionshipDriverStandings
   teamStandings: ChampionshipTeamStandings
-  scoringSystem: string
-  bonifications: string[]
-  penalties: string[]
+  scoringSystem: string | ScoringSystem
+  bonifications: string[] | Bonification
+  penalties: string[] | Penalty
   nextRaces: Race[]
 }
 
+export interface ScoringSystem {
+  id: string
+  position: number
+  points: number
+}
 export interface Bonification {
   id: string
   name: string
@@ -82,6 +87,47 @@ export interface Penalty {
   id: string
   name: string
   points: number
+}
+
+export interface ChampionshipUpsertDto {
+  name?: string
+  description?: string
+  platform?: string
+  admins: {
+    user: string
+    isCreator: boolean
+  }[]
+  races?: {
+    id?: string
+    startDate: string
+    track: string
+  }[]
+  drivers: {
+    user?: string
+    userName?: string
+    team?: string
+    isRegistered: boolean
+  }[]
+  teams: {
+    id: string
+    name: string
+    color?: string
+  }[]
+  bonifications: {
+    race: string
+    name: string
+    points: number
+  }[]
+  penalties: {
+    race: string
+    name: string
+    points: number
+  }[]
+  scoringSystem: {
+    [key: string]: number
+  }
+  avatarImage?: any
+  avatarImageUrl?: string
 }
 
 export default Championship

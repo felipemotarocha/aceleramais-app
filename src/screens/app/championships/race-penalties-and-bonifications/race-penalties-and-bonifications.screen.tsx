@@ -71,11 +71,12 @@ interface PenaltiesAndBonificationsScreenProps {
       }
     >
   }) => React.ReactElement
+  handleSavePress: () => void
 }
 
 const RacePenaltiesAndBonificationsScreen: FunctionComponent<
   PenaltiesAndBonificationsScreenProps
-> = ({ data, race, renderItem, renderSectionHeader }) => {
+> = ({ data, race, renderItem, renderSectionHeader, handleSavePress }) => {
   return (
     <View style={styles.container}>
       <Header showBack>Penalizações e Bonificações</Header>
@@ -101,7 +102,9 @@ const RacePenaltiesAndBonificationsScreen: FunctionComponent<
 
       <View
         style={{ paddingBottom: 20, paddingHorizontal: 20, paddingTop: 15 }}>
-        <CustomButton variant="primary">Salvar</CustomButton>
+        <CustomButton variant="primary" onPress={handleSavePress}>
+          Salvar
+        </CustomButton>
       </View>
     </View>
   )

@@ -2,7 +2,8 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
-  useMemo
+  useMemo,
+  useState
 } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
@@ -21,26 +22,32 @@ import {
   RacePenaltiesAndBonificationsScreenNavigationProp,
   RacePenaltiesAndBonificationsScreenRouteProp
 } from '~navigators/app/championships/championships.navigator.types'
-import {
+import Championship, {
   Bonification,
   ChampionshipDriver,
   Penalty
 } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
+import api from '~api/axios.api'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import {
   getChampionshipDrivers,
-  getRace
+  getRace,
+  submitRacePenaltiesAndBonificationsEdit
 } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
 import { updateChampionshipDrivers } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
+import { showSuccess } from '~helpers/flash-message.helpers'
 
 interface PenaltiesAndBonificationsContainerProps {}
 
 const RacePenaltiesAndBonificationsContainer: FunctionComponent<
   PenaltiesAndBonificationsContainerProps
 > = () => {
+  const [championshipWithFullPopulate, setChampionshipWithFullPopulate] =
+    useState<Championship | null>(null)
+
   const dispatch = useAppDispatch()
 
   const route = useRoute<RacePenaltiesAndBonificationsScreenRouteProp>()
@@ -56,6 +63,20 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
   )
 
   const { currentUser } = useAppSelector((state) => state.user)
+
+  useEffect(() => {
+    const fetchChampionshipWithFullPopulate = async () => {
+      if (!championshipDetails) return
+
+      const { data } = await api.get(
+        `/api/championship/${championshipDetails.id}?full_populate=true`
+      )
+
+      setChampionshipWithFullPopulate(data)
+    }
+
+    fetchChampionshipWithFullPopulate()
+  }, [championshipDetails])
 
   const fetchChampionshipDriversAndRace = async () => {
     await dispatch(getRace(route.params.race))
@@ -243,6 +264,65 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
     [canEdit]
   )
 
+  const handleSavePress = useCallback(async () => {
+    const {
+      races,
+      teams,
+      bonifications,
+      penalties,
+      // @ts-ignore
+      scoringSystem: { scoringSystem }
+    } = championshipWithFullPopulate!
+
+    const drivers = championshipDrivers.map((driver) => {
+      const _driver = { ...driver }
+
+      if (driver.isRegistered) {
+        _driver.user = driver.user!.id as any
+      }
+
+      if (driver.team) {
+        _driver.team = driver.team.id as any
+      }
+
+      if (driver.bonifications) {
+        _driver.bonifications = driver.bonifications.map((item) => ({
+          race: item.race,
+          bonification: item.bonification.id
+        })) as any
+      }
+
+      if (driver.penalties) {
+        _driver.penalties = driver.penalties.map((item) => ({
+          race: item.race,
+          penalty: item.penalty.id
+        })) as any
+      }
+
+      return _driver
+    })
+
+    const payload = {
+      drivers,
+      races,
+      teams,
+      bonifications,
+      penalties,
+      scoringSystem
+    }
+
+    dispatch(
+      submitRacePenaltiesAndBonificationsEdit(
+        championshipWithFullPopulate!.id,
+        payload
+      )
+    )
+
+    navigation.goBack()
+
+    showSuccess('As modificações foram salvas com sucesso!')
+  }, [dispatch, navigation, championshipWithFullPopulate, championshipDrivers])
+
   const data = [
     {
       title: 'Bonificações',
@@ -265,6 +345,7 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
         data={data}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
+        handleSavePress={handleSavePress}
       />
     </>
   )

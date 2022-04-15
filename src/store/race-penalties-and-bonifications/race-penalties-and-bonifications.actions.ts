@@ -1,5 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import api from '~api/axios.api'
+import FormData from 'form-data'
 
 import { API_URL } from '~constants/config.constants'
 import Championship, { Bonification, Penalty } from '~types/championship.types'
@@ -17,7 +18,9 @@ import {
   getPenaltiesSuccess,
   getRaceFailure,
   getRaceStart,
-  getRaceSuccess
+  getRaceSuccess,
+  submitRacePenaltiesAndBonificationsEditFailure,
+  submitRacePenaltiesAndBonificationsEditStart
 } from './race-penalties-and-bonifications.slice'
 
 export const getChampionshipDrivers = (championship: string) => {
@@ -80,6 +83,29 @@ export const getRace = (race: string) => {
       await dispatch(getRaceSuccess(data))
     } catch (error: any) {
       await dispatch(getRaceFailure(error?.message))
+    }
+  }
+}
+
+export const submitRacePenaltiesAndBonificationsEdit = (
+  championship: string,
+  data: any
+) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(submitRacePenaltiesAndBonificationsEditStart())
+
+    try {
+      const formData = new FormData()
+
+      formData.append('data', JSON.stringify(data))
+
+      // eslint-disable-next-line no-undef
+      await fetch(`${API_URL}/api/championship/${championship}`, {
+        body: formData as any,
+        method: 'PUT'
+      })
+    } catch (error: any) {
+      dispatch(submitRacePenaltiesAndBonificationsEditFailure(error?.message))
     }
   }
 }
