@@ -2,6 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit'
 import FormData from 'form-data'
 
 import { API_URL } from '~constants/config.constants'
+import ChampionshipHelpers from '~helpers/championship.helpers'
 
 import {
   ChampionshipCreationSliceInitialState,
@@ -19,53 +20,9 @@ export const createChampionship = (
     dispatch(createChampionshipStart())
 
     try {
-      const { basicInfo, penalties, bonifications, admins } = data
+      const { basicInfo } = data
 
-      const races = data.races.map((item) => ({
-        ...item,
-        track: item.track.id
-      }))
-
-      const drivers = data.drivers.map((item) =>
-        item.isRegistered
-          ? {
-              user: item.id,
-              isRegistered: true,
-              team: item.team?.id
-            }
-          : {
-              id: item.id,
-              firstName: item.firstName,
-              lastName: item.lastName,
-              isRegistered: false,
-              team: item.team?.id
-            }
-      )
-
-      const teams = data.teams.map((item) => ({
-        id: item.id,
-        color: item.color,
-        name: item.name
-      }))
-
-      let scoringSystem = {}
-
-      for (const item of data.scoringSystem) {
-        scoringSystem = { ...scoringSystem, [item.position]: item.points }
-      }
-
-      const payload = {
-        name: basicInfo?.title,
-        description: basicInfo?.description,
-        platform: basicInfo?.platform,
-        races,
-        teams,
-        drivers,
-        scoringSystem,
-        penalties,
-        bonifications,
-        admins
-      }
+      const payload = ChampionshipHelpers.generateUpsertPayload(data)
 
       const formData = new FormData()
 
@@ -80,12 +37,12 @@ export const createChampionship = (
       }
 
       // eslint-disable-next-line no-undef
-      const response = await fetch(`${API_URL}/api/championship`, {
+      await fetch(`${API_URL}/api/championship`, {
         body: formData as any,
         method: 'POST'
       })
 
-      return dispatch(createChampionshipSuccess(response))
+      return dispatch(createChampionshipSuccess())
     } catch (error) {
       return dispatch(createChampionshipFailure(error as any))
     }
