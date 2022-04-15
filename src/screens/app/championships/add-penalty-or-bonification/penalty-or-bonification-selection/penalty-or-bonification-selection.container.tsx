@@ -111,7 +111,11 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
             ...(driver.bonifications || []),
             {
               race: race!.id,
-              bonification: selectedBonification!
+              bonification: {
+                id: selectedBonification!.id,
+                points: selectedBonification!.points,
+                name: selectedBonification!.name
+              }
             }
           ]
         }
@@ -130,7 +134,11 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
             ...(driver.penalties || []),
             {
               race: race!.id,
-              penalty: selectedPenalty!
+              penalty: {
+                id: selectedPenalty!.id,
+                points: selectedPenalty!.points,
+                name: selectedPenalty!.name
+              }
             }
           ]
         }
