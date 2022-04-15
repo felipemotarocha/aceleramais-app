@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { Dispatch } from '@reduxjs/toolkit'
 
 // Utilities
+import api from '~api/axios.api'
 import { API_URL } from '~constants/config.constants'
 import {
   getChampionshipTeamStandingsFailure,
@@ -13,11 +13,11 @@ import { ChampionshipTeamStandings } from '~types/championship.types'
 export const getChampionshipTeamStandings = (championship: string) => {
   return async (dispatch: Dispatch) => {
     await dispatch(getChampionshipTeamStandingsStart())
-
+    console.log('HERE')
     try {
       const {
         data: championshipTeamStandings
-      }: { data: ChampionshipTeamStandings } = await axios.get(
+      }: { data: ChampionshipTeamStandings } = await api.get(
         `${API_URL}/api/teamStandings?championship=${championship}`
       )
 

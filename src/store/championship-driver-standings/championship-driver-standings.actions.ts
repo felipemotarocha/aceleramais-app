@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Dispatch } from '@reduxjs/toolkit'
 
 // Utilities
@@ -9,6 +8,7 @@ import {
   getChampionshipDriverStandingsSuccess
 } from './championship-driver-standings.slice'
 import { ChampionshipDriverStandings } from '~types/championship.types'
+import api from '~api/axios.api'
 
 export const getChampionshipDriverStandings = (championship: string) => {
   return async (dispatch: Dispatch) => {
@@ -17,7 +17,7 @@ export const getChampionshipDriverStandings = (championship: string) => {
     try {
       const {
         data: championshipDriverStandings
-      }: { data: ChampionshipDriverStandings } = await axios.get(
+      }: { data: ChampionshipDriverStandings } = await api.get(
         `${API_URL}/api/driverStandings?championship=${championship}`
       )
 

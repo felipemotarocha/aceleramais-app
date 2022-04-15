@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Dispatch } from '@reduxjs/toolkit'
 
 import { API_URL } from '~constants/config.constants'
@@ -11,6 +10,7 @@ import {
   submitRaceClassificationEditStart,
   submitRaceClassificationEditSuccess
 } from './race-classification.slice'
+import api from '~api/axios.api'
 
 export const getRaceClassification = (race: string) => {
   return async (dispatch: Dispatch) => {
@@ -18,7 +18,7 @@ export const getRaceClassification = (race: string) => {
 
     try {
       const { data: raceClassification }: { data: RaceClassification } =
-        await axios.get(`${API_URL}/api/raceClassification?race=${race}`)
+        await api.get(`${API_URL}/api/raceClassification?race=${race}`)
 
       await dispatch(getRaceClassificationSuccess(raceClassification))
     } catch (error: any) {
@@ -44,7 +44,7 @@ export const submitRaceClassificationEdit = (
         team: item?.team?.id
       }))
 
-      await axios.patch(
+      await api.patch(
         `${API_URL}/api/raceClassification?id=${raceClassification.id}&race=${raceClassification.race.id}`,
         { classification: payload }
       )

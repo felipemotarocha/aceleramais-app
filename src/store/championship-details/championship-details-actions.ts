@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '~api/axios.api'
 
 // Utilities
 import { API_URL } from '~constants/config.constants'
@@ -16,7 +16,7 @@ export const getChampionshipDetails = (championship: string) => {
 
     try {
       const { data: championshipDetails }: { data: Championship } =
-        await axios.get(`${API_URL}/api/championship/${championship}`)
+        await api.get(`${API_URL}/api/championship/${championship}`)
 
       await dispatch(getChampionshipDetailsSuccess(championshipDetails))
     } catch (error: any) {

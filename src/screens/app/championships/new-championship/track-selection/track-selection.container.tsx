@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, {
   FunctionComponent,
   useCallback,
@@ -29,6 +28,7 @@ import {
   updateRaces,
   updateTracks
 } from '~store/championship-creation/championship-creation.slice'
+import api from '~api/axios.api'
 
 const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
   const [filteredTracks, setFilteredTracks] = useState<
@@ -47,7 +47,7 @@ const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
     const fetchAllTracks = async () => {
       if (!isEmpty(tracks)) return
 
-      const { data: _tracks }: { data: Track[] } = await axios.get(
+      const { data: _tracks }: { data: Track[] } = await api.get(
         `${API_URL}/api/track`
       )
 

@@ -1,10 +1,16 @@
 import React from 'react'
-import axiosMock from 'axios'
+import MockHelpers from '~helpers/mock.helpers'
 
 import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import ChampionshipTrackSelectionContainer from './track-selection.container'
 
 describe('Championship Tracks Selection', () => {
+  const axiosMock = MockHelpers.generateAxiosMock()
+
+  beforeEach(() => {
+    axiosMock.reset()
+  })
+
   const initialState = {
     championshipCreation: {
       basicInfo: undefined,
@@ -28,9 +34,7 @@ describe('Championship Tracks Selection', () => {
   }
 
   it('should render all the Tracks', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: initialState.championshipCreation.tracks
-    })
+    axiosMock.onGet().reply(200, initialState.championshipCreation.tracks)
 
     const { getByText } = render(
       <ChampionshipTrackSelectionContainer />,
@@ -42,9 +46,7 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should select an unselected Track on press', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: initialState.championshipCreation.tracks
-    })
+    axiosMock.onGet().reply(200, initialState.championshipCreation.tracks)
 
     const { getByText, getByLabelText } = render(
       <ChampionshipTrackSelectionContainer />,
@@ -59,9 +61,7 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should filter the Tracks by Country Name based on the search input', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: initialState.championshipCreation.tracks
-    })
+    axiosMock.onGet().reply(200, initialState.championshipCreation.tracks)
 
     const { getByText, queryByText, getByPlaceholderText } = render(
       <ChampionshipTrackSelectionContainer />,
@@ -78,9 +78,7 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should filter the Tracks by Name based on the search input', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: initialState.championshipCreation.tracks
-    })
+    axiosMock.onGet().reply(200, initialState.championshipCreation.tracks)
 
     const { getByText, queryByText, getByPlaceholderText } = render(
       <ChampionshipTrackSelectionContainer />,
@@ -100,9 +98,7 @@ describe('Championship Tracks Selection', () => {
   })
 
   it('should show an error on submit if no Track is selected', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: initialState.championshipCreation.tracks
-    })
+    axiosMock.onGet().reply(200, initialState.championshipCreation.tracks)
 
     const { getByText } = render(
       <ChampionshipTrackSelectionContainer />,

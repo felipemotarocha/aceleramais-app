@@ -1,10 +1,12 @@
 import React from 'react'
-import axiosMock from 'axios'
+import MockHelpers from '~helpers/mock.helpers'
 
 import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import RaceDriversSelectionModalContainer from './race-drivers-selection-modal.container'
 
 describe('Race Drivers Selection Modal', () => {
+  const axiosMock = MockHelpers.generateAxiosMock()
+
   const raceClassification = {
     id: '622bf07c3e649a39e43234a5',
     championship: '622bedfbe669549ffd44d2ba',
@@ -91,10 +93,8 @@ describe('Race Drivers Selection Modal', () => {
   ]
 
   it('should render with no race classification', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        drivers
-      }
+    axiosMock.onGet().reply(200, {
+      drivers
     })
 
     const { getByText, queryByText } = render(
@@ -121,10 +121,8 @@ describe('Race Drivers Selection Modal', () => {
   })
 
   it('should render with a race classification', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        drivers
-      }
+    axiosMock.onGet().reply(200, {
+      drivers
     })
 
     const { getByText } = render(
@@ -149,10 +147,8 @@ describe('Race Drivers Selection Modal', () => {
   })
 
   it('should update the driver position on press', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        drivers
-      }
+    axiosMock.onGet().reply(200, {
+      drivers
     })
 
     const { getByText, queryByText } = render(
@@ -194,10 +190,8 @@ describe('Race Drivers Selection Modal', () => {
   })
 
   it('should select all drivers', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        drivers
-      }
+    axiosMock.onGet().reply(200, {
+      drivers
     })
 
     const { getByText } = render(

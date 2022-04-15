@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useState
 } from 'react'
-import axios from 'axios'
 import { isEmpty } from 'lodash'
 import { StyleSheet, View, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -17,6 +16,7 @@ import DriverName from '~components/driver-name/driver-name.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 
 // Utilities
+import api from '~api/axios.api'
 import Championship from '~types/championship.types'
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import RaceDriversSelectionModalHelper from './race-drivers-selection-modal.helper'
@@ -43,7 +43,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
 
   useEffect(() => {
     const generateInitialAvailableDrivers = async () => {
-      const { data }: { data: Championship } = await axios.get(
+      const { data }: { data: Championship } = await api.get(
         `${API_URL}/api/championship/${championship}`
       )
 

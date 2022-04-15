@@ -1,20 +1,14 @@
-import axios from 'axios'
 import React from 'react'
-import MockAdapter from 'axios-mock-adapter'
 
-import { cleanup, render, waitFor } from '~helpers/test.helpers'
+import { render, waitFor } from '~helpers/test.helpers'
 import RaceClassificationEditionContainer from './race-classification-edition.container'
-import { API_URL } from '~constants/config.constants'
-
-const axiosMock = new MockAdapter(axios)
+import MockHelpers from '~helpers/mock.helpers'
 
 describe('Race Classification Edition', () => {
-  beforeEach(() => {
-    cleanup()
-  })
+  const axiosMock = MockHelpers.generateAxiosMock()
 
   it('should render with empty classification', async () => {
-    axiosMock.onGet(`${API_URL}/api/raceClassification`).reply(200, {
+    axiosMock.onGet().reply(200, {
       id: '622bf07c3e649a39e43234a5',
       race: {
         championship: '622bedfbe669549ffd44d2ba',

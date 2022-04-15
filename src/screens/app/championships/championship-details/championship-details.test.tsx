@@ -1,17 +1,19 @@
 import React from 'react'
-import axiosMock from 'axios'
 
 import { render, waitFor } from '~helpers/test.helpers'
 
 import ChampionshipDetailsContainer from './championship-details.container'
 import ChampionshipDetailsStubs from './championship-details.stubs'
+import MockHelpers from '~helpers/mock.helpers'
 
 describe('Championship Details', () => {
+  const axiosMock = MockHelpers.generateAxiosMock()
+
   beforeEach(() => {})
 
   it('should render the header', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: ChampionshipDetailsStubs.validResponse
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse
     })
 
     const { getByText } = render(<ChampionshipDetailsContainer />)
@@ -23,8 +25,8 @@ describe('Championship Details', () => {
   })
 
   it('should render the next races', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: ChampionshipDetailsStubs.validResponse
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse
     })
 
     const { getByText } = render(<ChampionshipDetailsContainer />)
@@ -43,11 +45,9 @@ describe('Championship Details', () => {
   })
 
   it('should show the leading drivers', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        ...ChampionshipDetailsStubs.validResponse,
-        teamStandings: { standings: [] }
-      }
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      teamStandings: { standings: [] }
     })
 
     const { getByText, queryAllByText } = render(
@@ -74,15 +74,13 @@ describe('Championship Details', () => {
   })
 
   it('should show an warning if there is no leading drivers', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        ...ChampionshipDetailsStubs.validResponse,
-        driverStandings: {
-          standings: []
-        },
-        teamStandings: {
-          standings: []
-        }
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: {
+        standings: []
+      },
+      teamStandings: {
+        standings: []
       }
     })
 
@@ -98,11 +96,9 @@ describe('Championship Details', () => {
   })
 
   it('should show the leading teams', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        ...ChampionshipDetailsStubs.validResponse,
-        driverStandings: { standings: [] }
-      }
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: { standings: [] }
     })
 
     const { getByText } = render(<ChampionshipDetailsContainer />)
@@ -116,15 +112,13 @@ describe('Championship Details', () => {
   })
 
   it('should show an warning if there is no leading teams', async () => {
-    ;(axiosMock.get as any).mockResolvedValue({
-      data: {
-        ...ChampionshipDetailsStubs.validResponse,
-        driverStandings: {
-          standings: []
-        },
-        teamStandings: {
-          standings: []
-        }
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: {
+        standings: []
+      },
+      teamStandings: {
+        standings: []
       }
     })
 
