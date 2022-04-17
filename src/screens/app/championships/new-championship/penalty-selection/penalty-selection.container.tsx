@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import { UseFormReset } from 'react-hook-form'
 import { CommonActions, useNavigation } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
 
 // Components
 import ChampionshipPenaltySelectionItem from '~components/championship-bonification-selection-item/championship-bonification-selection-item.component'
@@ -16,6 +17,7 @@ import { showError, showSuccess } from '~helpers/flash-message.helpers'
 // Redux
 import {
   clear,
+  updateDrivers,
   updatePenalties,
   _Penalty
 } from '~store/championship-creation/championship-creation.slice'
@@ -27,7 +29,7 @@ interface ChampionshipPenaltySelectionContainerProps {}
 const ChampionshipPenaltySelectionContainer: FunctionComponent<
   ChampionshipPenaltySelectionContainerProps
 > = () => {
-  const { penalties, ...rest } = useAppSelector(
+  const { penalties, drivers, ...rest } = useAppSelector(
     (state) => state.championshipCreation
   )
 
@@ -65,7 +67,17 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
     (id: string) => {
       const newPenalties = penalties.filter((item) => item.id !== id)
 
+      const newDrivers = drivers.map((driver) => {
+        if (isEmpty(driver?.penalties)) return driver
+
+        return {
+          ...driver,
+          penalties: driver.penalties?.filter((item) => item.penalty.id !== id)
+        }
+      })
+
       dispatch(updatePenalties(newPenalties))
+      dispatch(updateDrivers(newDrivers))
     },
     [dispatch, penalties]
   )
@@ -96,6 +108,7 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
         await dispatch(
           createChampionship({
             ...rest,
+            drivers,
             penalties: newPenalties,
             admins: [{ user: currentUser!.id, isCreator: true }]
           })

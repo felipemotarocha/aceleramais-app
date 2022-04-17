@@ -2,6 +2,8 @@ import React, { FunctionComponent, useCallback } from 'react'
 import { View } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import { UseFormReset } from 'react-hook-form'
+import { isEmpty } from 'lodash'
+import { useNavigation } from '@react-navigation/native'
 
 // Components
 import ChampionshipBonificationSelectionItem from '~components/championship-bonification-selection-item/championship-bonification-selection-item.component'
@@ -15,17 +17,17 @@ import { ChampionshipBonificationsScreenNavigationProp } from '~navigators/app/c
 // Redux
 import {
   updateBonifications,
+  updateDrivers,
   _Bonification
 } from '~store/championship-creation/championship-creation.slice'
 import { useAppDispatch, useAppSelector } from '~store'
-import { useNavigation } from '@react-navigation/native'
 
 interface ChampionshipBonificationSelectionContainerProps {}
 
 const ChampionshipBonificationSelectionContainer: FunctionComponent<
   ChampionshipBonificationSelectionContainerProps
 > = () => {
-  const { bonifications } = useAppSelector(
+  const { bonifications, drivers } = useAppSelector(
     (state) => state.championshipCreation
   )
 
@@ -62,9 +64,21 @@ const ChampionshipBonificationSelectionContainer: FunctionComponent<
     (id: string) => {
       const newBonifications = bonifications.filter((item) => item.id !== id)
 
+      const newDrivers = drivers.map((driver) => {
+        if (isEmpty(driver?.bonifications)) return driver
+
+        return {
+          ...driver,
+          bonifications: driver.bonifications?.filter(
+            (item) => item.bonification.id !== id
+          )
+        }
+      })
+
       dispatch(updateBonifications(newBonifications))
+      dispatch(updateDrivers(newDrivers))
     },
-    [dispatch, bonifications]
+    [dispatch, bonifications, drivers]
   )
 
   const renderItem = useCallback(
