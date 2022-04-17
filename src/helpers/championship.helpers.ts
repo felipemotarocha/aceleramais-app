@@ -2,7 +2,10 @@ import { ChampionshipCreationSliceInitialState } from '~store/championship-creat
 
 const ChampionshipHelpers = {
   generateUpsertPayload: (
-    dto: Omit<ChampionshipCreationSliceInitialState, 'error' | 'loading'> & {
+    dto: Omit<
+      ChampionshipCreationSliceInitialState,
+      'isEdit' | 'error' | 'loading'
+    > & {
       admins: { user: string; isCreator: boolean }[]
     }
   ) => {

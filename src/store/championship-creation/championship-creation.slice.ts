@@ -135,6 +135,18 @@ const championshipSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    editChampionshipStart: (state) => {
+      state.loading = true
+      state.error = undefined
+    },
+    editChampionshipSuccess: (state) => {
+      state.loading = false
+      state.error = undefined
+    },
+    editChampionshipFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false
+      state.error = action.payload
+    },
     replace: (
       state,
       action: PayloadAction<ChampionshipCreationSliceInitialState>
@@ -172,6 +184,9 @@ export const {
   createChampionshipStart,
   createChampionshipSuccess,
   createChampionshipFailure,
+  editChampionshipStart,
+  editChampionshipSuccess,
+  editChampionshipFailure,
   replace,
   clear
 } = championshipSlice.actions

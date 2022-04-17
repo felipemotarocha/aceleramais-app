@@ -8,11 +8,17 @@ import {
   ChampionshipCreationSliceInitialState,
   createChampionshipFailure,
   createChampionshipStart,
-  createChampionshipSuccess
+  createChampionshipSuccess,
+  editChampionshipFailure,
+  editChampionshipStart,
+  editChampionshipSuccess
 } from './championship-creation.slice'
 
 export const createChampionship = (
-  data: Omit<ChampionshipCreationSliceInitialState, 'error' | 'loading'> & {
+  data: Omit<
+    ChampionshipCreationSliceInitialState,
+    'isEdit' | 'error' | 'loading'
+  > & {
     admins: { user: string; isCreator: boolean }[]
   }
 ) => {
@@ -45,6 +51,48 @@ export const createChampionship = (
       return dispatch(createChampionshipSuccess())
     } catch (error) {
       return dispatch(createChampionshipFailure(error as any))
+    }
+  }
+}
+
+export const editChampionship = (
+  championship: string,
+  data: Omit<
+    ChampionshipCreationSliceInitialState,
+    'isEdit' | 'error' | 'loading'
+  > & {
+    admins: { user: string; isCreator: boolean }[]
+  }
+) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(editChampionshipStart())
+
+    try {
+      const { basicInfo } = data
+
+      const payload = ChampionshipHelpers.generateUpsertPayload(data)
+
+      const formData = new FormData()
+
+      formData.append('data', JSON.stringify(payload))
+
+      if (basicInfo?.image) {
+        formData.append('avatarImage', {
+          uri: basicInfo.image.uri,
+          name: `championship_image`,
+          type: 'image/jpeg'
+        })
+      }
+
+      // eslint-disable-next-line no-undef
+      await fetch(`${API_URL}/api/championship/${championship}`, {
+        body: formData as any,
+        method: 'PUT'
+      })
+
+      return dispatch(editChampionshipSuccess())
+    } catch (error) {
+      return dispatch(editChampionshipFailure(error as any))
     }
   }
 }

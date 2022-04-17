@@ -22,15 +22,22 @@ import {
   _Penalty
 } from '~store/championship-creation/championship-creation.slice'
 import { useAppDispatch, useAppSelector } from '~store'
-import { createChampionship } from '~store/championship-creation/championship-creation.actions'
+import {
+  createChampionship,
+  editChampionship
+} from '~store/championship-creation/championship-creation.actions'
 
 interface ChampionshipPenaltySelectionContainerProps {}
 
 const ChampionshipPenaltySelectionContainer: FunctionComponent<
   ChampionshipPenaltySelectionContainerProps
 > = () => {
-  const { penalties, drivers, ...rest } = useAppSelector(
+  const { penalties, drivers, isEdit, ...rest } = useAppSelector(
     (state) => state.championshipCreation
+  )
+
+  const { championshipDetails } = useAppSelector(
+    (state) => state.championshipDetails
   )
 
   const { currentUser } = useAppSelector((state) => state.user)
@@ -104,15 +111,19 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
 
       await dispatch(updatePenalties(newPenalties))
 
+      const payload = {
+        ...rest,
+        drivers,
+        penalties: newPenalties,
+        admins: [{ user: currentUser!.id, isCreator: true }]
+      }
+
       try {
-        await dispatch(
-          createChampionship({
-            ...rest,
-            drivers,
-            penalties: newPenalties,
-            admins: [{ user: currentUser!.id, isCreator: true }]
-          })
-        )
+        if (isEdit) {
+          await dispatch(editChampionship(championshipDetails!.id, payload))
+        } else {
+          await dispatch(createChampionship(payload))
+        }
 
         await dispatch(clear())
 
@@ -123,12 +134,14 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
           })
         )
 
-        showSuccess('O campeonato foi criado com sucesso.')
+        showSuccess(
+          `O campeonato foi ${isEdit ? 'editado' : 'criado'} com sucesso.`
+        )
       } catch (error) {
         showError(error as any)
       }
     },
-    [dispatch, penalties, currentUser]
+    [dispatch, penalties, currentUser, championshipDetails]
   )
 
   return (
