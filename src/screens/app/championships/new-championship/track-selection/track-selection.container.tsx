@@ -21,6 +21,7 @@ import Track from '~types/track.types'
 import { ChampionshipRaceDatesScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 import ChampionshipTrackSelectionHelper from './track-selection.helper'
 import ChampionshipRaceDateSelectionHelper from '../race-date-selection/race-date-selection.helper'
+import api from '~api/axios.api'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -28,7 +29,6 @@ import {
   updateRaces,
   updateTracks
 } from '~store/championship-creation/championship-creation.slice'
-import api from '~api/axios.api'
 
 const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
   const [filteredTracks, setFilteredTracks] = useState<
@@ -52,7 +52,12 @@ const ChampionshipTrackSelectionContainer: FunctionComponent = () => {
       )
 
       await dispatch(
-        updateTracks(_tracks.map((track) => ({ ...track, isSelected: false })))
+        updateTracks(
+          _tracks.map((track) => ({
+            ...track,
+            isSelected: races.some((race) => race.track.id === track.id)
+          }))
+        )
       )
     }
 
