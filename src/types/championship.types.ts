@@ -67,15 +67,14 @@ interface Championship {
   driverStandings: ChampionshipDriverStandings
   teamStandings: ChampionshipTeamStandings
   scoringSystem: string | ScoringSystem
-  bonifications: string[] | Bonification
-  penalties: string[] | Penalty
+  bonifications: string[] | Bonification[]
+  penalties: string[] | Penalty[]
   nextRaces: Race[]
 }
 
 export interface ScoringSystem {
-  id: string
-  position: number
-  points: number
+  championship: string
+  scoringSystem: { [key: number]: number }
 }
 export interface Bonification {
   id: string

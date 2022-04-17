@@ -26,7 +26,10 @@ const ChampionshipEditionScreen: React.FunctionComponent<
           Geral
         </TextSemiBold>
 
-        <CustomButton variant="outlined" style={{ alignItems: 'flex-start' }}>
+        <CustomButton
+          variant="outlined"
+          style={{ alignItems: 'flex-start' }}
+          onPress={() => handlePress('detailsAndSettings')()}>
           Editar Detalhes e Configurações
         </CustomButton>
 

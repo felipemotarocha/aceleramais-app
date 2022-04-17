@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Bonification, Penalty } from '~types/championship.types'
 
 import Track from '~types/track.types'
 
@@ -19,6 +20,14 @@ export type _Driver = {
   team?: _Team
   isRegistered: boolean
   profileImageUrl?: string
+  bonifications?: {
+    bonification: Bonification
+    race: string
+  }[]
+  penalties?: {
+    penalty: Penalty
+    race: string
+  }[]
 }
 export type _Bonification = {
   id: string
@@ -50,6 +59,7 @@ export type ChampionshipCreationSliceInitialState = {
   drivers: _Driver[]
   bonifications: _Bonification[]
   penalties: _Penalty[]
+  isEdit: boolean
   loading: boolean
   error?: string
 }
@@ -64,6 +74,7 @@ const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
     drivers: [],
     bonifications: [],
     penalties: [],
+    isEdit: false,
     loading: false,
     error: undefined
   }
@@ -124,6 +135,14 @@ const championshipSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    replace: (
+      state,
+      action: PayloadAction<ChampionshipCreationSliceInitialState>
+    ) => {
+      Object.entries(action.payload).forEach(([k, v]) => {
+        state[k] = v
+      })
+    },
     clear: (state) => {
       state.basicInfo = undefined
       state.tracks = []
@@ -136,6 +155,7 @@ const championshipSlice = createSlice({
       state.bonifications = []
       state.loading = false
       state.error = undefined
+      state.isEdit = false
     }
   }
 })
@@ -152,6 +172,7 @@ export const {
   createChampionshipStart,
   createChampionshipSuccess,
   createChampionshipFailure,
+  replace,
   clear
 } = championshipSlice.actions
 
