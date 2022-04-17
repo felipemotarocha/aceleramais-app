@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-// Screen
+// Screens
 import ChampionshipListScreen from '~screens/app/championships/championship-list/championship-list.container'
 import ChampionshipDetailsScreen from '~screens/app/championships/championship-details/championship-details.container'
 import ChampionshipRacesScreen from '~screens/app/championships/championship-races/championship-races.container'
 import ChampionshipDriverStandingsScreen from '~screens/app/championships/championship-driver-standings/championship-driver-standings.container'
 import ChampionshipTeamStandingsScreen from '~screens/app/championships/championship-team-standings/championship-team-standings.container'
-import ChampionshipEditionScreen from '~screens/app/championships/championship-edition/championship-edition.screen'
+import ChampionshipEditionScreen from '~screens/app/championships/championship-edition/championship-edition.container'
 import ChampionshipRaceSelectionScreen from '~screens/app/championships/championship-race-selection/championship-race-selection.container'
 import RaceClassificationEditionScreen from '~screens/app/championships/race-classification-edition/race-classification-edition.container'
 import RacePenaltiesAndBonificationsScreen from '~screens/app/championships/race-penalties-and-bonifications/race-penalties-and-bonifications.container'

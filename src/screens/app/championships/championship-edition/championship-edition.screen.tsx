@@ -1,6 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native'
 import * as React from 'react'
-import { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 // Components
@@ -10,33 +8,15 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 
 // Utilities
 import Colors from '~constants/colors.constants'
-import {
-  ChampionshipEditionScreenNavigationProp,
-  ChampionshipEditionScreenRouteProp
-} from '~navigators/app/championships/championships.navigator.types'
+import { Button } from './championship-edition.container'
 
-type Button = 'raceResults'
-
-interface ChampionshipEditionScreenProps {}
+interface ChampionshipEditionScreenProps {
+  handlePress: (button: Button) => () => void
+}
 
 const ChampionshipEditionScreen: React.FunctionComponent<
   ChampionshipEditionScreenProps
-> = () => {
-  const {
-    params: { championship }
-  } = useRoute<ChampionshipEditionScreenRouteProp>()
-  const navigation = useNavigation<ChampionshipEditionScreenNavigationProp>()
-
-  const handlePress = useCallback(
-    (button: Button) => {
-      return {
-        raceResults: () =>
-          navigation.navigate('Championship Race Selection', { championship })
-      }[button]
-    },
-    [championship, navigation]
-  )
-
+> = ({ handlePress }) => {
   return (
     <View style={styles.container}>
       <Header showBack>Editar Campeonato</Header>
