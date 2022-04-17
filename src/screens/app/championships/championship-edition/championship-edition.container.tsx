@@ -50,7 +50,9 @@ const ChampionshipEditionContainer: React.FunctionComponent<
         error: undefined
       })
     )
-  }, [championship])
+
+    navigation.navigate('New Championship')
+  }, [dispatch, championship, navigation, championship])
 
   const handlePress = useCallback(
     (button: Button) => {

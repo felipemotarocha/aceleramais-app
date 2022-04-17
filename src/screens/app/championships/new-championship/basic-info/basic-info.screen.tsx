@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
 })
 
 interface ChampionshipBasicInfoScreenProps {
+  headerTitle: 'Editar Campeonato' | 'Novo Campeonato'
   imageUri?: string
+  defaultValues?: BasicInfoForm
   handlePickImagePress: () => Promise<void>
   handleSubmit: (data: BasicInfoForm) => void
 }
@@ -40,12 +42,18 @@ export type BasicInfoForm = {
 
 const ChampionshipBasicInfoScreen: FunctionComponent<
   ChampionshipBasicInfoScreenProps
-> = ({ imageUri, handlePickImagePress, handleSubmit }) => {
+> = ({
+  headerTitle,
+  imageUri,
+  defaultValues,
+  handlePickImagePress,
+  handleSubmit
+}) => {
   const {
     control,
     formState: { errors },
     handleSubmit: _handleSubmit
-  } = useForm<BasicInfoForm>()
+  } = useForm<BasicInfoForm>({ defaultValues })
 
   const titleInputRef = useRef<any>(null)
   const platformInputRef = useRef<any>(null)
@@ -71,7 +79,7 @@ const ChampionshipBasicInfoScreen: FunctionComponent<
 
   return (
     <View style={styles.container}>
-      <Header showBack>Novo Campeonato</Header>
+      <Header showBack>{headerTitle}</Header>
 
       <KeyboardAwareScrollView
         enableAutomaticScroll={Platform.OS === 'ios'}

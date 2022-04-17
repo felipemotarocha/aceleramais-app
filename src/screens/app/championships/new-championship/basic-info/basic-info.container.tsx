@@ -5,17 +5,19 @@ import React, {
   useState
 } from 'react'
 import * as ImagePicker from 'expo-image-picker'
+import { useNavigation } from '@react-navigation/native'
 
 // Screens
 import ChampionshipBasicInfoScreen, { BasicInfoForm } from './basic-info.screen'
 
 // Redux
-import { useAppDispatch } from '~store'
+import { useAppDispatch, useAppSelector } from '~store'
 import {
   clear,
   updateBasicInfo
 } from '~store/championship-creation/championship-creation.slice'
-import { useNavigation } from '@react-navigation/native'
+
+// Utilities
 import { ChampionshipBasicInfoScreenNavigationProp } from '~navigators/app/championships/new-championship/new-championship.types'
 
 interface ChampionshipsBasicInfoContainerProps {}
@@ -23,13 +25,17 @@ interface ChampionshipsBasicInfoContainerProps {}
 const ChampionshipsBasicInfoContainer: FunctionComponent<
   ChampionshipsBasicInfoContainerProps
 > = () => {
+  const { basicInfo, isEdit } = useAppSelector(
+    (state) => state.championshipCreation
+  )
+
   const [image, setImage] = useState<
     | {
         uri: string
-        type: string
+        type?: string
       }
     | undefined
-  >(undefined)
+  >(basicInfo?.image || undefined)
 
   const dispatch = useAppDispatch()
   const navigation = useNavigation<ChampionshipBasicInfoScreenNavigationProp>()
@@ -62,13 +68,17 @@ const ChampionshipsBasicInfoContainer: FunctionComponent<
     [dispatch, image, navigation]
   )
 
+  const headerTitle = isEdit ? 'Editar Campeonato' : 'Novo Campeonato'
+
   useEffect(() => {
     return () => dispatch(clear()) as any
   }, [])
 
   return (
     <ChampionshipBasicInfoScreen
+      headerTitle={headerTitle}
       imageUri={image?.uri}
+      defaultValues={basicInfo as any}
       handlePickImagePress={handlePickImagePress}
       handleSubmit={handleSubmit}
     />
