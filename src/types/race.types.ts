@@ -19,6 +19,7 @@ export interface RaceClassificationItem {
   lastName?: string
   team?: Team
   isRegistered: boolean
+  isRemoved: boolean
 }
 
 export interface RaceClassification {

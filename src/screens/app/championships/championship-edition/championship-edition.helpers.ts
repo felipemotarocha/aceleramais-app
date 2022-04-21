@@ -51,6 +51,7 @@ const ChampionshipEditionHelpers = {
       const _driver: _Driver = {
         id: (driver?.id || driver?.user?.id)!,
         isRegistered: driver.isRegistered,
+        isRemoved: driver.isRemoved,
         team: driver?.team as any,
         bonifications: driver.bonifications,
         penalties: driver.penalties

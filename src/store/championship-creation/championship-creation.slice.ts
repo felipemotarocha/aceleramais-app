@@ -19,6 +19,7 @@ export type _Driver = {
   userName?: string
   team?: _Team
   isRegistered: boolean
+  isRemoved: boolean
   profileImageUrl?: string
   bonifications?: {
     bonification: Bonification

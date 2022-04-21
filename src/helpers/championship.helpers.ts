@@ -21,14 +21,16 @@ const ChampionshipHelpers = {
         ? {
             user: item.id,
             isRegistered: true,
-            team: item.team?.id
+            team: item.team?.id,
+            isRemoved: item.isRemoved
           }
         : {
             id: item.id,
             firstName: item.firstName,
             lastName: item.lastName,
             isRegistered: false,
-            team: item.team?.id
+            team: item.team?.id,
+            isRemoved: item.isRemoved
           }
     )
 

@@ -41,6 +41,7 @@ export const submitRaceClassificationEdit = (
         firstName: item?.firstName,
         lastName: item?.lastName,
         isRegistered: item?.isRegistered,
+        isRemoved: item?.isRemoved,
         team: item?.team?.id
       }))
 

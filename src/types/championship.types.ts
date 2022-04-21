@@ -9,6 +9,7 @@ export interface ChampionshipDriver {
   lastName?: string
   team?: Team
   isRegistered: boolean
+  isRemoved: boolean
   bonifications?: {
     bonification: Bonification
     race: string
