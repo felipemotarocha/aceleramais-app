@@ -20,6 +20,7 @@ export interface RaceClassificationItem {
   team?: Team
   isRegistered: boolean
   isRemoved: boolean
+  scores: boolean
 }
 
 export interface RaceClassification {
