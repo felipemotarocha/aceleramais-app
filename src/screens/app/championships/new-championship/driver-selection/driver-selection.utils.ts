@@ -25,7 +25,8 @@ const ChampionshipDriverSelectionUtils = {
           id: driver.id,
           profileImageUrl: driver?.profileImageUrl,
           firstName: driver.firstName,
-          lastName: driver.lastName
+          lastName: driver.lastName,
+          isRemoved: false
         }
       ]
 
@@ -42,7 +43,8 @@ const ChampionshipDriverSelectionUtils = {
         firstName,
         lastName,
         team: data.team,
-        isRegistered: false
+        isRegistered: false,
+        isRemoved: false
       }
     ]
 

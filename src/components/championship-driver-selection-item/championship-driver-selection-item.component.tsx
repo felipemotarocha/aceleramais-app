@@ -14,12 +14,13 @@ import { _Driver } from '~store/championship-creation/championship-creation.slic
 
 interface ChampionshipDriverSelectionItemProps {
   driver: _Driver
+  isRemovable: boolean
   handleRemovePress: (driver: _Driver) => void
 }
 
 const ChampionshipDriverSelectionItem: FunctionComponent<
   ChampionshipDriverSelectionItemProps
-> = ({ driver, handleRemovePress }) => {
+> = ({ driver, isRemovable, handleRemovePress }) => {
   return (
     <View style={{ marginBottom: 15 }}>
       <DriverItem profileImageUrl={driver?.profileImageUrl}>
@@ -56,14 +57,16 @@ const ChampionshipDriverSelectionItem: FunctionComponent<
             )}
           </View>
 
-          <Pressable
-            style={styles.remove}
-            onPress={() => handleRemovePress(driver)}
-            accessibilityLabel={`Remove ${
-              driver?.userName || driver.firstName
-            }`}>
-            <AntDesign name="close" size={24} color={Colors.textSecondary} />
-          </Pressable>
+          {isRemovable && (
+            <Pressable
+              style={styles.remove}
+              onPress={() => handleRemovePress(driver)}
+              accessibilityLabel={`Remove ${
+                driver?.userName || driver.firstName
+              }`}>
+              <AntDesign name="close" size={24} color={Colors.textSecondary} />
+            </Pressable>
+          )}
         </View>
       </DriverItem>
     </View>

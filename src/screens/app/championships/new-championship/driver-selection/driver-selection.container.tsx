@@ -32,7 +32,7 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
     defaultValues: { isRegistered: false }
   })
 
-  const { teams, drivers } = useAppSelector(
+  const { teams, drivers, isEdit } = useAppSelector(
     (state) => state.championshipCreation
   )
   const dispatch = useAppDispatch()
@@ -83,6 +83,7 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
     ({ item }: { item: _Driver }) => (
       <ChampionshipDriverSelectionItem
         driver={item}
+        isRemovable={!isEdit}
         handleRemovePress={handleRemovePress}
       />
     ),
