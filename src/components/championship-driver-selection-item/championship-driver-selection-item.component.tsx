@@ -7,6 +7,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import DriverItem from '~components/driver-item/driver-item.component'
+import EditChampionshipDriverModal from '~components/edit-championship-driver-modal/edit-championship-driver-modal.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -21,55 +22,73 @@ interface ChampionshipDriverSelectionItemProps {
 const ChampionshipDriverSelectionItem: FunctionComponent<
   ChampionshipDriverSelectionItemProps
 > = ({ driver, isRemovable, handleRemovePress }) => {
+  const [editModalIsVisible, setEditModalIsVisible] = React.useState(false)
+
+  const handleLongPress = () => {
+    setEditModalIsVisible((prevState) => !prevState)
+  }
+
   return (
-    <View style={{ marginBottom: 15 }}>
-      <DriverItem profileImageUrl={driver?.profileImageUrl}>
-        <View
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            justifyContent: 'space-between'
-          }}>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center'
-              }}>
-              {driver?.team && (
-                <View
-                  style={[
-                    styles.teamColorLine,
-                    { borderColor: driver.team.color }
-                  ]}></View>
-              )}
-              <TextMedium numberOfLines={1}>
-                {driver.firstName}{' '}
-                <TextSemiBold>{driver.lastName?.toUpperCase()}</TextSemiBold>
-              </TextMedium>
-            </View>
-            {driver.userName && (
-              <View style={{ marginTop: 2 }}>
-                <TextRegular style={{ fontSize: 10 }} numberOfLines={1}>
-                  @{driver?.userName}
-                </TextRegular>
+    <>
+      <Pressable style={{ marginBottom: 15 }} onLongPress={handleLongPress}>
+        <DriverItem profileImageUrl={driver?.profileImageUrl}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'space-between'
+            }}>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}>
+                {driver?.team && (
+                  <View
+                    style={[
+                      styles.teamColorLine,
+                      { borderColor: driver.team.color }
+                    ]}></View>
+                )}
+                <TextMedium numberOfLines={1}>
+                  {driver.firstName}{' '}
+                  <TextSemiBold>{driver.lastName?.toUpperCase()}</TextSemiBold>
+                </TextMedium>
               </View>
+              {driver.userName && (
+                <View style={{ marginTop: 2 }}>
+                  <TextRegular style={{ fontSize: 10 }} numberOfLines={1}>
+                    @{driver?.userName}
+                  </TextRegular>
+                </View>
+              )}
+            </View>
+
+            {isRemovable && (
+              <Pressable
+                style={styles.remove}
+                onPress={() => handleRemovePress(driver)}
+                accessibilityLabel={`Remove ${
+                  driver?.userName || driver.firstName
+                }`}>
+                <AntDesign
+                  name="close"
+                  size={24}
+                  color={Colors.textSecondary}
+                />
+              </Pressable>
             )}
           </View>
+        </DriverItem>
+      </Pressable>
 
-          {isRemovable && (
-            <Pressable
-              style={styles.remove}
-              onPress={() => handleRemovePress(driver)}
-              accessibilityLabel={`Remove ${
-                driver?.userName || driver.firstName
-              }`}>
-              <AntDesign name="close" size={24} color={Colors.textSecondary} />
-            </Pressable>
-          )}
-        </View>
-      </DriverItem>
-    </View>
+      <EditChampionshipDriverModal
+        driver={driver}
+        isVisible={editModalIsVisible}
+        setIsVisible={setEditModalIsVisible}
+      />
+    </>
   )
 }
 

@@ -87,7 +87,7 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
         handleRemovePress={handleRemovePress}
       />
     ),
-    [dispatch, handleRemovePress]
+    [dispatch, handleRemovePress, isEdit, drivers]
   )
 
   const handleSubmit = useCallback(
