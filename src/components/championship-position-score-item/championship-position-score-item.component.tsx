@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import {
   Controller,
   FieldValues,
@@ -61,6 +61,10 @@ const ChampionshipPositionScoreItem: FunctionComponent<
   ChampionshipPositionScoreItemProps
 > = ({ position, points, handleRemovePress }) => {
   const { control, formState, setValue, reset } = useFormContext()
+
+  useEffect(() => {
+    setValue(position.toString(), points.toString())
+  }, [position, points])
 
   return (
     <View style={styles.container}>
