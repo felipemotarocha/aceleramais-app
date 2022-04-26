@@ -231,4 +231,100 @@ describe('Championship Scoring System Selection', () => {
     expect(queryByText(/3º lugar/i)).toBeNull()
     expect(queryByDisplayValue('18')).toBeNull()
   })
+
+  it('should remove the last position and add it again', async () => {
+    const {
+      getByText,
+      queryAllByLabelText,
+      getByPlaceholderText,
+      getByLabelText,
+      getByDisplayValue,
+      queryAllByDisplayValue
+    } = render(<ChampionshipScoringSystemSelectionContainer />)
+
+    const addButton = getByText(/adicionar/i)
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 1º lugar/i), '25')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 2º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 2º lugar/i), '20')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '18')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 4º lugar/i))
+
+    fireEvent.press(getByLabelText(/remove 3/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '15')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 4º lugar/i))
+
+    expect(queryAllByLabelText(/remove/i)).toHaveLength(3)
+
+    getByText(/1º lugar/i)
+    getByDisplayValue('25')
+
+    getByText(/2º lugar/i)
+    getByDisplayValue('20')
+
+    getByText(/3º lugar/i)
+    getByDisplayValue('15')
+
+    expect(queryAllByDisplayValue(/18/i)).toHaveLength(0)
+  })
+
+  it('should remove the first position and add the last one', async () => {
+    const {
+      getByText,
+      queryAllByLabelText,
+      getByPlaceholderText,
+      getByLabelText,
+      getByDisplayValue,
+      queryByDisplayValue
+    } = render(<ChampionshipScoringSystemSelectionContainer />)
+
+    const addButton = getByText(/adicionar/i)
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 1º lugar/i), '25')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 2º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 2º lugar/i), '20')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 3º lugar/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '18')
+    fireEvent.press(addButton)
+
+    await waitFor(async () => getByPlaceholderText(/pontos 4º lugar/i))
+
+    fireEvent.press(getByLabelText(/remove 1/i))
+
+    fireEvent.changeText(getByPlaceholderText(/pontos 3º lugar/i), '15')
+    fireEvent.press(addButton)
+
+    await waitFor(async () =>
+      expect(queryAllByLabelText(/remove/i)).toHaveLength(3)
+    )
+
+    getByText(/1º lugar/i)
+    getByDisplayValue('20')
+
+    getByText(/2º lugar/i)
+    getByDisplayValue('18')
+
+    getByText(/3º lugar/i)
+    getByDisplayValue('15')
+
+    expect(queryByDisplayValue('25')).toBeNull()
+  })
 })
