@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useCallback, useMemo } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { v4 as uuidv4 } from 'uuid'
 
 // Components
 import CustomModal from '~components/common/custom-modal/custom-modal.component'
@@ -13,7 +14,7 @@ interface ChampionshipTeamsModalProps {
   teams: _Team[]
   isVisible: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
-  handleTeamChange: (team: _Team) => void
+  handleTeamChange: (team: _Team | null) => void
 }
 
 const ChampionshipTeamsModal: FunctionComponent<
@@ -24,14 +25,18 @@ const ChampionshipTeamsModal: FunctionComponent<
   const watchFilter = watch('filter')
 
   const filteredTeams = useMemo(() => {
-    if (!watchFilter) return teams
+    const none = { id: uuidv4(), name: 'Nenhum', color: '#BBB' }
+    if (!watchFilter) return [none, ...teams]
 
-    return teams.filter((team) =>
-      team.name.toLowerCase().startsWith(watchFilter.toLowerCase())
-    )
+    return [
+      none,
+      ...teams.filter((team) =>
+        team.name.toLowerCase().startsWith(watchFilter.toLowerCase())
+      )
+    ]
   }, [watchFilter])
 
-  const handlePress = useCallback((team: _Team) => {
+  const handlePress = useCallback((team: _Team | null) => {
     handleTeamChange(team)
     setIsVisible(false)
   }, [])
@@ -39,7 +44,7 @@ const ChampionshipTeamsModal: FunctionComponent<
   const renderItem = useCallback(
     ({ item }: { item: _Team }) => (
       <Pressable
-        onPress={() => handlePress(item)}
+        onPress={() => handlePress(item.name === 'Nenhum' ? null : item)}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
