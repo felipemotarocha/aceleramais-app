@@ -42,7 +42,7 @@ interface ChampionshipDriverSelectionScreenProps {
   teams: _Team[]
   drivers: _Driver[]
   teamInputIsToBeShown: boolean
-  handleTeamChange: (team: _Team) => void
+  handleTeamChange: (team: _Team | null) => void
   handleAddPress: (data: DriverSelectionForm) => void
   renderDriverItem: ListRenderItem<_Driver> | null | undefined
   handleSubmit: () => void
@@ -205,6 +205,8 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
           contentContainerStyle={{ paddingTop: 15 }}
           alwaysBounceVertical
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
         />
 
         {isEmpty(drivers) ? (

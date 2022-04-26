@@ -24,7 +24,10 @@ describe('Championship Driver Selection', () => {
       ],
 
       scoringSystem: [],
-      bonifications: []
+      bonifications: [],
+      penalties: [],
+      isEdit: false,
+      loading: false
     }
   }
 
@@ -155,6 +158,150 @@ describe('Championship Driver Selection', () => {
     fireEvent.press(getByText(/adicionar/i))
 
     await waitFor(async () => getByLabelText(/remove felipe/i))
+  })
+
+  it('should edit an unregistered driver (with Teams available)', async () => {
+    const { getByText, queryAllByText, queryAllByPlaceholderText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      {
+        preloadedState: {
+          championshipCreation: {
+            ...initialState.championshipCreation,
+            drivers: [
+              {
+                id: '1',
+                firstName: 'Max',
+                lastName: 'Verstappen',
+                isRegistered: false
+              }
+            ]
+          }
+        }
+      }
+    )
+
+    await waitFor(async () => {
+      expect(queryAllByText(/max/i)).toHaveLength(2)
+      expect(queryAllByText(/verstappen/i)).toHaveLength(2)
+    })
+
+    fireEvent(queryAllByText(/verstappen/i)[1], 'onLongPress')
+
+    await waitFor(async () => {
+      getByText(/editar piloto/i)
+    })
+
+    expect(queryAllByPlaceholderText(/time/i)).toHaveLength(4)
+  })
+
+  it('should edit an unregistered driver (with no Teams available)', async () => {
+    const { getByText, queryAllByText, queryAllByPlaceholderText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      {
+        preloadedState: {
+          championshipCreation: {
+            ...initialState.championshipCreation,
+            drivers: [
+              {
+                id: '1',
+                firstName: 'Max',
+                lastName: 'Verstappen',
+                isRegistered: false
+              }
+            ],
+            teams: []
+          }
+        }
+      }
+    )
+
+    await waitFor(async () => {
+      expect(queryAllByText(/max/i)).toHaveLength(2)
+      expect(queryAllByText(/verstappen/i)).toHaveLength(2)
+    })
+
+    fireEvent(queryAllByText(/verstappen/i)[1], 'onLongPress')
+
+    await waitFor(async () => {
+      getByText(/editar piloto/i)
+    })
+
+    expect(queryAllByPlaceholderText(/time/i)).toHaveLength(2)
+  })
+
+  it('should edit a registered driver (with Teams available)', async () => {
+    const { getByText, queryAllByText, queryAllByPlaceholderText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      {
+        preloadedState: {
+          championshipCreation: {
+            ...initialState.championshipCreation,
+            drivers: [
+              {
+                id: '1',
+                userName: 'felipe.rocha',
+                firstName: 'Felipe',
+                lastName: 'Rocha',
+                isRegistered: true
+              }
+            ]
+          }
+        }
+      }
+    )
+
+    await waitFor(async () => {
+      expect(queryAllByText(/felipe/i)).toHaveLength(4)
+      expect(queryAllByText(/rocha/i)).toHaveLength(4)
+    })
+
+    fireEvent(queryAllByText(/rocha/i)[1], 'onLongPress')
+
+    await waitFor(async () => {
+      getByText(/editar piloto/i)
+    })
+
+    expect(queryAllByPlaceholderText(/time/i)).toHaveLength(4)
+    expect(queryAllByPlaceholderText(/nome de usuário/i)).toHaveLength(0)
+    expect(queryAllByPlaceholderText(/nome e sobrenome/i)).toHaveLength(1)
+  })
+
+  it('should edit a registered driver (with no Teams available)', async () => {
+    const { getByText, queryAllByText, queryAllByPlaceholderText } = render(
+      <ChampionshipDriverSelectionContainer />,
+      {
+        preloadedState: {
+          championshipCreation: {
+            ...initialState.championshipCreation,
+            drivers: [
+              {
+                id: '1',
+                userName: 'felipe.rocha',
+                firstName: 'Felipe',
+                lastName: 'Rocha',
+                isRegistered: true
+              }
+            ],
+            teams: []
+          }
+        }
+      }
+    )
+
+    await waitFor(async () => {
+      expect(queryAllByText(/felipe/i)).toHaveLength(4)
+      expect(queryAllByText(/rocha/i)).toHaveLength(4)
+    })
+
+    fireEvent(queryAllByText(/rocha/i)[1], 'onLongPress')
+
+    await waitFor(async () => {
+      getByText(/editar piloto/i)
+    })
+
+    expect(queryAllByPlaceholderText(/time/i)).toHaveLength(2)
+    expect(queryAllByPlaceholderText(/nome de usuário/i)).toHaveLength(0)
+    expect(queryAllByPlaceholderText(/nome e sobrenome/i)).toHaveLength(1)
   })
 
   it('should remove a Driver', async () => {

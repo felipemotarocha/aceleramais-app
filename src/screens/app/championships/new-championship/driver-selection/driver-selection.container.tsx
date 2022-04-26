@@ -49,8 +49,8 @@ const ChampionshipDriverSelectionContainer: FunctionComponent = () => {
   }, [watchIsRegistered])
 
   const handleTeamChange = useCallback(
-    (team: _Team) => {
-      methods.setValue('team', team)
+    (team: _Team | null) => {
+      methods.setValue('team', team as any)
     },
     [methods]
   )
