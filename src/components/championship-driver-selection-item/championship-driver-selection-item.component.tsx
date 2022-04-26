@@ -83,11 +83,13 @@ const ChampionshipDriverSelectionItem: FunctionComponent<
         </DriverItem>
       </Pressable>
 
-      <EditChampionshipDriverModal
-        driver={driver}
-        isVisible={editModalIsVisible}
-        setIsVisible={setEditModalIsVisible}
-      />
+      <View style={{ flex: 1 }}>
+        <EditChampionshipDriverModal
+          driver={driver}
+          isVisible={editModalIsVisible}
+          setIsVisible={setEditModalIsVisible}
+        />
+      </View>
     </>
   )
 }
