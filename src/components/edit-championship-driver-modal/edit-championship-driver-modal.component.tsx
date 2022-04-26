@@ -2,7 +2,6 @@ import * as React from 'react'
 import { useCallback, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { View, StyleSheet, Pressable } from 'react-native'
-import ChampionshipTeamsModal from '~components/championship-teams-modal/championship-teams-modal.component'
 
 // Components
 import CustomBottomModal from '~components/common/custom-bottom-modal/custom-bottom-modal.component'
@@ -12,7 +11,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import DriverItem from '~components/driver-item/driver-item.component'
-import { useAppSelector, useAppDispatch } from '~store'
+import ChampionshipTeamsModal from '~components/championship-teams-modal/championship-teams-modal.component'
 
 // Redux
 import {
@@ -20,6 +19,7 @@ import {
   _Driver,
   _Team
 } from '~store/championship-creation/championship-creation.slice'
+import { useAppSelector, useAppDispatch } from '~store'
 
 interface EditChampionshipDriverModalProps {
   driver: _Driver
@@ -57,8 +57,8 @@ const EditChampionshipDriverModal: React.FunctionComponent<
 
   const dispatch = useAppDispatch()
 
-  const handleTeamChange = (team: _Team) => {
-    setValue('team', team)
+  const handleTeamChange = (team: _Team | null) => {
+    setValue('team', team as any)
   }
 
   const handleDismiss = () => {
@@ -174,7 +174,10 @@ const EditChampionshipDriverModal: React.FunctionComponent<
           Salvar
         </CustomButton>
 
-        <CustomButton variant="outlined" style={{ marginTop: 15 }}>
+        <CustomButton
+          variant="outlined"
+          style={{ marginTop: 15 }}
+          onPress={() => setIsVisible(false)}>
           Cancelar
         </CustomButton>
       </View>
