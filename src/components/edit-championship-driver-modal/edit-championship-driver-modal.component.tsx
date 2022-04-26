@@ -21,6 +21,9 @@ import {
 } from '~store/championship-creation/championship-creation.slice'
 import { useAppSelector, useAppDispatch } from '~store'
 
+// Utilities
+import Colors from '~constants/colors.constants'
+
 interface EditChampionshipDriverModalProps {
   driver: _Driver
   isVisible: boolean
@@ -40,6 +43,7 @@ const EditChampionshipDriverModal: React.FunctionComponent<
     control,
     setValue,
     reset,
+    formState: { errors },
     handleSubmit: _handleSubmit
   } = useForm<EditDriverForm>({
     defaultValues: {
@@ -133,20 +137,30 @@ const EditChampionshipDriverModal: React.FunctionComponent<
 
       <View style={{ width: '100%' }}>
         {!driver?.userName && (
-          <Controller
-            name="fullName"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, onBlur } }) => (
-              <CustomInput
-                placeholder="Nome e sobrenome"
-                onChangeText={onChange}
-                value={value}
-                onBlur={onBlur}
-                style={{ marginTop: 20 }}
-              />
+          <View>
+            <Controller
+              name="fullName"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, onBlur } }) => (
+                <CustomInput
+                  placeholder="Nome e sobrenome"
+                  hasError={!!errors?.fullName}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  style={{ marginTop: 20 }}
+                />
+              )}
+            />
+
+            {errors.fullName?.type === 'required' && (
+              <TextMedium
+                style={{ fontSize: 12, color: Colors.error, marginTop: 5 }}>
+                O nome e sobrenome são obrigatórios.
+              </TextMedium>
             )}
-          />
+          </View>
         )}
 
         {(driver?.team || teamInputIsToBeShown) && (
