@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.input.background
+    borderColor: Colors.input.background,
+    fontFamily: 'Poppins_400Regular'
   },
   placeholder: {
     fontFamily: 'Poppins_500Medium',

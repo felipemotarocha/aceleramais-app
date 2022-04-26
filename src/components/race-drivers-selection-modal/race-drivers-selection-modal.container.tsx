@@ -38,6 +38,10 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
   const [availableDrivers, setAvailableDrivers] = useState<
     RaceClassificationItem[]
   >([])
+  const [editDriverModalIsVisible, setEditDriverModalIsVisible] =
+    useState(false)
+  const [driverBeingEdited, setDriverBeingEdited] =
+    useState<RaceClassificationItem | null>(null)
 
   const dispatch = useDispatch()
 
@@ -133,6 +137,11 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
       return (
         <Pressable
           onPress={() => handleDriverPress(item)}
+          onLongPress={() => {
+            console.log('long press')
+            setEditDriverModalIsVisible(true)
+            setDriverBeingEdited(item)
+          }}
           style={[
             styles.itemContainer,
             item.position !== 0 && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
@@ -175,15 +184,20 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
   )
 
   return (
-    <RaceDriversSelectionModal
-      isVisible={isVisible}
-      availableDrivers={availableDrivers}
-      handleSelectAllPress={handleSelectAllPress}
-      setIsVisible={setIsVisible}
-      renderItem={renderItem}
-      handleSavePress={handleSavePress}
-      handleDismiss={handleDismiss}
-    />
+    <>
+      <RaceDriversSelectionModal
+        isVisible={isVisible}
+        availableDrivers={availableDrivers}
+        driverBeingEdited={driverBeingEdited}
+        editDriverModalIsVisible={editDriverModalIsVisible}
+        setEditDriverModalIsVisible={setEditDriverModalIsVisible}
+        handleSelectAllPress={handleSelectAllPress}
+        setIsVisible={setIsVisible}
+        renderItem={renderItem}
+        handleSavePress={handleSavePress}
+        handleDismiss={handleDismiss}
+      />
+    </>
   )
 }
 

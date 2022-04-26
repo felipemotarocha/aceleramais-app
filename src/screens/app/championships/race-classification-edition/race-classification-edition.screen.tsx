@@ -8,11 +8,11 @@ import Header from '~components/common/header/header.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import RaceItem from '~components/race-item/race-item.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import RaceDriversSelectionModalContainer from '~components/race-drivers-selection-modal/race-drivers-selection-modal.container'
 
 // Utilities
 import Colors from '~constants/colors.constants'
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
-import RaceDriversSelectionModalContainer from '~components/race-drivers-selection-modal/race-drivers-selection-modal.container'
 
 interface RaceClassificationEditionScreenProps {
   driversSelectionModalIsVisible: boolean
