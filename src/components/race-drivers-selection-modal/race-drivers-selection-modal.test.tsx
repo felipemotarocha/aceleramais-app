@@ -34,6 +34,7 @@ describe('Race Drivers Selection Modal', () => {
             'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/YaWOZoE596acPgLsg7CrAChrQjT2.jpeg',
           id: 'YaWOZoE596acPgLsg7CrAChrQjT2'
         },
+        scores: true,
         team: {
           championship: '622bedfbe669549ffd44d2ba',
           name: 'Mercedes',
@@ -53,6 +54,7 @@ describe('Race Drivers Selection Modal', () => {
           color: '#002776',
           id: '622bedfbe669549ffd44d2bc'
         },
+        scores: false,
         isRegistered: false
       }
     ]
@@ -143,6 +145,7 @@ describe('Race Drivers Selection Modal', () => {
       getByText('Max')
       getByText('VERSTAPPEN')
       getByText('2º')
+      getByText(/não pontua/i)
     })
   })
 
@@ -186,6 +189,38 @@ describe('Race Drivers Selection Modal', () => {
 
     await waitFor(async () => {
       expect(queryByText('2º')).toBeNull()
+    })
+  })
+
+  it('should edit driver on long press', async () => {
+    axiosMock.onGet().reply(200, {
+      drivers
+    })
+
+    const { getByText, getByDisplayValue } = render(
+      <RaceDriversSelectionModalContainer
+        championship="622bedfbe669549ffd44d2ba"
+        isVisible
+        raceClassification={{ classification: [] } as any}
+        setIsVisible={() => {}}
+      />
+    )
+
+    await waitFor(async () => {
+      getByText('Felipe')
+      getByText('ROCHA')
+      getByText(/@felipe.rocha/i)
+
+      getByText('Max')
+      getByText('VERSTAPPEN')
+    })
+
+    await fireEvent(getByText(/@felipe.rocha/i), 'onLongPress')
+
+    await waitFor(async () => {
+      getByText(/editar piloto/i)
+      getByText(/pontua nos campeonatos?/i)
+      getByDisplayValue(/sim/i)
     })
   })
 
