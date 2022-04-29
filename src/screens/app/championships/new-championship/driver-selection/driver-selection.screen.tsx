@@ -199,10 +199,14 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
           Adicionar
         </CustomButton>
 
+        <TextRegular style={{ paddingTop: 15, fontSize: 12 }}>
+          Toque e segure em um piloto para editá-lo.
+        </TextRegular>
+
         <FlatList
           data={drivers}
           renderItem={renderDriverItem}
-          contentContainerStyle={{ paddingTop: 15 }}
+          style={{ marginTop: 15 }}
           alwaysBounceVertical
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="always"

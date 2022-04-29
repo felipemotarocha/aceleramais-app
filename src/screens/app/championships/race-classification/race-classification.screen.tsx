@@ -67,7 +67,7 @@ const RaceClassificationScreen: FunctionComponent<
             )}
           </Pressable>
 
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, marginHorizontal: 20 }}>
             <DraggableFlatList
               onDragEnd={isEditable ? handleDragEnd : () => {}}
               renderItem={renderItem}
@@ -80,7 +80,9 @@ const RaceClassificationScreen: FunctionComponent<
               }
               data={raceClassification?.classification}
               keyExtractor={(item) => item?.id || item?.user?.id || ''}
-              style={{ paddingHorizontal: 20, paddingVertical: 15 }}
+              style={{
+                paddingVertical: 15
+              }}
             />
           </View>
 
