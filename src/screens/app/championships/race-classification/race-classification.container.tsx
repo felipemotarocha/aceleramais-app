@@ -11,7 +11,7 @@ import { ScaleDecorator } from 'react-native-draggable-flatlist'
 import { useDispatch } from 'react-redux'
 
 // Screens
-import RaceClassificationEditionScreen from './race-classification-edition.screen'
+import RaceClassificationScreen from './race-classification.screen'
 
 // Components
 import TextRegular from '~components/common/text-regular/text-regular.component'
@@ -33,23 +33,23 @@ import { getChampionshipRaces } from '~store/championship-races/championship-rac
 
 // Utilities
 import {
-  RaceClassificationEditionNavigationProp,
-  RaceClassificationEditionScreenRouteProp
+  RaceClassificationNavigationProp,
+  RaceClassificationScreenRouteProp
 } from '~navigators/app/championships/championships.navigator.types'
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
 import { showSuccess } from '~helpers/flash-message.helpers'
 
-interface RaceClassificationEditionContainerProps {}
+interface RaceClassificationContainerProps {}
 
-const RaceClassificationEditionContainer: FunctionComponent<
-  RaceClassificationEditionContainerProps
+const RaceClassificationContainer: FunctionComponent<
+  RaceClassificationContainerProps
 > = () => {
   const {
     params: { race, championship }
-  } = useRoute<RaceClassificationEditionScreenRouteProp>()
+  } = useRoute<RaceClassificationScreenRouteProp>()
 
-  const navigation = useNavigation<RaceClassificationEditionNavigationProp>()
+  const navigation = useNavigation<RaceClassificationNavigationProp>()
 
   const [driversSelectionModalIsVisible, setDriversSelectionModalIsVisible] =
     useState(false)
@@ -113,7 +113,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
       <ScaleDecorator>
         <Pressable
           style={styles.itemContainer}
-          onLongPress={isEditable ? drag : () => {}}
+          onLongPress={isEditable ? () => drag() : () => {}}
           disabled={isEditable ? isActive : true}>
           <View style={styles.left}>
             <TextSemiBold style={{ fontSize: 14, width: 25 }} numberOfLines={1}>
@@ -157,7 +157,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
         </Pressable>
       </ScaleDecorator>
     ),
-    []
+    [isEditable]
   )
 
   const handleDragEnd = useCallback(
@@ -180,7 +180,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
   )
 
   return (
-    <RaceClassificationEditionScreen
+    <RaceClassificationScreen
       raceClassification={raceClassification}
       driversSelectionModalIsVisible={driversSelectionModalIsVisible}
       isEditable={isEditable}
@@ -238,4 +238,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RaceClassificationEditionContainer
+export default RaceClassificationContainer

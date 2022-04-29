@@ -51,7 +51,7 @@ const ChampionshipRaceSelectionContainer: FunctionComponent<
 
   const handleItemPress = useCallback(
     (race: string) =>
-      navigation.navigate('Race Classification Edition', {
+      navigation.navigate('Race Classification', {
         race,
         championship
       }),

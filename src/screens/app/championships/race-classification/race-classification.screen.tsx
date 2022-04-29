@@ -14,7 +14,7 @@ import RaceDriversSelectionModalContainer from '~components/race-drivers-selecti
 import Colors from '~constants/colors.constants'
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 
-interface RaceClassificationEditionScreenProps {
+interface RaceClassificationScreenProps {
   driversSelectionModalIsVisible: boolean
   isEditable: boolean
   handleEditDriversPress: () => void
@@ -29,8 +29,8 @@ interface RaceClassificationEditionScreenProps {
   handleSavePress: () => void
 }
 
-const RaceClassificationEditionScreen: FunctionComponent<
-  RaceClassificationEditionScreenProps
+const RaceClassificationScreen: FunctionComponent<
+  RaceClassificationScreenProps
 > = ({
   driversSelectionModalIsVisible,
   isEditable,
@@ -99,14 +99,12 @@ const RaceClassificationEditionScreen: FunctionComponent<
             )}
           </View>
 
-          {driversSelectionModalIsVisible && (
-            <RaceDriversSelectionModalContainer
-              championship={raceClassification.race.championship}
-              raceClassification={raceClassification}
-              isVisible={driversSelectionModalIsVisible}
-              setIsVisible={setDriversSelectionModalIsVisible}
-            />
-          )}
+          <RaceDriversSelectionModalContainer
+            championship={raceClassification.race.championship}
+            raceClassification={raceClassification}
+            isVisible={driversSelectionModalIsVisible}
+            setIsVisible={setDriversSelectionModalIsVisible}
+          />
         </>
       )}
     </View>
@@ -120,4 +118,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RaceClassificationEditionScreen
+export default RaceClassificationScreen

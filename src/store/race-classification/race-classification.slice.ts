@@ -2,20 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RaceClassification } from '~types/race.types'
 
-export type RaceClassificationEditionSliceInitialState = {
+export type RaceClassificationSliceInitialState = {
   raceClassification?: RaceClassification
   error: string | null
   loading: boolean
   championshipAdmins: string[]
 }
 
-const raceClassificationInitialState: RaceClassificationEditionSliceInitialState =
-  {
-    raceClassification: undefined,
-    championshipAdmins: [],
-    error: null,
-    loading: false
-  }
+const raceClassificationInitialState: RaceClassificationSliceInitialState = {
+  raceClassification: undefined,
+  championshipAdmins: [],
+  error: null,
+  loading: false
+}
 
 const raceClassificationSlice = createSlice({
   name: 'raceClassification',

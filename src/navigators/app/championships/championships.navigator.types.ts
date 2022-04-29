@@ -10,7 +10,7 @@ export type ChampionshipsStackParamList = {
   'Championship Team Standings': { championship: string }
   'Championship Edition': { championship: string }
   'Championship Race Selection': { championship: string }
-  'Race Classification Edition': { race: string; championship: string }
+  'Race Classification': { race: string; championship: string }
   'Race Penalties and Bonifications Edition': {
     championship: string
     race: string
@@ -55,9 +55,9 @@ export type ChampionshipRaceSelectionScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Championship Race Selection'
 >
-export type RaceClassificationEditionScreenRouteProp = RouteProp<
+export type RaceClassificationScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
-  'Race Classification Edition'
+  'Race Classification'
 >
 export type RacePenaltiesAndBonificationsScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
@@ -106,9 +106,9 @@ export type ChampionshipRaceSelectionNavigationProp = NativeStackNavigationProp<
   ChampionshipsStackParamList,
   'Championship Race Selection'
 >
-export type RaceClassificationEditionNavigationProp = NativeStackNavigationProp<
+export type RaceClassificationNavigationProp = NativeStackNavigationProp<
   ChampionshipsStackParamList,
-  'Race Classification Edition'
+  'Race Classification'
 >
 export type RacePenaltiesAndBonificationsScreenNavigationProp =
   NativeStackNavigationProp<

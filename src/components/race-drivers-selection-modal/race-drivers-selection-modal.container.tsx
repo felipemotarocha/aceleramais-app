@@ -56,11 +56,17 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     if (isEmpty(availableDrivers)) {
       generateInitialAvailableDrivers()
     }
-  }, [availableDrivers])
+  }, [availableDrivers, isVisible, raceClassification])
+
+  useEffect(() => {
+    return () => {
+      setAvailableDrivers([])
+    }
+  }, [isVisible])
 
   const selectedDrivers = useMemo(() => {
     return availableDrivers.filter((driver) => driver.position !== 0)
-  }, [availableDrivers])
+  }, [availableDrivers, isVisible])
 
   const handleDriverPress = useCallback(
     (driver: RaceClassificationItem) => {
@@ -98,7 +104,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
 
       setAvailableDrivers(newAvailableDrivers)
     },
-    [availableDrivers, selectedDrivers]
+    [availableDrivers, selectedDrivers, isVisible]
   )
 
   const handleSelectAllPress = useCallback(() => {
@@ -108,7 +114,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     }))
 
     setAvailableDrivers(newAvailableDrivers)
-  }, [availableDrivers])
+  }, [availableDrivers, isVisible])
 
   const handleSavePress = useCallback(() => {
     const newRaceClassification: RaceClassification = {
@@ -119,11 +125,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     dispatch(updateRaceClassification(newRaceClassification))
 
     setIsVisible(false)
-  }, [dispatch, selectedDrivers])
-
-  const handleDismiss = useCallback(() => {
-    setAvailableDrivers([])
-  }, [setAvailableDrivers])
+  }, [dispatch, selectedDrivers, isVisible])
 
   const renderItem = useCallback(
     ({ item }: { item: RaceClassificationItem }) => {
@@ -136,7 +138,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
         />
       )
     },
-    [availableDrivers, selectedDrivers, handleDriverPress]
+    [availableDrivers, selectedDrivers, isVisible, handleDriverPress]
   )
 
   return (
@@ -149,7 +151,6 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
         setIsVisible={setIsVisible}
         renderItem={renderItem}
         handleSavePress={handleSavePress}
-        handleDismiss={handleDismiss}
       />
     </>
   )

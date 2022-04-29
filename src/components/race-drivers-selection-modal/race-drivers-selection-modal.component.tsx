@@ -15,7 +15,6 @@ interface RaceDriversSelectionModalProps {
   setAvailableDrivers: (
     value: React.SetStateAction<RaceClassificationItem[]>
   ) => void
-  handleDismiss: () => void
   handleSelectAllPress: () => void
   handleSavePress: () => void
   // eslint-disable-next-line no-undef
@@ -30,7 +29,7 @@ const RaceDriversSelectionModal: FunctionComponent<
   availableDrivers,
   handleSelectAllPress,
   handleSavePress,
-  handleDismiss,
+
   setIsVisible,
   renderItem
 }) => {
@@ -39,8 +38,7 @@ const RaceDriversSelectionModal: FunctionComponent<
       title="Selecionar Pilotos"
       showHeader
       isVisible={isVisible}
-      setIsVisible={setIsVisible}
-      onDismiss={handleDismiss}>
+      setIsVisible={setIsVisible}>
       <View style={{ flex: 1 }}>
         <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
           <TextRegular style={{ fontSize: 12 }}>

@@ -9,7 +9,7 @@ import ChampionshipDriverStandingsScreen from '~screens/app/championships/champi
 import ChampionshipTeamStandingsScreen from '~screens/app/championships/championship-team-standings/championship-team-standings.container'
 import ChampionshipEditionScreen from '~screens/app/championships/championship-edition/championship-edition.container'
 import ChampionshipRaceSelectionScreen from '~screens/app/championships/championship-race-selection/championship-race-selection.container'
-import RaceClassificationEditionScreen from '~screens/app/championships/race-classification-edition/race-classification-edition.container'
+import RaceClassificationScreen from '~screens/app/championships/race-classification/race-classification.container'
 import RacePenaltiesAndBonificationsScreen from '~screens/app/championships/race-penalties-and-bonifications/race-penalties-and-bonifications.container'
 import PenaltyOrBonificationDriverSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/driver-selection/driver-selection.container'
 import PenaltyOrBonificationSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/penalty-or-bonification-selection/penalty-or-bonification-selection.container'
@@ -62,8 +62,8 @@ const ChampionshipsNavigator: FunctionComponent<
         component={ChampionshipRaceSelectionScreen}
       />
       <Stack.Screen
-        name="Race Classification Edition"
-        component={RaceClassificationEditionScreen}
+        name="Race Classification"
+        component={RaceClassificationScreen}
       />
       <Stack.Screen
         name="Race Penalties and Bonifications Edition"
