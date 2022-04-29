@@ -9,7 +9,8 @@ describe('Race Drivers Selection Modal Helper', () => {
             id: '1',
             firstName: 'valid_first_name',
             lastName: 'valid_last_name',
-            isRegistered: false
+            isRegistered: false,
+            isRemoved: false
           },
           {
             user: {
@@ -20,14 +21,17 @@ describe('Race Drivers Selection Modal Helper', () => {
               provider: 'google',
               userName: 'valid_user_name'
             },
-            isRegistered: true
+            isRegistered: true,
+            isRemoved: false
           }
         ],
         [
           {
             isRegistered: false,
             id: '1',
-            position: 1
+            position: 1,
+            isRemoved: false,
+            scores: true
           }
         ]
       )
@@ -35,10 +39,14 @@ describe('Race Drivers Selection Modal Helper', () => {
       {
         isRegistered: false,
         id: '1',
-        position: 1
+        position: 1,
+        scores: true,
+        isRemoved: false
       },
       {
         isRegistered: true,
+        isRemoved: false,
+        scores: true,
         position: 0,
         user: {
           id: 'valid_id',
@@ -60,7 +68,8 @@ describe('Race Drivers Selection Modal Helper', () => {
             id: '1',
             firstName: 'valid_first_name',
             lastName: 'valid_last_name',
-            isRegistered: false
+            isRegistered: false,
+            isRemoved: false
           },
           {
             user: {
@@ -71,14 +80,17 @@ describe('Race Drivers Selection Modal Helper', () => {
               provider: 'google',
               userName: 'valid_user_name'
             },
-            isRegistered: true
+            isRegistered: true,
+            isRemoved: false
           }
         ],
         [
           {
             isRegistered: false,
             id: '1',
-            position: 1
+            position: 1,
+            scores: true,
+            isRemoved: false
           },
           {
             user: {
@@ -90,7 +102,9 @@ describe('Race Drivers Selection Modal Helper', () => {
               userName: 'valid_user_name'
             },
             position: 2,
-            isRegistered: true
+            isRegistered: true,
+            scores: false,
+            isRemoved: false
           }
         ]
       )
@@ -98,7 +112,9 @@ describe('Race Drivers Selection Modal Helper', () => {
       {
         isRegistered: false,
         id: '1',
-        position: 1
+        position: 1,
+        scores: true,
+        isRemoved: false
       },
       {
         isRegistered: true,
@@ -110,7 +126,9 @@ describe('Race Drivers Selection Modal Helper', () => {
           lastName: 'valid_last_name',
           provider: 'google',
           userName: 'valid_user_name'
-        }
+        },
+        scores: false,
+        isRemoved: false
       }
     ])
   })
