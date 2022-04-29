@@ -6,11 +6,13 @@ export type RaceClassificationEditionSliceInitialState = {
   raceClassification?: RaceClassification
   error: string | null
   loading: boolean
+  championshipAdmins: string[]
 }
 
 const raceClassificationInitialState: RaceClassificationEditionSliceInitialState =
   {
     raceClassification: undefined,
+    championshipAdmins: [],
     error: null,
     loading: false
   }
@@ -37,7 +39,20 @@ const raceClassificationSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
-
+    getChampionshipAdminsStart: (state) => {
+      state.loading = true
+      state.error = null
+    },
+    getChampionshipAdminsSuccess: (state, action: PayloadAction<string[]>) => {
+      state.championshipAdmins = action.payload
+      state.loading = false
+      state.error = null
+    },
+    getChampionshipAdminsFailure: (state, action: PayloadAction<string>) => {
+      state.championshipAdmins = []
+      state.loading = false
+      state.error = action.payload
+    },
     submitRaceClassificationEditStart: (state) => {
       state.loading = true
       state.error = null
@@ -61,6 +76,7 @@ const raceClassificationSlice = createSlice({
     },
     clear(state) {
       state.raceClassification = undefined
+      state.championshipAdmins = []
       state.error = null
       state.loading = false
     }
@@ -71,6 +87,9 @@ export const {
   getRaceClassificationStart,
   getRaceClassificationSuccess,
   getRaceClassificationFailure,
+  getChampionshipAdminsStart,
+  getChampionshipAdminsSuccess,
+  getChampionshipAdminsFailure,
   submitRaceClassificationEditStart,
   submitRaceClassificationEditSuccess,
   submitRaceClassificationEditFailure,

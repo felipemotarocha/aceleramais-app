@@ -4,6 +4,7 @@ import { FlatList, View } from 'react-native'
 // Components
 import CustomModal from '~components/common/custom-modal/custom-modal.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import TextRegular from '~components/common/text-regular/text-regular.component'
 
 // Utilities
 import { RaceClassificationItem } from '~types/race.types'
@@ -41,8 +42,14 @@ const RaceDriversSelectionModal: FunctionComponent<
       setIsVisible={setIsVisible}
       onDismiss={handleDismiss}>
       <View style={{ flex: 1 }}>
+        <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
+          <TextRegular style={{ fontSize: 12 }}>
+            Toque em um piloto para selecioná-lo. Toque e segure para definir se
+            ele pontua ou não nos campeonatos.
+          </TextRegular>
+        </View>
         <FlatList
-          contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
+          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 15 }}
           renderItem={renderItem}
           data={availableDrivers}
           keyExtractor={(item) => item?.id || item?.user?.id || ''}

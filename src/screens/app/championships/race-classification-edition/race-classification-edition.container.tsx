@@ -3,6 +3,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
+  useMemo,
   useState
 } from 'react'
 import { StyleSheet, View, Image, Pressable } from 'react-native'
@@ -20,6 +21,7 @@ import DriverName from '~components/driver-name/driver-name.component'
 // Redux
 import { useAppSelector } from '~store'
 import {
+  getChampionshipAdmins,
   getRaceClassification,
   submitRaceClassificationEdit
 } from '~store/race-classification/race-classification.actions'
@@ -44,7 +46,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
   RaceClassificationEditionContainerProps
 > = () => {
   const {
-    params: { race }
+    params: { race, championship }
   } = useRoute<RaceClassificationEditionScreenRouteProp>()
 
   const navigation = useNavigation<RaceClassificationEditionNavigationProp>()
@@ -52,19 +54,27 @@ const RaceClassificationEditionContainer: FunctionComponent<
   const [driversSelectionModalIsVisible, setDriversSelectionModalIsVisible] =
     useState(false)
 
-  const { raceClassification } = useAppSelector(
-    (state) => state.raceClassificationReducer
+  const { raceClassification, championshipAdmins } = useAppSelector(
+    (state) => state.raceClassification
   )
+
+  const { currentUser } = useAppSelector((state) => state.user)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getChampionshipAdmins(championship))
     dispatch(getRaceClassification(race))
 
     return () => {
       dispatch(clear())
     }
-  }, [race, dispatch])
+  }, [race, championship, dispatch])
+
+  const isEditable = useMemo(
+    () => championshipAdmins.includes(currentUser!.id),
+    [championshipAdmins, currentUser]
+  )
 
   const handleEditDriversPress = useCallback(
     () => setDriversSelectionModalIsVisible((prevState) => !prevState),
@@ -103,8 +113,8 @@ const RaceClassificationEditionContainer: FunctionComponent<
       <ScaleDecorator>
         <Pressable
           style={styles.itemContainer}
-          onLongPress={drag}
-          disabled={isActive}>
+          onLongPress={isEditable ? drag : () => {}}
+          disabled={isEditable ? isActive : true}>
           <View style={styles.left}>
             <TextSemiBold style={{ fontSize: 14, width: 25 }} numberOfLines={1}>
               {item.position}º
@@ -121,13 +131,27 @@ const RaceClassificationEditionContainer: FunctionComponent<
               />
             </View>
 
-            <View>
-              <DriverName driver={item} fontSize={12} />
-              {item.isRegistered && (
-                <TextRegular style={{ fontSize: 10 }}>
-                  @{item.user?.userName}
-                </TextRegular>
-              )}
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+              <View>
+                <DriverName driver={item} fontSize={12} />
+                {item.isRegistered && (
+                  <TextRegular style={{ fontSize: 10 }}>
+                    @{item.user?.userName}
+                  </TextRegular>
+                )}
+              </View>
+
+              <View>
+                {!item.scores && (
+                  <TextRegular style={{ fontSize: 10 }}>NÃO PONTUA</TextRegular>
+                )}
+              </View>
             </View>
           </View>
         </Pressable>
@@ -159,6 +183,7 @@ const RaceClassificationEditionContainer: FunctionComponent<
     <RaceClassificationEditionScreen
       raceClassification={raceClassification}
       driversSelectionModalIsVisible={driversSelectionModalIsVisible}
+      isEditable={isEditable}
       setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
       handleEditDriversPress={handleEditDriversPress}
       handlePenaltiesAndBonificationsPress={

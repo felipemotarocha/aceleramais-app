@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { RenderItem } from 'react-native-draggable-flatlist'
+import DraggableFlatList, { RenderItem } from 'react-native-draggable-flatlist'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -16,6 +16,7 @@ import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 
 interface RaceClassificationEditionScreenProps {
   driversSelectionModalIsVisible: boolean
+  isEditable: boolean
   handleEditDriversPress: () => void
   handlePenaltiesAndBonificationsPress: () => void
   setDriversSelectionModalIsVisible: React.Dispatch<
@@ -32,6 +33,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
   RaceClassificationEditionScreenProps
 > = ({
   driversSelectionModalIsVisible,
+  isEditable,
   raceClassification,
   handleEditDriversPress,
   handlePenaltiesAndBonificationsPress,
@@ -55,16 +57,19 @@ const RaceClassificationEditionScreen: FunctionComponent<
               flexDirection: 'row',
               alignItems: 'center'
             }}
-            onPress={handleEditDriversPress}>
+            onPress={isEditable ? handleEditDriversPress : () => {}}>
             <TextSemiBold style={{ fontSize: 16, marginRight: 8 }}>
               Pilotos
             </TextSemiBold>
-            <Feather name="edit" size={22} color={Colors.textSecondary} />
+
+            {isEditable && (
+              <Feather name="edit" size={22} color={Colors.textSecondary} />
+            )}
           </Pressable>
 
           <View style={{ flex: 1 }}>
-            {/* <DraggableFlatList
-              onDragEnd={handleDragEnd}
+            <DraggableFlatList
+              onDragEnd={isEditable ? handleDragEnd : () => {}}
               renderItem={renderItem}
               ListEmptyComponent={
                 <CustomButton
@@ -76,7 +81,7 @@ const RaceClassificationEditionScreen: FunctionComponent<
               data={raceClassification?.classification}
               keyExtractor={(item) => item?.id || item?.user?.id || ''}
               style={{ paddingHorizontal: 20, paddingVertical: 15 }}
-            /> */}
+            />
           </View>
 
           <View
@@ -87,17 +92,21 @@ const RaceClassificationEditionScreen: FunctionComponent<
               onPress={handlePenaltiesAndBonificationsPress}>
               Penalizações e Bonificações
             </CustomButton>
-            <CustomButton variant="primary" onPress={handleSavePress}>
-              Salvar
-            </CustomButton>
+            {isEditable && (
+              <CustomButton variant="primary" onPress={handleSavePress}>
+                Salvar
+              </CustomButton>
+            )}
           </View>
 
-          <RaceDriversSelectionModalContainer
-            championship={raceClassification.race.championship}
-            raceClassification={raceClassification}
-            isVisible={driversSelectionModalIsVisible}
-            setIsVisible={setDriversSelectionModalIsVisible}
-          />
+          {driversSelectionModalIsVisible && (
+            <RaceDriversSelectionModalContainer
+              championship={raceClassification.race.championship}
+              raceClassification={raceClassification}
+              isVisible={driversSelectionModalIsVisible}
+              setIsVisible={setDriversSelectionModalIsVisible}
+            />
+          )}
         </>
       )}
     </View>

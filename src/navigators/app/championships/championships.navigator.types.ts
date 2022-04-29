@@ -10,7 +10,7 @@ export type ChampionshipsStackParamList = {
   'Championship Team Standings': { championship: string }
   'Championship Edition': { championship: string }
   'Championship Race Selection': { championship: string }
-  'Race Classification Edition': { race: string }
+  'Race Classification Edition': { race: string; championship: string }
   'Race Penalties and Bonifications Edition': {
     championship: string
     race: string

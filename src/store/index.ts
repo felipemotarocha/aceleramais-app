@@ -21,7 +21,7 @@ const store = configureStore({
     championshipRaces: championshipRacesReducer,
     championshipDriverStandings: championshipDriverStandingsReducer,
     championshipTeamStandings: championshipTeamStandingsReducer,
-    raceClassificationReducer: raceClassificationReducer,
+    raceClassification: raceClassificationReducer,
     racePenaltiesAndBonifications: racePenaltiesAndBonificationsReducer
   }
 })
