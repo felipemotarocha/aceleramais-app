@@ -6,14 +6,11 @@ import React, {
   useState
 } from 'react'
 import { isEmpty } from 'lodash'
-import { StyleSheet, View, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 // Components
 import RaceDriversSelectionModal from './race-drivers-selection-modal.component'
-import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
-import DriverName from '~components/driver-name/driver-name.component'
-import TextRegular from '~components/common/text-regular/text-regular.component'
+import RaceDriverItem from '~components/race-driver-item/race-driver-item.component'
 
 // Utilities
 import api from '~api/axios.api'
@@ -38,10 +35,6 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
   const [availableDrivers, setAvailableDrivers] = useState<
     RaceClassificationItem[]
   >([])
-  const [editDriverModalIsVisible, setEditDriverModalIsVisible] =
-    useState(false)
-  const [driverBeingEdited, setDriverBeingEdited] =
-    useState<RaceClassificationItem | null>(null)
 
   const dispatch = useDispatch()
 
@@ -135,52 +128,15 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
   const renderItem = useCallback(
     ({ item }: { item: RaceClassificationItem }) => {
       return (
-        <Pressable
-          onPress={() => handleDriverPress(item)}
-          onLongPress={() => {
-            console.log('long press')
-            setEditDriverModalIsVisible(true)
-            setDriverBeingEdited(item)
-          }}
-          style={[
-            styles.itemContainer,
-            item.position !== 0 && { backgroundColor: 'rgba(0, 0, 0, 0.2)' }
-          ]}>
-          <View style={styles.left}>
-            {item.position !== 0 && (
-              <TextSemiBold
-                style={{ fontSize: 14, width: 25 }}
-                numberOfLines={1}>
-                {item.position}º
-              </TextSemiBold>
-            )}
-
-            <View style={styles.imageContainer}>
-              <Image
-                style={{ flex: 1, borderRadius: 30 }}
-                source={{
-                  uri:
-                    item?.user?.profileImageUrl ||
-                    'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
-                }}
-              />
-            </View>
-
-            <View>
-              <DriverName driver={item} fontSize={12} />
-              {item.isRegistered && (
-                <TextRegular style={{ fontSize: 10 }}>
-                  @{item.user?.userName}
-                </TextRegular>
-              )}
-            </View>
-          </View>
-
-          <View style={styles.right}></View>
-        </Pressable>
+        <RaceDriverItem
+          driver={item}
+          handlePress={handleDriverPress}
+          raceDrivers={availableDrivers}
+          setRaceDrivers={setAvailableDrivers}
+        />
       )
     },
-    [availableDrivers, selectedDrivers]
+    [availableDrivers, selectedDrivers, handleDriverPress]
   )
 
   return (
@@ -188,9 +144,7 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
       <RaceDriversSelectionModal
         isVisible={isVisible}
         availableDrivers={availableDrivers}
-        driverBeingEdited={driverBeingEdited}
-        editDriverModalIsVisible={editDriverModalIsVisible}
-        setEditDriverModalIsVisible={setEditDriverModalIsVisible}
+        setAvailableDrivers={setAvailableDrivers}
         handleSelectAllPress={handleSelectAllPress}
         setIsVisible={setIsVisible}
         renderItem={renderItem}
@@ -200,37 +154,5 @@ const RaceDriversSelectionModalContainer: FunctionComponent<
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    minHeight: 45,
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 8,
-    marginBottom: 15,
-    borderRadius: 10
-  },
-  left: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1
-  },
-  right: {},
-  imageContainer: {
-    elevation: 3,
-    width: 35,
-    height: 35,
-    borderRadius: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 2.22,
-    marginHorizontal: 8
-  }
-})
 
 export default RaceDriversSelectionModalContainer

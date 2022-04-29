@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { FlatList, View } from 'react-native'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import CustomModal from '~components/common/custom-modal/custom-modal.component'
-import EditRaceDriverModal from '~components/edit-race-driver-modal/edit-race-driver-modal.component'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Utilities
 import { RaceClassificationItem } from '~types/race.types'
@@ -12,9 +11,9 @@ import { RaceClassificationItem } from '~types/race.types'
 interface RaceDriversSelectionModalProps {
   isVisible: boolean
   availableDrivers: RaceClassificationItem[]
-  editDriverModalIsVisible: boolean
-  driverBeingEdited: RaceClassificationItem | null
-  setEditDriverModalIsVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setAvailableDrivers: (
+    value: React.SetStateAction<RaceClassificationItem[]>
+  ) => void
   handleDismiss: () => void
   handleSelectAllPress: () => void
   handleSavePress: () => void
@@ -28,9 +27,6 @@ const RaceDriversSelectionModal: FunctionComponent<
 > = ({
   isVisible,
   availableDrivers,
-  editDriverModalIsVisible,
-  driverBeingEdited,
-  setEditDriverModalIsVisible,
   handleSelectAllPress,
   handleSavePress,
   handleDismiss,
@@ -64,12 +60,6 @@ const RaceDriversSelectionModal: FunctionComponent<
           Salvar
         </CustomButton>
       </View>
-
-      <EditRaceDriverModal
-        isVisible={editDriverModalIsVisible}
-        setIsVisible={setEditDriverModalIsVisible}
-        driver={driverBeingEdited}
-      />
     </CustomModal>
   )
 }

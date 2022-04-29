@@ -20,7 +20,8 @@ const RaceDriversSelectionModalHelper = {
       } else {
         drivers.push({
           ...driver,
-          position: 0
+          position: 0,
+          scores: true
         })
       }
     }
