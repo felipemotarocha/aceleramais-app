@@ -8,6 +8,7 @@ import ChampionshipsNavigator from './championships/championships.navigator'
 // Utilities
 import { AppTabBottomParamList } from './app-bottom-navigator.types'
 import Colors from '~constants/colors.constants'
+import SearchNavigator from './search/search.navigator'
 
 const Tab = createBottomTabNavigator<AppTabBottomParamList>()
 
@@ -45,6 +46,17 @@ const AppBottomTabNavigator = () => {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="trophy" color={color} size={22} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchNavigator}
+        options={{
+          title: 'Pesquisar',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="search" color={color} size={22} />
           )
         }}
       />
