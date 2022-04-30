@@ -14,6 +14,7 @@ import Colors from '~constants/colors.constants'
 // Redux
 import { useAppDispatch } from '~store'
 import { submitSearch } from '~store/search/search.actions'
+import { updateSearchText } from '~store/search/search.slice'
 
 interface SearchHeaderProps {}
 
@@ -23,6 +24,7 @@ const SearchHeader: FunctionComponent<SearchHeaderProps> = () => {
   const {
     control,
     formState: { errors },
+
     handleSubmit: _handleSubmit
   } = useForm<SearchForm>()
 
@@ -33,6 +35,7 @@ const SearchHeader: FunctionComponent<SearchHeaderProps> = () => {
   const handleSubmit = (data: SearchForm) => {
     // TODO: get entity from redux
     dispatch(submitSearch(data.searchText, 'championship'))
+    dispatch(updateSearchText(data.searchText))
   }
 
   return (

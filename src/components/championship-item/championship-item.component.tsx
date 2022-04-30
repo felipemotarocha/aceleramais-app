@@ -7,10 +7,10 @@ import { View, StyleSheet, Image, Pressable } from 'react-native'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
-import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 // Utilities
 import Race from '~types/race.types'
+import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
 interface ChampionshipItemProps {
   id: string

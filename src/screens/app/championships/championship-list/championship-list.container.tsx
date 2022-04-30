@@ -37,7 +37,7 @@ const ChampionshipListContainer: FunctionComponent<
 
     if (filterBy === 'admin') {
       return championships.filter((championship) =>
-        championship.admins.some((admin) => admin.user === currentUser!.id)
+        championship.admins.some((admin) => admin.user.id === currentUser!.id)
       )
     }
 

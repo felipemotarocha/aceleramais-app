@@ -9,12 +9,14 @@ type SearchInitialState = {
   entity: SearchEntity
   result: Championship[] | User[]
   loading: boolean
+  searchText?: string
   error?: string
 }
 
 const searchInitialState: SearchInitialState = {
   entity: 'championship',
   result: [],
+  searchText: undefined,
   loading: false,
   error: undefined
 }
@@ -40,12 +42,19 @@ const searchSlice = createSlice({
       state.result = []
       state.loading = false
       state.error = action.payload
+    },
+    updateSearchText: (state, action: PayloadAction<string | undefined>) => {
+      state.searchText = action.payload
     }
   }
 })
 
-export const { submitSearchStart, submitSearchSuccess, submitSearchFailure } =
-  searchSlice.actions
+export const {
+  submitSearchStart,
+  submitSearchSuccess,
+  submitSearchFailure,
+  updateSearchText
+} = searchSlice.actions
 
 const searchReducer = searchSlice.reducer
 
