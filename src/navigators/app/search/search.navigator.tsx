@@ -13,7 +13,7 @@ import RaceClassificationScreen from '~screens/app/championships/race-classifica
 import RacePenaltiesAndBonificationsScreen from '~screens/app/championships/race-penalties-and-bonifications/race-penalties-and-bonifications.container'
 import PenaltyOrBonificationDriverSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/driver-selection/driver-selection.container'
 import PenaltyOrBonificationSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/penalty-or-bonification-selection/penalty-or-bonification-selection.container'
-import SearchScreen from '~screens/app/search/search/search.screen'
+import SearchScreen from '~screens/app/search/search/search.container'
 
 interface SearchNavigatorProps {}
 

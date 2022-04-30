@@ -52,7 +52,8 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
   return (
     <View
       style={{
-        paddingTop: Platform.OS === 'android' ? insets.top : insets.top + 25,
+        paddingTop:
+          Platform.OS === 'android' ? insets.top + 10 : insets.top + 25,
         ...styles.container
       }}>
       <View style={styles.top}>

@@ -21,7 +21,9 @@ export const submitSearch = (searchText: string, entity: SearchEntity) => {
       let data: Championship[] | User[] = []
 
       if (entity === 'championship') {
-        data = await api.get(`/api/championship?nameOrCode=${searchText}`)
+        data = await (
+          await api.get(`/api/championship?nameOrCode=${searchText}`)
+        )?.data
       }
 
       // TODO: add use case for user
