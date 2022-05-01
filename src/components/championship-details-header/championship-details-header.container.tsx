@@ -14,6 +14,7 @@ interface ChampionshipDetailsHeaderContainerProps {
   championship: string
   name: string
   platform: string
+  code: string
   description?: string
   avatarImageUrl?: string
   admins: ChampionshipAdmin[]

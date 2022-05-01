@@ -6,7 +6,6 @@ import { Controller, useForm } from 'react-hook-form'
 // Components
 import TextBold from '~components/common/text-bold/text-bold.component'
 import CustomInput from '~components/common/custom-input/custom-input.component'
-import TextMedium from '~components/common/text-medium/text-medium.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -21,12 +20,7 @@ interface SearchHeaderProps {}
 type SearchForm = { searchText: string }
 
 const SearchHeader: FunctionComponent<SearchHeaderProps> = () => {
-  const {
-    control,
-    formState: { errors },
-
-    handleSubmit: _handleSubmit
-  } = useForm<SearchForm>()
+  const { control, handleSubmit: _handleSubmit } = useForm<SearchForm>()
 
   const insets = useSafeAreaInsets()
 
@@ -34,8 +28,12 @@ const SearchHeader: FunctionComponent<SearchHeaderProps> = () => {
 
   const handleSubmit = (data: SearchForm) => {
     // TODO: get entity from redux
-    dispatch(submitSearch(data.searchText, 'championship'))
-    dispatch(updateSearchText(data.searchText))
+    const isCode = data.searchText[0] === '#'
+
+    const _searchText = isCode ? data.searchText.split('#')[1] : data.searchText
+
+    dispatch(submitSearch(_searchText, 'championship'))
+    dispatch(updateSearchText(_searchText))
   }
 
   return (
@@ -61,18 +59,10 @@ const SearchHeader: FunctionComponent<SearchHeaderProps> = () => {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              hasError={!!errors?.searchText}
               onSubmitEditing={() => _handleSubmit(handleSubmit)()}
             />
           )}
         />
-
-        {errors?.searchText?.type === 'required' && (
-          <TextMedium
-            style={{ fontSize: 12, color: Colors.error, marginTop: 5 }}>
-            Este campo é obrigatório.
-          </TextMedium>
-        )}
       </View>
     </View>
   )

@@ -31,11 +31,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
           contentContainerStyle={{ padding: 20 }}>
           <ChampionshipDetailsHeaderContainer
             championship={championshipDetails.id}
-            name={championshipDetails.name}
-            platform={championshipDetails.platform}
-            description={championshipDetails.description}
-            avatarImageUrl={championshipDetails?.avatarImageUrl}
-            admins={championshipDetails.admins}
+            {...championshipDetails}
           />
 
           <ChampionshipNextRaces

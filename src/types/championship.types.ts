@@ -61,6 +61,7 @@ interface Championship {
   name: string
   description: string
   platform: string
+  code: string
   admins: ChampionshipAdmin[]
   races: string[] | Race[]
   teams: string[] | Team[]

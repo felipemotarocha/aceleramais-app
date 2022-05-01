@@ -10,6 +10,7 @@ import CustomButton from '~components/common/custom-button/custom-button.compone
 interface ChampionshipDetailsHeaderProps {
   name: string
   platform: string
+  code: string
   description?: string
   avatarImageUrl?: string
   editButtonIsToBeShown: boolean
@@ -20,6 +21,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
   ChampionshipDetailsHeaderProps
 > = ({
   name,
+  code,
   description,
   platform,
   avatarImageUrl,
@@ -44,6 +46,10 @@ const ChampionshipDetailsHeader: FunctionComponent<
           <TextSemiBold style={{ fontSize: 16 }} numberOfLines={2}>
             {name}
           </TextSemiBold>
+
+          <TextRegular style={{ fontSize: 12 }} numberOfLines={1}>
+            <TextMedium style={{ fontSize: 12 }}>Código: </TextMedium>#{code}
+          </TextRegular>
 
           <TextRegular style={{ fontSize: 12 }} numberOfLines={1}>
             <TextMedium style={{ fontSize: 12 }}>Plataforma: </TextMedium>

@@ -16,6 +16,7 @@ interface ChampionshipItemProps {
   id: string
   name: string
   platform: string
+  code: string
   nextRace: Race
   avatarImageUrl?: string
   goToDetailsOnPress: boolean
@@ -24,6 +25,7 @@ interface ChampionshipItemProps {
 const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
   id,
   name,
+  code,
   platform,
   nextRace,
   avatarImageUrl,
@@ -54,6 +56,10 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
         <TextSemiBold style={{ flex: 1 }} numberOfLines={2}>
           {name}
         </TextSemiBold>
+
+        <TextRegular style={{ fontSize: 12, flex: 1 }}>
+          <TextMedium style={{ fontSize: 12 }}>Código:</TextMedium> #{code}
+        </TextRegular>
 
         <TextRegular style={{ fontSize: 12, flex: 1 }}>
           <TextMedium style={{ fontSize: 12 }}>Plataforma:</TextMedium>{' '}
