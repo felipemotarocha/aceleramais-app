@@ -76,4 +76,23 @@ describe('Search Screen', () => {
       getByText('19/04/2022, 15:52')
     })
   })
+
+  it('should show an empty message when there is no results', async () => {
+    const { getByPlaceholderText, getByText, getByDisplayValue } = render(
+      <SearchScreen />
+    )
+
+    fireEvent.changeText(
+      getByPlaceholderText(/nome ou código do campeonato/i),
+      '#123'
+    )
+
+    axiosMock.onGet('/api/championship?nameOrCode=123').reply(200, [])
+
+    fireEvent(getByDisplayValue(/123/i), 'submitEditing')
+
+    await waitFor(async () => {
+      getByText(/não há campeonatos para exibir/i)
+    })
+  })
 })
