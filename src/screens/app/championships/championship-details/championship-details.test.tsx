@@ -18,10 +18,10 @@ describe('Championship Details', () => {
 
     const { getByText } = render(<ChampionshipDetailsContainer />)
 
-    await waitFor(async () => getByText(/psgl sim racing league/i))
+    await waitFor(async () => getByText(/psgl/i))
     await waitFor(async () => getByText(/plataforma/i))
     await waitFor(async () => getByText(/descrição/i))
-    await waitFor(async () => getByText(/join us./i))
+    await waitFor(async () => getByText(/join us/i))
   })
 
   it('should render the next races', async () => {
@@ -130,6 +130,32 @@ describe('Championship Details', () => {
       )
 
       expect(queryByText(/ver classificação completa/i)).toBeNull()
+    })
+  })
+
+  it('should show entry request button if the current user is not on the championship', async () => {
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: { standings: [] }
+    })
+
+    const { getByText } = render(<ChampionshipDetailsContainer />, {
+      preloadedState: {
+        user: {
+          currentUser: {
+            id: '1yqRUUO3tJTL8QHp3ssoxeK03rB3',
+            firstName: 'Gustavo',
+            lastName: 'Rocha',
+            email: 'gustavo.rocha@gmail.com',
+            userName: '123456',
+            provider: 'firebase'
+          }
+        }
+      }
+    })
+
+    await waitFor(async () => {
+      getByText(/solicitar entrada/i)
     })
   })
 })
