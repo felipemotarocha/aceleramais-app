@@ -8,8 +8,12 @@ import ChampionshipDetailsHeader from './championship-details-header.component'
 import { useAppSelector } from '~store'
 
 // Utilities
-import { ChampionshipAdmin } from '~types/championship.types'
+import {
+  ChampionshipAdmin,
+  ChampionshipDriver
+} from '~types/championship.types'
 import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
+
 interface ChampionshipDetailsHeaderContainerProps {
   championship: string
   name: string
@@ -18,11 +22,12 @@ interface ChampionshipDetailsHeaderContainerProps {
   description?: string
   avatarImageUrl?: string
   admins: ChampionshipAdmin[]
+  drivers: ChampionshipDriver[]
 }
 
 const ChampionshipDetailsHeaderContainer: FunctionComponent<
   ChampionshipDetailsHeaderContainerProps
-> = ({ admins, championship, ...rest }) => {
+> = ({ admins, championship, drivers, ...rest }) => {
   const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
 
   const { currentUser } = useAppSelector((state) => state.user)
@@ -30,6 +35,13 @@ const ChampionshipDetailsHeaderContainer: FunctionComponent<
   const editButtonIsToBeShown = useMemo(
     () => admins.some((admin) => admin.user.id === currentUser?.id),
     [admins, currentUser]
+  )
+
+  const entryRequestButtonIsToBeShown = useMemo(
+    () =>
+      drivers.every((driver) => driver?.user?.id !== currentUser?.id) &&
+      admins.every((admin) => admin.user.id !== currentUser?.id),
+    [drivers, admins, currentUser]
   )
 
   const handleEditPress = useCallback(
@@ -40,6 +52,7 @@ const ChampionshipDetailsHeaderContainer: FunctionComponent<
   return (
     <ChampionshipDetailsHeader
       editButtonIsToBeShown={editButtonIsToBeShown}
+      entryRequestButtonIsToBeShown={entryRequestButtonIsToBeShown}
       handleEditPress={handleEditPress}
       {...rest}
     />

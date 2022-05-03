@@ -14,6 +14,7 @@ interface ChampionshipDetailsHeaderProps {
   description?: string
   avatarImageUrl?: string
   editButtonIsToBeShown: boolean
+  entryRequestButtonIsToBeShown: boolean
   handleEditPress: () => void
 }
 
@@ -26,6 +27,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
   platform,
   avatarImageUrl,
   editButtonIsToBeShown,
+  entryRequestButtonIsToBeShown,
   handleEditPress
 }) => {
   return (
@@ -68,6 +70,21 @@ const ChampionshipDetailsHeader: FunctionComponent<
                 marginTop: 5
               }}>
               Editar
+            </CustomButton>
+          )}
+
+          {entryRequestButtonIsToBeShown && (
+            <CustomButton
+              onPress={handleEditPress}
+              variant="primary"
+              style={{
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                alignItems: 'flex-start',
+                alignSelf: 'flex-start',
+                marginTop: 5
+              }}>
+              Solicitar Entrada
             </CustomButton>
           )}
         </View>
