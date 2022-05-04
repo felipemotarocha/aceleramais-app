@@ -1,4 +1,8 @@
 import { ChampionshipCreationSliceInitialState } from '~store/championship-creation/championship-creation.slice'
+import {
+  ChampionshipPendentDriver,
+  ChampionshipUpsertDto
+} from '~types/championship.types'
 
 const ChampionshipHelpers = {
   generateUpsertPayload: (
@@ -7,13 +11,15 @@ const ChampionshipHelpers = {
       'isEdit' | 'error' | 'loading'
     > & {
       admins: { user: string; isCreator: boolean }[]
+      pendentDrivers: ChampionshipPendentDriver[]
     }
-  ) => {
-    const { basicInfo, penalties, bonifications, admins } = dto
+  ): ChampionshipUpsertDto => {
+    const { basicInfo, penalties, bonifications, admins, pendentDrivers } = dto
 
     const races = dto.races.map((item) => ({
       ...item,
-      track: item.track.id
+      track: item.track.id,
+      startDate: item!.startDate!
     }))
 
     const drivers = dto.drivers.map((item) =>
@@ -50,9 +56,11 @@ const ChampionshipHelpers = {
       name: basicInfo?.title,
       description: basicInfo?.description,
       platform: basicInfo?.platform,
+      avatarImage: basicInfo?.image,
       races,
       teams,
       drivers,
+      pendentDrivers: pendentDrivers as { user: string; team?: string }[],
       scoringSystem,
       penalties,
       bonifications,

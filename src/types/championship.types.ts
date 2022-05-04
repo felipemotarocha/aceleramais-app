@@ -20,6 +20,11 @@ export interface ChampionshipDriver {
   }[]
 }
 
+export interface ChampionshipPendentDriver {
+  user: User | string
+  team?: Team | string
+}
+
 export interface ChampionshipAdmin {
   user: User
   isCreator: boolean
@@ -109,18 +114,22 @@ export interface ChampionshipUpsertDto {
     team?: string
     isRegistered: boolean
   }[]
+  pendentDrivers: {
+    user: string
+    team?: string
+  }[]
   teams: {
     id: string
     name: string
     color?: string
   }[]
   bonifications: {
-    race: string
+    id: string
     name: string
     points: number
   }[]
   penalties: {
-    race: string
+    id: string
     name: string
     points: number
   }[]

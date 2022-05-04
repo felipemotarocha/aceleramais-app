@@ -45,6 +45,7 @@ const ChampionshipEditionContainer: React.FunctionComponent<
       replace({
         ...reducerData,
         tracks: [],
+        pendentDrivers: [],
         isEdit: true,
         loading: false,
         error: undefined

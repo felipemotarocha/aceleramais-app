@@ -30,8 +30,9 @@ const ChampionshipDetailsScreen: FunctionComponent<
           refreshing={refreshing}
           contentContainerStyle={{ padding: 20 }}>
           <ChampionshipDetailsHeaderContainer
-            championship={championshipDetails.id}
             {...championshipDetails}
+            championship={championshipDetails.id}
+            teams={championshipDetails.teams as string[]}
           />
 
           <ChampionshipNextRaces

@@ -13,13 +13,14 @@ import ChampionshipPenaltySelectionScreen from './penalty-selection.screen'
 
 // Utilities
 import { showError, showSuccess } from '~helpers/flash-message.helpers'
+import { Penalty } from '~types/championship.types'
+import ChampionshipHelpers from '~helpers/championship.helpers'
 
 // Redux
 import {
   clear,
   updateDrivers,
-  updatePenalties,
-  _Penalty
+  updatePenalties
 } from '~store/championship-creation/championship-creation.slice'
 import { useAppDispatch, useAppSelector } from '~store'
 import {
@@ -90,7 +91,7 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
   )
 
   const renderItem = useCallback(
-    ({ item }: { item: _Penalty }) => (
+    ({ item }: { item: Penalty }) => (
       <View style={{ marginBottom: 15 }}>
         <ChampionshipPenaltySelectionItem
           {...item}
@@ -103,7 +104,7 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
 
   const handleAdvancePress = useCallback(
     async (data: { [key: string]: { name: string; points: string } }) => {
-      const newPenalties: _Penalty[] = Object.keys(data).map((key) => ({
+      const newPenalties: Penalty[] = Object.keys(data).map((key) => ({
         id: key,
         name: data[key].name,
         points: parseInt(data[key].points)
@@ -120,7 +121,9 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
 
       try {
         if (isEdit) {
-          await dispatch(editChampionship(championshipDetails!.id, payload))
+          const _payload = ChampionshipHelpers.generateUpsertPayload(payload)
+
+          await dispatch(editChampionship(championshipDetails!.id, _payload))
         } else {
           await dispatch(createChampionship(payload))
         }

@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Bonification, Penalty } from '~types/championship.types'
+import {
+  Bonification,
+  ChampionshipPendentDriver,
+  Penalty
+} from '~types/championship.types'
 
 import Track from '~types/track.types'
 
@@ -30,16 +34,6 @@ export type _Driver = {
     race: string
   }[]
 }
-export type _Bonification = {
-  id: string
-  name: string
-  points: number
-}
-export type _Penalty = {
-  id: string
-  name: string
-  points: number
-}
 
 export type ChampionshipCreationSliceInitialState = {
   basicInfo:
@@ -58,8 +52,9 @@ export type ChampionshipCreationSliceInitialState = {
   scoringSystem: _ScoringSystem[]
   teams: _Team[]
   drivers: _Driver[]
-  bonifications: _Bonification[]
-  penalties: _Penalty[]
+  pendentDrivers: ChampionshipPendentDriver[]
+  bonifications: Bonification[]
+  penalties: Penalty[]
   isEdit: boolean
   loading: boolean
   error?: string
@@ -73,6 +68,7 @@ const championshipCreationInitialState: ChampionshipCreationSliceInitialState =
     scoringSystem: [],
     teams: [],
     drivers: [],
+    pendentDrivers: [],
     bonifications: [],
     penalties: [],
     isEdit: false,
@@ -118,10 +114,10 @@ const championshipSlice = createSlice({
     updateDrivers: (state, action: PayloadAction<_Driver[]>) => {
       state.drivers = action.payload
     },
-    updateBonifications: (state, action: PayloadAction<_Bonification[]>) => {
+    updateBonifications: (state, action: PayloadAction<Bonification[]>) => {
       state.bonifications = action.payload
     },
-    updatePenalties: (state, action: PayloadAction<_Penalty[]>) => {
+    updatePenalties: (state, action: PayloadAction<Penalty[]>) => {
       state.penalties = action.payload
     },
     createChampionshipStart: (state) => {

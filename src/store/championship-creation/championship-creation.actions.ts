@@ -3,6 +3,7 @@ import FormData from 'form-data'
 
 import { API_URL } from '~constants/config.constants'
 import ChampionshipHelpers from '~helpers/championship.helpers'
+import { ChampionshipUpsertDto } from '~types/championship.types'
 
 import {
   ChampionshipCreationSliceInitialState,
@@ -57,28 +58,19 @@ export const createChampionship = (
 
 export const editChampionship = (
   championship: string,
-  data: Omit<
-    ChampionshipCreationSliceInitialState,
-    'isEdit' | 'error' | 'loading'
-  > & {
-    admins: { user: string; isCreator: boolean }[]
-  }
+  data: ChampionshipUpsertDto
 ) => {
   return async (dispatch: Dispatch) => {
     dispatch(editChampionshipStart())
 
     try {
-      const { basicInfo } = data
-
-      const payload = ChampionshipHelpers.generateUpsertPayload(data)
-
       const formData = new FormData()
 
-      formData.append('data', JSON.stringify(payload))
+      formData.append('data', JSON.stringify(data))
 
-      if (basicInfo?.image) {
+      if (data.avatarImage) {
         formData.append('avatarImage', {
-          uri: basicInfo.image.uri,
+          uri: data.avatarImage.uri,
           name: `championship_image`,
           type: 'image/jpeg'
         })
