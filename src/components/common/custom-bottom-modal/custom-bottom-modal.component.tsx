@@ -29,7 +29,10 @@ const CustomBottomModal: React.FunctionComponent<CustomBottomModalProps> = ({
       style={styles.view}
       {...rest}>
       <View style={styles.content}>
-        <TextBold style={{ fontSize: 16, marginBottom: 10 }}>{header}</TextBold>
+        <TextBold
+          style={{ fontSize: 16, marginBottom: 10, textAlign: 'center' }}>
+          {header}
+        </TextBold>
 
         {children}
       </View>
