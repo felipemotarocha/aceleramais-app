@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react'
+import React, { FunctionComponent, useCallback, useMemo, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 // Components
 import ChampionshipDetailsHeader from './championship-details-header.component'
+import ChampionshipEntryRequestModal from '~components/championship-entry-request-modal/championship-entry-request-modal.container'
 
 // Redux
 import { useAppSelector } from '~store'
@@ -23,12 +24,18 @@ interface ChampionshipDetailsHeaderContainerProps {
   avatarImageUrl?: string
   admins: ChampionshipAdmin[]
   drivers: ChampionshipDriver[]
+  teams: string[]
 }
 
 const ChampionshipDetailsHeaderContainer: FunctionComponent<
   ChampionshipDetailsHeaderContainerProps
-> = ({ admins, championship, drivers, ...rest }) => {
+> = ({ admins, championship, drivers, teams, ...rest }) => {
   const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
+
+  const [
+    requestEntryConfirmationModalIsVisible,
+    setRequestEntryConfirmationModalIsVisible
+  ] = useState(false)
 
   const { currentUser } = useAppSelector((state) => state.user)
 
@@ -49,13 +56,26 @@ const ChampionshipDetailsHeaderContainer: FunctionComponent<
     [navigation]
   )
 
+  const handleRequestEntryPress = useCallback(
+    () => setRequestEntryConfirmationModalIsVisible(true),
+    []
+  )
+
   return (
-    <ChampionshipDetailsHeader
-      editButtonIsToBeShown={editButtonIsToBeShown}
-      entryRequestButtonIsToBeShown={entryRequestButtonIsToBeShown}
-      handleEditPress={handleEditPress}
-      {...rest}
-    />
+    <>
+      <ChampionshipDetailsHeader
+        editButtonIsToBeShown={editButtonIsToBeShown}
+        entryRequestButtonIsToBeShown={entryRequestButtonIsToBeShown}
+        handleEditPress={handleEditPress}
+        handleRequestEntryPress={handleRequestEntryPress}
+        {...rest}
+      />
+
+      <ChampionshipEntryRequestModal
+        isVisible={requestEntryConfirmationModalIsVisible}
+        setIsVisible={setRequestEntryConfirmationModalIsVisible}
+      />
+    </>
   )
 }
 

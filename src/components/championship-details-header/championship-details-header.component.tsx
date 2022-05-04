@@ -16,6 +16,7 @@ interface ChampionshipDetailsHeaderProps {
   editButtonIsToBeShown: boolean
   entryRequestButtonIsToBeShown: boolean
   handleEditPress: () => void
+  handleRequestEntryPress: () => void
 }
 
 const ChampionshipDetailsHeader: FunctionComponent<
@@ -28,7 +29,8 @@ const ChampionshipDetailsHeader: FunctionComponent<
   avatarImageUrl,
   editButtonIsToBeShown,
   entryRequestButtonIsToBeShown,
-  handleEditPress
+  handleEditPress,
+  handleRequestEntryPress
 }) => {
   return (
     <View>
@@ -75,7 +77,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
 
           {entryRequestButtonIsToBeShown && (
             <CustomButton
-              onPress={handleEditPress}
+              onPress={handleRequestEntryPress}
               variant="primary"
               style={{
                 paddingVertical: 5,
