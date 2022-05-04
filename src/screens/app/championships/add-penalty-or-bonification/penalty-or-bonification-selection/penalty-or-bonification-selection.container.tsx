@@ -100,7 +100,9 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
       if (type === 'bonification') {
         const bonificationWasAlreadyAdded = driver.bonifications?.some(
-          (item) => item.bonification.id === selectedBonification?.id
+          (item) =>
+            item.bonification.id === selectedBonification?.id &&
+            item.race === race!.id
         )
 
         if (bonificationWasAlreadyAdded) return driver
@@ -123,7 +125,8 @@ const PenaltyOrBonificationSelectionContainer: FunctionComponent = () => {
 
       if (type === 'penalty') {
         const penaltyWasAlreadyAdded = driver.penalties?.some(
-          (item) => item.penalty.id === selectedPenalty?.id
+          (item) =>
+            item.penalty.id === selectedPenalty?.id && item.race === race!.id
         )
 
         if (penaltyWasAlreadyAdded) return driver
