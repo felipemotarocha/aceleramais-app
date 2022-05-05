@@ -37,7 +37,7 @@ const ChampionshipEntryRequestModal: FunctionComponent<
 
   const header = isEmpty(teams)
     ? 'Deseja mesmo solicitar a entrada neste campeonato?'
-    : 'Selecione o time com o qual você quer entrar'
+    : 'Selecione o time com o qual você quer entrar (opcional)'
 
   return (
     <>
