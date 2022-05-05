@@ -7,7 +7,7 @@ export interface ChampionshipDriver {
   id?: string
   firstName?: string
   lastName?: string
-  team?: Team
+  team?: Omit<Team, 'championship'>
   isRegistered: boolean
   isRemoved: boolean
   bonifications?: {
@@ -36,27 +36,25 @@ export interface ChampionshipDriverStandingsItem {
   firstName?: string
   lastName?: string
   profileImageUrl?: string
-  team?: Team
+  team?: Omit<Team, 'championship'>
   position: number
   points: number
   isRegistered: boolean
 }
 
 export interface ChampionshipTeamStandingsItem {
-  team: Team
+  team?: Omit<Team, 'championship'>
   position: number
   points: number
 }
 
 export interface ChampionshipDriverStandings {
   id: string
-  championship: string
   standings: ChampionshipDriverStandingsItem[]
 }
 
 export interface ChampionshipTeamStandings {
   id: string
-  championship: string
   standings: ChampionshipTeamStandingsItem[]
 }
 
@@ -72,15 +70,16 @@ interface Championship {
   teams: string[] | Team[]
   drivers: ChampionshipDriver[]
   pendentDrivers: ChampionshipPendentDriver[]
-  driverStandings: ChampionshipDriverStandings
+  driverStandings: string | ChampionshipDriverStandings
   teamStandings: ChampionshipTeamStandings
   scoringSystem: string | ScoringSystem
   bonifications: string[] | Bonification[]
   penalties: string[] | Penalty[]
-  nextRaces: Race[]
+  nextRaces: Omit<Race, 'championship' | 'isCompleted' | 'classification'>[]
 }
 
 export interface ScoringSystem {
+  id: string
   championship: string
   scoringSystem: { [key: number]: number }
 }

@@ -7,8 +7,7 @@ import ChampionshipEntryRequestModal from './championship-entry-request-modal.co
 // Utilities
 import Team from '~types/team.types'
 import api from '~api/axios.api'
-import ChampionshipEditionHelpers from '~screens/app/championships/championship-edition/championship-edition.helpers'
-import ChampionshipHelpers from '~helpers/championship.helpers'
+import ChampionshipEntryRequestModalHelpers from './championship-entry-request-modal.helpers'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -56,26 +55,17 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
         `/api/championship/${championshipDetails!.id}?full_populate=true`
       )
 
-      const reducerData = ChampionshipEditionHelpers.generateReducerData({
-        ..._data,
-        pendentDrivers: [
-          ..._data.pendentDrivers.map((item) => ({
-            user: item.user.id,
-            team: item?.team?.id
-          })),
-          { user: currentUser!.id, team: data?.team?.id }
-        ]
-      })
-
-      const _payload = ChampionshipHelpers.generateUpsertPayload({
-        ...reducerData,
-        admins: [{ user: currentUser!.id, isCreator: true }]
-      })
+      const payload =
+        ChampionshipEntryRequestModalHelpers.generateSubmitPayload({
+          championship: _data,
+          driver: currentUser!,
+          team: data?.team?.id
+        })
 
       setIsVisible(false)
 
       batch(async () => {
-        await dispatch(editChampionship(championshipDetails!.id, _payload))
+        await dispatch(editChampionship(championshipDetails!.id, payload))
         await dispatch(getChampionshipDetails(championshipDetails!.id))
       })
     } catch (error) {
