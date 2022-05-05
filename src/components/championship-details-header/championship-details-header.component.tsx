@@ -15,6 +15,7 @@ interface ChampionshipDetailsHeaderProps {
   avatarImageUrl?: string
   editButtonIsToBeShown: boolean
   entryRequestButtonIsToBeShown: boolean
+  entryWasRequested: boolean
   handleEditPress: () => void
   handleRequestEntryPress: () => void
 }
@@ -29,6 +30,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
   avatarImageUrl,
   editButtonIsToBeShown,
   entryRequestButtonIsToBeShown,
+  entryWasRequested,
   handleEditPress,
   handleRequestEntryPress
 }) => {
@@ -64,13 +66,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
             <CustomButton
               onPress={handleEditPress}
               variant="primary"
-              style={{
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-                alignItems: 'flex-start',
-                alignSelf: 'flex-start',
-                marginTop: 5
-              }}>
+              style={styles.button}>
               Editar
             </CustomButton>
           )}
@@ -79,14 +75,14 @@ const ChampionshipDetailsHeader: FunctionComponent<
             <CustomButton
               onPress={handleRequestEntryPress}
               variant="primary"
-              style={{
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-                alignItems: 'flex-start',
-                alignSelf: 'flex-start',
-                marginTop: 5
-              }}>
+              style={styles.button}>
               Solicitar Entrada
+            </CustomButton>
+          )}
+
+          {entryWasRequested && (
+            <CustomButton disabled variant="primary" style={styles.button}>
+              Entrada Solicitada
             </CustomButton>
           )}
         </View>
@@ -129,6 +125,13 @@ const styles = StyleSheet.create({
   },
   bottom: {
     marginTop: 20
+  },
+  button: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignItems: 'flex-start',
+    alignSelf: 'flex-start',
+    marginTop: 5
   }
 })
 

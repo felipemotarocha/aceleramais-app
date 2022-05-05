@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { batch } from 'react-redux'
 
 // Components
 import ChampionshipEntryRequestModal from './championship-entry-request-modal.component'
@@ -13,6 +14,7 @@ import ChampionshipHelpers from '~helpers/championship.helpers'
 import { useAppDispatch, useAppSelector } from '~store'
 import { editChampionship } from '~store/championship-creation/championship-creation.actions'
 import { _Team } from '~store/championship-creation/championship-creation.slice'
+import { getChampionshipDetails } from '~store/championship-details/championship-details-actions'
 
 interface ChampionshipEntryRequestModalContainerProps {
   isVisible: boolean
@@ -49,7 +51,6 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
   }, [isVisible])
 
   const handleSubmit = async (data: { team?: _Team }) => {
-    console.log({ data })
     try {
       const { data: _data } = await api.get(
         `/api/championship/${championshipDetails!.id}?full_populate=true`
@@ -71,9 +72,12 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
         admins: [{ user: currentUser!.id, isCreator: true }]
       })
 
-      await dispatch(editChampionship(championshipDetails!.id, _payload))
-
       setIsVisible(false)
+
+      batch(async () => {
+        await dispatch(editChampionship(championshipDetails!.id, _payload))
+        await dispatch(getChampionshipDetails(championshipDetails!.id))
+      })
     } catch (error) {
       console.error(error)
     }
