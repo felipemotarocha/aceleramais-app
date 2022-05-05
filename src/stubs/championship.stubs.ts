@@ -27,6 +27,7 @@ const ChampionshipStubs = {
           isCreator: true
         }
       ],
+      pendentDrivers: [],
       drivers: [
         {
           user: {
