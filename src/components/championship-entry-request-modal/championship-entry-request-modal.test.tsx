@@ -1,6 +1,6 @@
 import React from 'react'
 import ChampionshipEntryRequestModalContainer from './championship-entry-request-modal.container'
-import { render, waitFor } from '~helpers/test.helpers'
+import { render, waitFor, fireEvent } from '~helpers/test.helpers'
 import MockHelpers from '~helpers/mock.helpers'
 
 describe('Championship Entry Request Modal', () => {
@@ -55,6 +55,35 @@ describe('Championship Entry Request Modal', () => {
       getByText(/confirmar/i)
       getByText(/cancelar/i)
       expect(queryAllByPlaceholderText(/time/i)).toHaveLength(2)
+    })
+  })
+
+  it('should open team selection modal on team input press', async () => {
+    axiosMock.onGet().reply(200, [
+      {
+        id: 'valid_id',
+        name: 'valid_name',
+        color: 'valid_color'
+      }
+    ])
+
+    const { getByText, getByPlaceholderText, queryAllByPlaceholderText } =
+      render(
+        <ChampionshipEntryRequestModalContainer
+          isVisible
+          setIsVisible={() => {}}
+        />,
+        { preloadedState }
+      )
+
+    await waitFor(async () => {
+      getByPlaceholderText(/time/i)
+    })
+
+    await fireEvent.press(queryAllByPlaceholderText(/time/i)[1])
+
+    await waitFor(async () => {
+      getByText(/selecionar time/i)
     })
   })
 })
