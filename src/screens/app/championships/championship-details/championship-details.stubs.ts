@@ -13,6 +13,7 @@ const ChampionshipDetailsStubs = {
         isCreator: true
       }
     ],
+    pendentDrivers: [],
     drivers: [
       {
         bonifications: [],
