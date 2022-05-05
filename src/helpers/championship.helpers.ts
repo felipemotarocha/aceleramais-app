@@ -8,7 +8,7 @@ const ChampionshipHelpers = {
   generateUpsertPayload: (
     dto: Omit<
       ChampionshipCreationSliceInitialState,
-      'isEdit' | 'error' | 'loading'
+      'isEdit' | 'error' | 'loading' | 'tracks'
     > & {
       admins: { user: string; isCreator: boolean }[]
       pendentDrivers: ChampionshipPendentDriver[]

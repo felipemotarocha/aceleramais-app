@@ -71,6 +71,7 @@ interface Championship {
   races: string[] | Race[]
   teams: string[] | Team[]
   drivers: ChampionshipDriver[]
+  pendentDrivers: ChampionshipPendentDriver[]
   driverStandings: ChampionshipDriverStandings
   teamStandings: ChampionshipTeamStandings
   scoringSystem: string | ScoringSystem

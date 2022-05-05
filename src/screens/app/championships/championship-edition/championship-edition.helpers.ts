@@ -83,7 +83,8 @@ const ChampionshipEditionHelpers = {
       teams,
       drivers,
       bonifications,
-      penalties
+      penalties,
+      pendentDrivers: championship.pendentDrivers
     }
   }
 }
