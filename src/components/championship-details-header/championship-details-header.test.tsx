@@ -81,9 +81,38 @@ describe('Championship Details Header', () => {
     getByText(/código:/i)
     getByText(/#12345678/i)
     expect(queryByText(/entrada solicitada/i)).toBeNull()
-
+    expect(queryByText(/editar/i)).toBeNull()
     await waitFor(async () => {
-      getByText(/Solicitar Entrada/)
+      getByText(/solicitar entrada/i)
+    })
+  })
+
+  it('should show that the entry was already requested if the user is a pendent driver', async () => {
+    const { getByText, queryByText } = render(
+      <ChampionshipDetailsHeaderContainer />,
+      {
+        preloadedState: {
+          user: { currentUser: { ...UserStubs.validUser, id: '345' } },
+          championshipDetails: {
+            championshipDetails: {
+              ...ChampionshipStubs.validChampionships[0],
+              admins: [{ user: UserStubs.validUser, isCreator: true }],
+              pendentDrivers: [{ user: { ...UserStubs.validUser, id: '345' } }]
+            }
+          }
+        }
+      }
+    )
+
+    getByText(/psgl sim racing league/i)
+    getByText(/plataforma:/i)
+    getByText(/pc/i)
+    getByText(/código:/i)
+    getByText(/#12345678/i)
+    expect(queryByText(/solicitar entrada/i)).toBeNull()
+    expect(queryByText(/editar/i)).toBeNull()
+    await waitFor(async () => {
+      getByText(/entrada solicitada/i)
     })
   })
 })
