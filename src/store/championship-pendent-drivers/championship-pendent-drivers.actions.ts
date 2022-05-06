@@ -2,6 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit'
 
 // Actions
 import {
+  ChampionshipPendentDriver,
   getChampionshipPendentDriversFailure,
   getChampionshipPendentDriversStart,
   getChampionshipPendentDriversSuccess
@@ -17,10 +18,16 @@ export const getChampionshipPendentDrivers = (championship: string) => {
 
     try {
       const { data }: { data: Championship } = await api.get(
-        `/api/championship=${championship}?full_populate=true`
+        `/api/championship/${championship}?full_populate=true`
       )
 
-      await dispatch(getChampionshipPendentDriversSuccess(data.pendentDrivers))
+      const pendentDrivers: ChampionshipPendentDriver[] =
+        data.pendentDrivers.map((driver) => ({
+          ...driver,
+          status: 'none'
+        }))
+
+      await dispatch(getChampionshipPendentDriversSuccess(pendentDrivers))
     } catch (error: any) {
       await dispatch(getChampionshipPendentDriversFailure(error?.message))
     }

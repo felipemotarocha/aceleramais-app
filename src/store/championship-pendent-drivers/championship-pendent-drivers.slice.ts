@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { ChampionshipPendentDriver } from '~types/championship.types'
+import { ChampionshipPendentDriver as _ChampionshipPendentDriver } from '~types/championship.types'
+
+export type PendentDriverStatus = 'approved' | 'reproved' | 'none'
+
+export type ChampionshipPendentDriver = _ChampionshipPendentDriver & {
+  status: PendentDriverStatus
+}
 
 export type ChampionshipPendentDriversSliceInitialState = {
   pendentDrivers: ChampionshipPendentDriver[]
