@@ -21,6 +21,7 @@ export type ChampionshipsStackParamList = {
   'Penalty or Bonification Selection': {
     type: 'penalty' | 'bonification'
   }
+  'Championship Pendent Drivers': { championship: string }
 }
 
 export type ChampionshipListScreenRouteProp = RouteProp<
@@ -70,6 +71,10 @@ export type PenaltyOrBonificationDriverSelectionScreenRouteProp = RouteProp<
 export type PenaltyOrBonificationSelectionScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Penalty or Bonification Selection'
+>
+export type ChampionshipPendentDriversScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'Championship Pendent Drivers'
 >
 
 export type ChampionshipListScreenNavigationProp = NativeStackNavigationProp<
@@ -124,4 +129,9 @@ export type PenaltyOrBonificationSelectionScreenNavigationProp =
   NativeStackNavigationProp<
     ChampionshipsStackParamList,
     'Penalty or Bonification Selection'
+  >
+export type ChampionshipPendentDriversScreenNavigationProp =
+  NativeStackNavigationProp<
+    ChampionshipsStackParamList,
+    'Championship Pendent Drivers'
   >
