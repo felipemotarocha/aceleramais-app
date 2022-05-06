@@ -22,7 +22,7 @@ import {
 
 interface ChampionshipEditionContainerProps {}
 
-export type Button = 'raceResults' | 'detailsAndSettings'
+export type Button = 'raceResults' | 'detailsAndSettings' | 'pendentDrivers'
 
 const ChampionshipEditionContainer: React.FunctionComponent<
   ChampionshipEditionContainerProps
@@ -34,7 +34,7 @@ const ChampionshipEditionContainer: React.FunctionComponent<
 
   const dispatch = useAppDispatch()
 
-  const handleEditDetailsAndSettingsPress = useCallback(async () => {
+  const handleEditDetailsAndSettingsPress = async () => {
     const { data } = await api.get(
       `/api/championship/${championship}?full_populate=true`
     )
@@ -53,14 +53,18 @@ const ChampionshipEditionContainer: React.FunctionComponent<
     )
 
     navigation.navigate('New Championship')
-  }, [dispatch, championship, navigation, championship])
+  }
+
+  const handlePendentDriversPress = () =>
+    navigation.navigate('Championship Pendent Drivers', { championship })
 
   const handlePress = useCallback(
     (button: Button) => {
       return {
         raceResults: () =>
           navigation.navigate('Championship Race Selection', { championship }),
-        detailsAndSettings: handleEditDetailsAndSettingsPress
+        detailsAndSettings: handleEditDetailsAndSettingsPress,
+        pendentDrivers: handlePendentDriversPress
       }[button]
     },
     [championship, navigation, handleEditDetailsAndSettingsPress]

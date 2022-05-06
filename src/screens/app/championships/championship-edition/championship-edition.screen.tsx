@@ -41,7 +41,8 @@ const ChampionshipEditionScreen: React.FunctionComponent<
 
         <CustomButton
           variant="outlined"
-          style={{ marginBottom: 15, alignItems: 'flex-start' }}>
+          style={{ marginBottom: 15, alignItems: 'flex-start' }}
+          onPress={() => handlePress('pendentDrivers')()}>
           Gerenciar Pilotos Pendentes
         </CustomButton>
 
