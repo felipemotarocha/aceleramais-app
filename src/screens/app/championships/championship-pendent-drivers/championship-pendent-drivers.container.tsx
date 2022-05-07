@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import { View } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 
 // Screens
@@ -36,7 +37,9 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
 
   const renderItem = useCallback(
     ({ item }: { item: ChampionshipPendentDriver }) => (
-      <ChampionshipPendentDriverItem pendentDriver={item} />
+      <View style={{ marginTop: 20 }}>
+        <ChampionshipPendentDriverItem pendentDriver={item} />
+      </View>
     ),
     []
   )

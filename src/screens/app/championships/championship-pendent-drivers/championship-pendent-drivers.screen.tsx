@@ -1,7 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, ListRenderItem } from 'react-native'
+
+// Components
 import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
 import Header from '~components/common/header/header.component'
+
+// Utilities
 import Colors from '~constants/colors.constants'
 import { ChampionshipPendentDriver } from '~store/championship-pendent-drivers/championship-pendent-drivers.slice'
 
@@ -23,7 +27,7 @@ const ChampionshipPendentDriversScreen: FunctionComponent<
         refreshing={refreshing}
         refetch={refetch}
         renderItem={renderItem}
-        style={{ marginHorizontal: 20, paddingVertical: 20 }}
+        style={{ marginHorizontal: 20, paddingBottom: 20 }}
         keyExtractor={(item) => item.user.id}
       />
     </View>
