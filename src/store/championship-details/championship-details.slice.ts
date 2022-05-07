@@ -18,7 +18,6 @@ const championshipDetailsSlice = createSlice({
   initialState: championshipDetailsInitialState,
   reducers: {
     getChampionshipDetailsStart: (state) => {
-      state.championshipDetails = undefined
       state.loading = true
       state.error = null
     },

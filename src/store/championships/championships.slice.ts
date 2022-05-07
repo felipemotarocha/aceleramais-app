@@ -20,7 +20,6 @@ const championshipsSlice = createSlice({
   initialState: championshipsInitialState,
   reducers: {
     getChampionshipsStart: (state) => {
-      state.championships = []
       state.loading = true
       state.error = null
     },

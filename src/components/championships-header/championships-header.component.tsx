@@ -15,6 +15,9 @@ import { useAppDispatch, useAppSelector } from '~store'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 import { updateFilterBy } from '~store/championships/championships.slice'
+import { signOutUser } from '~store/user/user.actions'
+import { signOut } from 'firebase/auth'
+import { auth } from '~config/firebase.config'
 
 interface ChampionshipsHeaderProps {}
 
@@ -49,6 +52,11 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
     dispatch(updateFilterBy('completed'))
   }, [filterBy, dispatch])
 
+  const handleSignOutPress = () => {
+    dispatch(signOutUser())
+    signOut(auth)
+  }
+
   return (
     <View
       style={{
@@ -66,6 +74,15 @@ const ChampionshipsHeader: FunctionComponent<ChampionshipsHeaderProps> = () => {
           </View>
           <TextBold style={{ fontSize: 16 }}>Seus Campeonatos</TextBold>
         </View>
+
+        {/* TODO: remove */}
+        <Pressable style={styles.right} onPress={handleSignOutPress}>
+          <Ionicons
+            name="exit-outline"
+            size={28}
+            color={Colors.textSecondary}
+          />
+        </Pressable>
 
         <Pressable style={styles.right} onPress={handlePlusPress}>
           <Ionicons name="add-sharp" size={32} color={Colors.textSecondary} />

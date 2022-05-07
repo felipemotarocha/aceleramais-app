@@ -26,7 +26,6 @@ const championshipPendentDriversSlice = createSlice({
   initialState: championshipPendentDriversInitialState,
   reducers: {
     getChampionshipPendentDriversStart: (state) => {
-      state.pendentDrivers = []
       state.loading = true
       state.error = null
     },

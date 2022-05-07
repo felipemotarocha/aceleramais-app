@@ -1,16 +1,31 @@
 import React, { FunctionComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ListRenderItem } from 'react-native'
+import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
 import Header from '~components/common/header/header.component'
 import Colors from '~constants/colors.constants'
+import { ChampionshipPendentDriver } from '~store/championship-pendent-drivers/championship-pendent-drivers.slice'
 
-interface ChampionshipPendentDriversScreenProps {}
+interface ChampionshipPendentDriversScreenProps {
+  pendentDrivers: ChampionshipPendentDriver[]
+  refreshing: boolean
+  refetch: () => void
+  renderItem: ListRenderItem<any> | null | undefined
+}
 
 const ChampionshipPendentDriversScreen: FunctionComponent<
   ChampionshipPendentDriversScreenProps
-> = () => {
+> = ({ pendentDrivers, refreshing, refetch, renderItem }) => {
   return (
     <View style={styles.container}>
       <Header showBack>Pilotos Pendentes</Header>
+      <FlatListWithPullRefresh
+        data={pendentDrivers}
+        refreshing={refreshing}
+        refetch={refetch}
+        renderItem={renderItem}
+        style={{ marginHorizontal: 20, paddingVertical: 20 }}
+        keyExtractor={(item) => item.user.id}
+      />
     </View>
   )
 }
