@@ -19,7 +19,7 @@ const ChampionshipEntryRequestModalHelpers = {
           user: (item.user as User).id,
           team: (item?.team as Team)?.id
         })),
-        { user: driver, team }
+        { user: driver.id, team }
       ]
     })
 
