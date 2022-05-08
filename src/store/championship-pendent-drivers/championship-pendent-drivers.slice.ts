@@ -45,6 +45,12 @@ const championshipPendentDriversSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    updateChampionshipPendentDrivers: (
+      state,
+      action: PayloadAction<ChampionshipPendentDriver[]>
+    ) => {
+      state.pendentDrivers = action.payload
+    },
     clear(state) {
       state.pendentDrivers = []
       state.error = null
@@ -57,6 +63,7 @@ export const {
   getChampionshipPendentDriversStart,
   getChampionshipPendentDriversSuccess,
   getChampionshipPendentDriversFailure,
+  updateChampionshipPendentDrivers,
   clear
 } = championshipPendentDriversSlice.actions
 

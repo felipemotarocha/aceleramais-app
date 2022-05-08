@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 
 // Components
 import ChampionshipDriverItem from '~components/championship-driver-item/championship-driver-item.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -13,11 +15,19 @@ import User from '~types/user.types'
 
 interface ChampionshipPendentDriverItemProps {
   pendentDriver: ChampionshipPendentDriver
+  handleApprovePress: (driver: ChampionshipPendentDriver) => void
+  handleReprovePress: (driver: ChampionshipPendentDriver) => void
+  handleUndoPress: (driver: ChampionshipPendentDriver) => void
 }
 
 const ChampionshipPendentDriverItem: FunctionComponent<
   ChampionshipPendentDriverItemProps
-> = ({ pendentDriver }) => {
+> = ({
+  pendentDriver,
+  handleApprovePress,
+  handleReprovePress,
+  handleUndoPress
+}) => {
   return (
     <View style={styles.container}>
       <View>
@@ -37,11 +47,63 @@ const ChampionshipPendentDriverItem: FunctionComponent<
           <>
             <CustomButton
               variant="outlined"
-              style={{ flex: 1, marginRight: 10 }}>
+              style={{ flex: 1, marginRight: 10 }}
+              onPress={() => handleApprovePress(pendentDriver)}>
               Aprovar
             </CustomButton>
-            <CustomButton variant="outlined" style={{ flex: 1 }}>
+            <CustomButton
+              variant="outlined"
+              style={{ flex: 1 }}
+              onPress={() => handleReprovePress(pendentDriver)}>
               Reprovar
+            </CustomButton>
+          </>
+        )}
+
+        {pendentDriver.status === 'approved' && (
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginRight: 50
+            }}>
+            <MaterialIcons
+              name="done"
+              size={30}
+              color={Colors.primary}
+              accessibilityLabel="approved"
+            />
+
+            <TextSemiBold style={{ fontSize: 10, marginLeft: 8 }}>
+              Aprovado
+            </TextSemiBold>
+          </View>
+        )}
+
+        {pendentDriver.status === 'reproved' && (
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginRight: 50
+            }}>
+            <AntDesign name="close" size={30} color={Colors.textSecondary} />
+
+            <TextSemiBold style={{ fontSize: 10, marginLeft: 8 }}>
+              Reprovado
+            </TextSemiBold>
+          </View>
+        )}
+
+        {pendentDriver.status !== 'none' && (
+          <>
+            <CustomButton
+              variant="outlined"
+              style={{ flex: 1 }}
+              onPress={() => handleUndoPress(pendentDriver)}>
+              Desfazer
             </CustomButton>
           </>
         )}
