@@ -51,6 +51,7 @@ describe('Championship Pendent Drivers', () => {
       getByText('@gustavo.rocha')
       getByText(/aprovar/i)
       getByText(/reprovar/i)
+      getByText(/salvar/i)
     })
 
     await fireEvent.press(getByText(/aprovar/i))

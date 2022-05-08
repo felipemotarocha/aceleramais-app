@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, ListRenderItem } from 'react-native'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
@@ -30,6 +31,12 @@ const ChampionshipPendentDriversScreen: FunctionComponent<
         style={{ marginHorizontal: 20, paddingBottom: 20 }}
         keyExtractor={(item) => item.user.id}
       />
+
+      <CustomButton
+        variant="primary"
+        style={{ marginHorizontal: 20, marginBottom: 20 }}>
+        Salvar
+      </CustomButton>
     </View>
   )
 }
