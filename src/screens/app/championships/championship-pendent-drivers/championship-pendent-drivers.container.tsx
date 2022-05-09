@@ -110,7 +110,8 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
           ...driver,
           bonifications: [],
           penalties: [],
-          isRegistered: true
+          isRegistered: true,
+          isRemoved: false
         }))
     ]
 
