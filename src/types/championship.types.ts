@@ -3,19 +3,20 @@ import Team from './team.types'
 import User from './user.types'
 
 export interface ChampionshipDriver {
-  user?: User
+  user?: string | User
   id?: string
+  userName?: string
   firstName?: string
   lastName?: string
-  team?: Omit<Team, 'championship'>
+  team?: string | Omit<Team, 'championship'>
   isRegistered: boolean
   isRemoved: boolean
-  bonifications?: {
-    bonification: Bonification
+  bonifications: {
+    bonification: string | Bonification
     race: string
   }[]
-  penalties?: {
-    penalty: Penalty
+  penalties: {
+    penalty: string | Penalty
     race: string
   }[]
 }
@@ -108,12 +109,7 @@ export interface ChampionshipUpsertDto {
     startDate: string
     track: string
   }[]
-  drivers: {
-    user?: string
-    userName?: string
-    team?: string
-    isRegistered: boolean
-  }[]
+  drivers: ChampionshipDriver[]
   pendentDrivers: {
     user: string
     team?: string

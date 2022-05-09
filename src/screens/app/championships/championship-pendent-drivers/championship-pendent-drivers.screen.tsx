@@ -15,11 +15,12 @@ interface ChampionshipPendentDriversScreenProps {
   refreshing: boolean
   refetch: () => void
   renderItem: ListRenderItem<any> | null | undefined
+  handleSubmit: () => Promise<void>
 }
 
 const ChampionshipPendentDriversScreen: FunctionComponent<
   ChampionshipPendentDriversScreenProps
-> = ({ pendentDrivers, refreshing, refetch, renderItem }) => {
+> = ({ pendentDrivers, refreshing, refetch, renderItem, handleSubmit }) => {
   return (
     <View style={styles.container}>
       <Header showBack>Pilotos Pendentes</Header>
@@ -34,7 +35,8 @@ const ChampionshipPendentDriversScreen: FunctionComponent<
 
       <CustomButton
         variant="primary"
-        style={{ marginHorizontal: 20, marginBottom: 20 }}>
+        style={{ marginHorizontal: 20, marginBottom: 20 }}
+        onPress={handleSubmit}>
         Salvar
       </CustomButton>
     </View>

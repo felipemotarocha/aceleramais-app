@@ -1,25 +1,36 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
 import { View } from 'react-native'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 // Screens
 import ChampionshipPendentDriversScreen from './championship-pendent-drivers.screen'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { getChampionshipPendentDrivers } from '~store/championship-pendent-drivers/championship-pendent-drivers.actions'
+import {
+  getChampionshipPendentDrivers,
+  submitChampionshipPendentDriversEdition
+} from '~store/championship-pendent-drivers/championship-pendent-drivers.actions'
 
 // Utilities
-import { ChampionshipPendentDriversScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
+import {
+  ChampionshipPendentDriversScreenNavigationProp,
+  ChampionshipPendentDriversScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 import {
   ChampionshipPendentDriver,
   PendentDriverStatus,
   updateChampionshipPendentDrivers
 } from '~store/championship-pendent-drivers/championship-pendent-drivers.slice'
 import User from '~types/user.types'
+import ChampionshipHelpers from '~helpers/championship.helpers'
 
 // Components
 import ChampionshipPendentDriverItem from '~components/championship-pendent-driver-item/championship-pendent-driver-item.component'
+import api from '~api/axios.api'
+import { ChampionshipDriver } from '~types/championship.types'
+import { showSuccess } from '~helpers/flash-message.helpers'
+import Loading from '~components/common/loading/loading.component'
 
 interface ChampionshipPendentDriversContainerProps {}
 
@@ -32,9 +43,12 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
 
   const dispatch = useAppDispatch()
 
-  const { loading, pendentDrivers } = useAppSelector(
+  const { loading, submitIsLoading, pendentDrivers } = useAppSelector(
     (state) => state.championshipPendentDrivers
   )
+
+  const navigation =
+    useNavigation<ChampionshipPendentDriversScreenNavigationProp>()
 
   useEffect(() => {
     dispatch(getChampionshipPendentDrivers(championship))
@@ -79,6 +93,42 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
     [dispatch, pendentDrivers]
   )
 
+  const handleSubmit = async () => {
+    const { data } = await api.get(
+      `/api/championship/${championship}?full_populate=true`
+    )
+
+    const newPendentDrivers = pendentDrivers.filter(
+      (driver) => driver.status === 'none'
+    )
+
+    const newDrivers: ChampionshipDriver[] = [
+      ...data.drivers,
+      ...pendentDrivers
+        .filter((driver) => driver.status === 'approved')
+        .map((driver) => ({
+          ...driver,
+          bonifications: [],
+          penalties: [],
+          isRegistered: true
+        }))
+    ]
+
+    const payload = ChampionshipHelpers.generatePayload({
+      ...data,
+      drivers: newDrivers,
+      pendentDrivers: newPendentDrivers
+    })
+
+    await dispatch(
+      submitChampionshipPendentDriversEdition(championship, payload)
+    )
+
+    navigation.goBack()
+
+    showSuccess('As modificações foram salvas com sucesso!')
+  }
+
   const renderItem = useCallback(
     ({ item }: { item: ChampionshipPendentDriver }) => (
       <View style={{ marginTop: 20 }}>
@@ -94,12 +144,17 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
   )
 
   return (
-    <ChampionshipPendentDriversScreen
-      refreshing={loading}
-      pendentDrivers={pendentDrivers}
-      refetch={() => dispatch(getChampionshipPendentDrivers(championship))}
-      renderItem={renderItem}
-    />
+    <>
+      {submitIsLoading && <Loading />}
+
+      <ChampionshipPendentDriversScreen
+        refreshing={loading}
+        pendentDrivers={pendentDrivers}
+        refetch={() => dispatch(getChampionshipPendentDrivers(championship))}
+        renderItem={renderItem}
+        handleSubmit={handleSubmit}
+      />
+    </>
   )
 }
 

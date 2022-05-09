@@ -12,13 +12,15 @@ export type ChampionshipPendentDriversSliceInitialState = {
   pendentDrivers: ChampionshipPendentDriver[]
   error: string | null
   loading: boolean
+  submitIsLoading: boolean
 }
 
 const championshipPendentDriversInitialState: ChampionshipPendentDriversSliceInitialState =
   {
     pendentDrivers: [],
     error: null,
-    loading: false
+    loading: false,
+    submitIsLoading: false
   }
 
 const championshipPendentDriversSlice = createSlice({
@@ -45,6 +47,22 @@ const championshipPendentDriversSlice = createSlice({
       state.loading = false
       state.error = action.payload
     },
+    submitChampionshipPendentDriversEditionStart: (state) => {
+      state.submitIsLoading = true
+      state.error = null
+    },
+    submitChampionshipPendentDriversEditionSuccess: (state) => {
+      state.submitIsLoading = false
+      state.error = null
+    },
+    submitChampionshipPendentDriversEditionFailure: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.pendentDrivers = []
+      state.submitIsLoading = false
+      state.error = action.payload
+    },
     updateChampionshipPendentDrivers: (
       state,
       action: PayloadAction<ChampionshipPendentDriver[]>
@@ -63,6 +81,9 @@ export const {
   getChampionshipPendentDriversStart,
   getChampionshipPendentDriversSuccess,
   getChampionshipPendentDriversFailure,
+  submitChampionshipPendentDriversEditionStart,
+  submitChampionshipPendentDriversEditionSuccess,
+  submitChampionshipPendentDriversEditionFailure,
   updateChampionshipPendentDrivers,
   clear
 } = championshipPendentDriversSlice.actions
