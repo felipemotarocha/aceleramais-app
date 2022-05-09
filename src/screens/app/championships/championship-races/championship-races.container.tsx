@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { format } from 'date-fns'
 import CountryFlag from 'react-native-country-flag'
 
@@ -16,7 +16,10 @@ import { useAppDispatch, useAppSelector } from '~store'
 import { getChampionshipRaces } from '~store/championship-races/championship-races.actions'
 
 // Utilities
-import { ChampionshipRacesScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
+import {
+  ChampionshipRacesScreenNavigationProp,
+  ChampionshipRacesScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
 import Race from '~types/race.types'
 import Colors from '~constants/colors.constants'
 import { clear } from '~store/championship-races/championship-races.slice'
@@ -32,6 +35,8 @@ const ChampionshipRacesContainer: FunctionComponent<
 
   const dispatch = useAppDispatch()
 
+  const navigation = useNavigation<ChampionshipRacesScreenNavigationProp>()
+
   const { championshipRaces } = useAppSelector(
     (state) => state.championshipRaces
   )
@@ -43,9 +48,17 @@ const ChampionshipRacesContainer: FunctionComponent<
     return () => dispatch(clear())
   }, [championship, dispatch])
 
+  const handleItemPress = useCallback(
+    (race: string) =>
+      navigation.navigate('Race Classification', { race, championship }),
+    [navigation, championship]
+  )
+
   const renderItem = useCallback(
     ({ item }: { item: Race }) => (
-      <View style={styles.raceItem}>
+      <Pressable
+        style={styles.raceItem}
+        onPress={() => handleItemPress(item.id)}>
         <CountryFlag
           isoCode={item.track.countryCode}
           size={28}
@@ -78,7 +91,7 @@ const ChampionshipRacesContainer: FunctionComponent<
             {item.isCompleted && ' (concluída)'}
           </TextRegular>
         </View>
-      </View>
+      </Pressable>
     ),
     []
   )

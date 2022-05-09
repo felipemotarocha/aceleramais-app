@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import DraggableFlatList, { RenderItem } from 'react-native-draggable-flatlist'
+import { isEmpty } from 'lodash'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -9,6 +10,7 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 import RaceItem from '~components/race-item/race-item.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import RaceDriversSelectionModalContainer from '~components/race-drivers-selection-modal/race-drivers-selection-modal.container'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -72,11 +74,23 @@ const RaceClassificationScreen: FunctionComponent<
               onDragEnd={isEditable ? handleDragEnd : () => {}}
               renderItem={renderItem}
               ListEmptyComponent={
-                <CustomButton
-                  variant="outlined"
-                  onPress={handleEditDriversPress}>
-                  Adicionar Pilotos
-                </CustomButton>
+                isEditable ? (
+                  <CustomButton
+                    variant="outlined"
+                    onPress={handleEditDriversPress}>
+                    Adicionar Pilotos
+                  </CustomButton>
+                ) : (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                    <TextMedium>
+                      Os resultados dessa corrida ainda não foram registrados.
+                    </TextMedium>
+                  </View>
+                )
               }
               data={raceClassification?.classification}
               keyExtractor={(item) => item?.id || item?.user?.id || ''}
@@ -88,12 +102,14 @@ const RaceClassificationScreen: FunctionComponent<
 
           <View
             style={{ paddingTop: 5, paddingHorizontal: 20, paddingBottom: 20 }}>
-            <CustomButton
-              variant="outlined"
-              style={{ marginBottom: 15 }}
-              onPress={handlePenaltiesAndBonificationsPress}>
-              Penalizações e Bonificações
-            </CustomButton>
+            {!isEmpty(raceClassification?.classification) && (
+              <CustomButton
+                variant="outlined"
+                style={{ marginBottom: 15 }}
+                onPress={handlePenaltiesAndBonificationsPress}>
+                Penalizações e Bonificações
+              </CustomButton>
+            )}
             {isEditable && (
               <CustomButton variant="primary" onPress={handleSavePress}>
                 Salvar
