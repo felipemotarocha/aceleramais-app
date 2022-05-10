@@ -29,7 +29,8 @@ export const createChampionship = (
     try {
       const { basicInfo } = data
 
-      const payload = ChampionshipHelpers.generateUpsertPayload(data)
+      const payload =
+        ChampionshipHelpers.convertReducerDataToUpsertPayload(data)
 
       const formData = new FormData()
 

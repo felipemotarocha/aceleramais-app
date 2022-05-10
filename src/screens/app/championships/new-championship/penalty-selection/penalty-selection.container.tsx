@@ -121,7 +121,8 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
 
       try {
         if (isEdit) {
-          const _payload = ChampionshipHelpers.generateUpsertPayload(payload)
+          const _payload =
+            ChampionshipHelpers.convertReducerDataToUpsertPayload(payload)
 
           await dispatch(editChampionship(championshipDetails!.id, _payload))
         } else {

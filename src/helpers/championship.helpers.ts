@@ -12,7 +12,9 @@ import Team from '~types/team.types'
 import User from '~types/user.types'
 
 const ChampionshipHelpers = {
-  generatePayload: (championship: Championship): ChampionshipUpsertDto => {
+  convertChampionshipToUpsertPayload: (
+    championship: Championship
+  ): ChampionshipUpsertDto => {
     const { name, description, platform, avatarImageUrl } = championship
 
     const drivers = championship.drivers.map((driver) => {
@@ -83,7 +85,7 @@ const ChampionshipHelpers = {
       teams
     }
   },
-  generateUpsertPayload: (
+  convertReducerDataToUpsertPayload: (
     dto: Omit<
       ChampionshipCreationSliceInitialState,
       'isEdit' | 'error' | 'loading' | 'tracks'

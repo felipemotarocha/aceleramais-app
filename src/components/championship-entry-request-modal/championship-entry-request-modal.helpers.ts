@@ -23,7 +23,7 @@ const ChampionshipEntryRequestModalHelpers = {
       ]
     })
 
-    return ChampionshipHelpers.generateUpsertPayload({
+    return ChampionshipHelpers.convertReducerDataToUpsertPayload({
       ...reducerData,
       admins: [{ user: driver!.id, isCreator: true }]
     })

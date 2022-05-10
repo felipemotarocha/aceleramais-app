@@ -32,14 +32,7 @@ describe('Championship Entry Request Modal Helper', () => {
 
     expect(result.pendentDrivers).toStrictEqual([
       {
-        user: {
-          id: 'valid_id',
-          email: 'valid_email@mail.com',
-          firstName: 'valid_first_name',
-          lastName: 'valid_last_name',
-          provider: 'google',
-          userName: 'valid_username'
-        },
+        user: 'valid_id',
         team: undefined
       }
     ])
@@ -76,14 +69,7 @@ describe('Championship Entry Request Modal Helper', () => {
 
     expect(result.pendentDrivers).toStrictEqual([
       {
-        user: {
-          id: 'valid_id',
-          email: 'valid_email@mail.com',
-          firstName: 'valid_first_name',
-          lastName: 'valid_last_name',
-          provider: 'google',
-          userName: 'valid_username'
-        },
+        user: 'valid_id',
         team: 'valid_team'
       }
     ])

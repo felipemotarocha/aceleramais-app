@@ -24,12 +24,12 @@ import {
 } from '~store/championship-pendent-drivers/championship-pendent-drivers.slice'
 import User from '~types/user.types'
 import ChampionshipHelpers from '~helpers/championship.helpers'
+import api from '~api/axios.api'
+import { ChampionshipDriver } from '~types/championship.types'
+import { showError, showSuccess } from '~helpers/flash-message.helpers'
 
 // Components
 import ChampionshipPendentDriverItem from '~components/championship-pendent-driver-item/championship-pendent-driver-item.component'
-import api from '~api/axios.api'
-import { ChampionshipDriver } from '~types/championship.types'
-import { showSuccess } from '~helpers/flash-message.helpers'
 import Loading from '~components/common/loading/loading.component'
 
 interface ChampionshipPendentDriversContainerProps {}
@@ -94,40 +94,54 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
   )
 
   const handleSubmit = async () => {
-    const { data } = await api.get(
-      `/api/championship/${championship}?full_populate=true`
-    )
+    try {
+      const { data } = await api.get(
+        `/api/championship/${championship}?full_populate=true`
+      )
 
-    const newPendentDrivers = pendentDrivers.filter(
-      (driver) => driver.status === 'none'
-    )
+      const newPendentDrivers = pendentDrivers.filter(
+        (driver) => driver.status === 'none'
+      )
 
-    const newDrivers: ChampionshipDriver[] = [
-      ...data.drivers,
-      ...pendentDrivers
-        .filter((driver) => driver.status === 'approved')
-        .map((driver) => ({
-          ...driver,
-          bonifications: [],
-          penalties: [],
-          isRegistered: true,
-          isRemoved: false
-        }))
-    ]
+      const newDrivers: ChampionshipDriver[] = [
+        ...data.drivers,
+        ...pendentDrivers
+          .filter((driver) => driver.status === 'approved')
+          .map((driver) => ({
+            ...driver,
+            bonifications: [],
+            penalties: [],
+            isRegistered: true,
+            isRemoved: false
+          }))
+      ]
 
-    const payload = ChampionshipHelpers.generatePayload({
-      ...data,
-      drivers: newDrivers,
-      pendentDrivers: newPendentDrivers
-    })
+      console.log(
+        JSON.stringify({
+          ...data,
+          drivers: newDrivers,
+          pendentDrivers: newPendentDrivers
+        })
+      )
 
-    await dispatch(
-      submitChampionshipPendentDriversEdition(championship, payload)
-    )
+      const payload = ChampionshipHelpers.convertChampionshipToUpsertPayload({
+        ...data,
+        drivers: newDrivers,
+        pendentDrivers: newPendentDrivers
+      })
 
-    navigation.goBack()
+      console.log(JSON.stringify(payload))
 
-    showSuccess('As modificações foram salvas com sucesso!')
+      await dispatch(
+        submitChampionshipPendentDriversEdition(championship, payload)
+      )
+
+      navigation.goBack()
+
+      showSuccess('As modificações foram salvas com sucesso!')
+    } catch (_err) {
+      showError('Algo deu errado. Por favor, tente novamente mais tarde.')
+    }
   }
 
   const renderItem = useCallback(
