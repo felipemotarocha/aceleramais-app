@@ -29,7 +29,7 @@ describe('Search Screen', () => {
 
     axiosMock
       .onGet('/api/championship?nameOrCode=psgl')
-      .reply(200, ChampionshipStubs.validChampionships)
+      .reply(200, [ChampionshipStubs.validChampionships[0]])
 
     fireEvent(getByDisplayValue(/psgl/i), 'submitEditing')
 
@@ -59,7 +59,7 @@ describe('Search Screen', () => {
 
     axiosMock
       .onGet('/api/championship?nameOrCode=123')
-      .reply(200, ChampionshipStubs.validChampionships)
+      .reply(200, [ChampionshipStubs.validChampionships[0]])
 
     fireEvent(getByDisplayValue(/123/i), 'submitEditing')
 
