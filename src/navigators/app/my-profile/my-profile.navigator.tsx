@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Screens
-import UserProfileScreen from '~screens/app/my-profile/user-profile/user-profile.screen'
+import UserProfileScreen from '~screens/app/my-profile/user-profile/user-profile.container'
 
 // Utilities
 import { UserStackParamList } from './my-profile.navigator.types'
