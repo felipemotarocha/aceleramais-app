@@ -6,6 +6,10 @@ interface User {
   provider?: string
   userName: string
   profileImageUrl?: string
+  wins: number
+  titles: number
+  podiums: number
+  biography?: string
 }
 
 export default User
