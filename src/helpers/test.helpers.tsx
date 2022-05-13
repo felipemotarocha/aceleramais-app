@@ -17,6 +17,7 @@ import raceClassificationReducer from '~store/race-classification/race-classific
 import racePenaltiesAndBonificationsReducer from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
 import searchReducer from '~store/search/search.slice'
 import championshipPendentDriversReducer from '~store/championship-pendent-drivers/championship-pendent-drivers.slice'
+import userProfileReducer from '~store/user-profile/user-profile.slice'
 
 function render(
   ui,
@@ -35,7 +36,8 @@ function render(
         raceClassification: raceClassificationReducer,
         racePenaltiesAndBonifications: racePenaltiesAndBonificationsReducer,
         championshipPendentDrivers: championshipPendentDriversReducer,
-        search: searchReducer
+        search: searchReducer,
+        userProfile: userProfileReducer
       },
       preloadedState
     }),
