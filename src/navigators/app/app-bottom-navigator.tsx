@@ -4,11 +4,12 @@ import { Ionicons } from '@expo/vector-icons'
 
 // Navigators
 import ChampionshipsNavigator from './championships/championships.navigator'
+import MyProfileNavigator from './my-profile/my-profile.navigator'
+import SearchNavigator from './search/search.navigator'
 
 // Utilities
 import { AppTabBottomParamList } from './app-bottom-navigator.types'
 import Colors from '~constants/colors.constants'
-import SearchNavigator from './search/search.navigator'
 
 const Tab = createBottomTabNavigator<AppTabBottomParamList>()
 
@@ -57,6 +58,17 @@ const AppBottomTabNavigator = () => {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="search" color={color} size={22} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="My Profile"
+        component={MyProfileNavigator}
+        options={{
+          title: 'Meu Perfil',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person" color={color} size={22} />
           )
         }}
       />

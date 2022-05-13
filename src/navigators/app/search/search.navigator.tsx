@@ -26,7 +26,6 @@ const SearchNavigator: FunctionComponent<SearchNavigatorProps> = () => {
         name="Search Championships and Users"
         component={SearchScreen}
       />
-
       <Stack.Screen
         name="Championship List"
         component={ChampionshipListScreen}
