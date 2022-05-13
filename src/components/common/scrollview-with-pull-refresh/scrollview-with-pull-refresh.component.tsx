@@ -16,7 +16,7 @@ export interface ScrollViewWithPullRefreshProps extends ScrollViewProps {
 const ScrollViewWithPullRefresh: React.FC<ScrollViewWithPullRefreshProps> = (
   props
 ) => {
-  const { refetch, refreshing, refetchInterval = 30 } = props
+  const { refetch, refreshing, refetchInterval = 5 } = props
 
   const lastRefresh = useRef<Date | null>()
 
