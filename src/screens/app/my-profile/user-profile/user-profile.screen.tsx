@@ -15,18 +15,23 @@ import Colors from '~constants/colors.constants'
 
 interface UserProfileScreenProps {
   userProfile: User | undefined
-  refetch: () => void
   refreshing: boolean
+  refetch: () => void
+  // eslint-disable-next-line no-undef
+  renderOptionsButton: () => JSX.Element
 }
 
 const UserProfileScreen: FunctionComponent<UserProfileScreenProps> = ({
   userProfile,
   refreshing,
-  refetch
+  refetch,
+  renderOptionsButton
 }) => {
   return (
     <View style={styles.container}>
-      <Header showBack>Perfil do Piloto</Header>
+      <Header showBack renderRight={renderOptionsButton()}>
+        Perfil do Piloto
+      </Header>
       <ScrollViewWithPullRefresh
         style={styles.content}
         refetch={refetch}
