@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 // Components
@@ -11,12 +11,13 @@ import Colors from '~constants/colors.constants'
 
 interface UserProfileOptionsModalProps {
   isVisible: boolean
+  handleSignOutPress: () => void
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const UserProfileOptionsModal: FunctionComponent<
   UserProfileOptionsModalProps
-> = ({ isVisible, setIsVisible }) => {
+> = ({ isVisible, setIsVisible, handleSignOutPress }) => {
   return (
     <CustomBottomModal
       header="Opções"
@@ -32,12 +33,14 @@ const UserProfileOptionsModal: FunctionComponent<
 
         <View style={styles.line}></View>
 
-        <View style={[styles.item, { marginTop: 15 }]}>
+        <Pressable
+          style={[styles.item, { marginTop: 15 }]}
+          onPress={handleSignOutPress}>
           <Feather name="log-out" size={28} color={Colors.input.placeholder} />
           <TextSemiBold style={{ marginLeft: 5, fontSize: 12 }}>
             Fazer logout
           </TextSemiBold>
-        </View>
+        </Pressable>
       </View>
     </CustomBottomModal>
   )
