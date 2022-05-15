@@ -1,10 +1,21 @@
 import { RouteProp } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
+export type SignUpScreenDefaultValues = {
+  firstName: string
+  lastName: string
+  email: string
+  userName: string
+  profileImageUrl?: string
+}
+
 export type AuthStackParamList = {
   Welcome: undefined
   'Sign In': undefined
-  'Sign Up': undefined
+  'Sign Up': {
+    defaultValues?: SignUpScreenDefaultValues
+    isEdit: boolean
+  }
   'Forgot My Password': undefined
   'Social Sign Up': {
     id: string

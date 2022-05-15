@@ -13,23 +13,31 @@ interface UserProfileOptionsModalProps {
   isVisible: boolean
   handleSignOutPress: () => void
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
+  handleEditProfilePress: () => void
 }
 
 const UserProfileOptionsModal: FunctionComponent<
   UserProfileOptionsModalProps
-> = ({ isVisible, setIsVisible, handleSignOutPress }) => {
+> = ({
+  isVisible,
+  setIsVisible,
+  handleSignOutPress,
+  handleEditProfilePress
+}) => {
   return (
     <CustomBottomModal
       header="Opções"
       isVisible={isVisible}
       setIsVisible={setIsVisible}>
       <View style={{ width: '100%' }}>
-        <View style={[styles.item, { marginBottom: 15 }]}>
+        <Pressable
+          style={[styles.item, { marginBottom: 15 }]}
+          onPress={handleEditProfilePress}>
           <Feather name="edit" size={28} color={Colors.input.placeholder} />
           <TextSemiBold style={{ marginLeft: 5, fontSize: 12 }}>
             Editar perfil
           </TextSemiBold>
-        </View>
+        </Pressable>
 
         <View style={styles.line}></View>
 
