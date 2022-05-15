@@ -13,7 +13,7 @@ const WelcomeScreenContainer: FunctionComponent<
   const navigation = useNavigation<WelcomeScreenNavigationProp>()
 
   const handleSignUpPress = useCallback(
-    () => navigation.navigate('Sign Up'),
+    () => navigation.navigate('Sign Up', { isEdit: false }),
     [navigation]
   )
 

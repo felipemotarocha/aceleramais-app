@@ -36,7 +36,7 @@ export const loginUser = (id: string, authToken: string) => {
 }
 
 export const createUser = (
-  user: User & {
+  user: Omit<User, 'wins' | 'titles' | 'podiums'> & {
     profileImage?: { uri: string; type: string }
     profileImageUrl?: string
   }
