@@ -63,7 +63,8 @@ describe('Sign Up Screen', () => {
       email: 'valid_email@mail.com',
       firstName: 'valid_first_name',
       lastName: 'valid_last_name',
-      userName: 'valid_user_name'
+      userName: 'valid_user_name',
+      biography: 'valid_biography'
     }
 
     const { getByText, getByDisplayValue } = render(<SignUpContainer />)
@@ -71,6 +72,7 @@ describe('Sign Up Screen', () => {
     await waitFor(async () => {
       getByText(/salvar/i)
       getByDisplayValue(/valid_email@mail.com/i)
+      getByDisplayValue(/valid_biography/i)
       getByDisplayValue(/valid_first_name/i)
       getByDisplayValue(/valid_last_name/i)
       getByDisplayValue(/valid_user_name/i)

@@ -76,4 +76,12 @@ describe('User Profile Screen', () => {
 
     expect(queryByA11yLabel(/opções/i)).toBeNull()
   })
+
+  it('should not show biography section if the user does not have one', () => {
+    axiosMock.onGet().reply(200, { ...UserStubs.validUser, biography: '' })
+
+    const { queryByText } = render(<UserProfileContainer />)
+
+    expect(queryByText(/sobre/i)).toBeNull()
+  })
 })
