@@ -7,7 +7,6 @@ import Header from '~components/common/header/header.component'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 import ScrollViewWithPullRefresh from '~components/common/scrollview-with-pull-refresh/scrollview-with-pull-refresh.component'
 
 // Utilities
@@ -114,9 +113,9 @@ const UserProfileScreen: FunctionComponent<UserProfileScreenProps> = ({
               </View>
             )}
 
-            <CustomButton variant="outlined" style={{ marginTop: 20 }}>
+            {/* <CustomButton variant="outlined" style={{ marginTop: 20 }}>
               Ver Campeonatos
-            </CustomButton>
+            </CustomButton> */}
           </>
         )}
       </ScrollViewWithPullRefresh>
