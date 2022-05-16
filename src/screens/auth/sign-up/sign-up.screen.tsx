@@ -36,6 +36,7 @@ export type SignUpFormData = {
   email: string
   password: string
   userName: string
+  biography: string
 }
 
 interface SignUpScreenProps {
@@ -63,7 +64,8 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
       lastName: '',
       userName: '',
       password: '',
-      email: ''
+      email: '',
+      biography: ''
     }
   })
 
@@ -73,6 +75,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
   const firstNameInputRef = useRef<any>(null)
   const lastNameInputRef = useRef<any>(null)
   const emailInputRef = useRef<any>(null)
+  const biographyInputRef = useRef<any>(null)
   const passwordInputRef = useRef<any>(null)
 
   const handleOnSubmitEditting = useCallback(
@@ -82,13 +85,17 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
         | 'firstNameInputRef'
         | 'lastNameInputRef'
         | 'emailInputRef'
+        | 'biographyInputRef'
         | 'passwordInputRef'
     ) => {
       return {
         firstNameInputRef: () => lastNameInputRef?.current?.focus(),
-        lastNameInputRef: () => emailInputRef?.current?.focus(),
+        lastNameInputRef: () =>
+          params?.isEdit
+            ? biographyInputRef?.current?.focus()
+            : emailInputRef?.current?.focus(),
         emailInputRef: () => passwordInputRef?.current?.focus(),
-        passwordInputRef: () => userNameInputRef?.current?.focus(),
+        passwordInputRef: () => biographyInputRef?.current?.focus(),
         userNameInputRef: () => Keyboard.dismiss()
       }[input]
     },
@@ -98,7 +105,9 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
       firstNameInputRef,
       lastNameInputRef,
       emailInputRef,
-      passwordInputRef
+      passwordInputRef,
+      biographyInputRef,
+      params
     ]
   )
 
@@ -109,9 +118,7 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
         {params?.isEdit ? 'Editar perfil' : 'Crie sua conta'}
       </Header>
       <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1, backgroundColor: Colors.background }}
-        bounces={false}>
+        style={{ flex: 1, backgroundColor: Colors.background }}>
         <DismissKeyboard>
           <Container>
             <ImagePickerButton
@@ -243,6 +250,31 @@ const SignUpScreen: FunctionComponent<SignUpScreenProps> = ({
                 Por favor, insira um e-mail válido.
               </TextMedium>
             )}
+
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomInput
+                  style={{
+                    marginVertical: 10,
+                    height: 120,
+                    maxHeight: 120,
+                    textAlignVertical: 'top'
+                  }}
+                  placeholder="Sobre você"
+                  accessibilityLabel="Sobre você"
+                  returnKeyType="default"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  hasError={!!errors.biography}
+                  blurOnSubmit={false}
+                  ref={biographyInputRef}
+                  multiline
+                />
+              )}
+              name="biography"
+            />
 
             {!params?.isEdit && (
               <Controller

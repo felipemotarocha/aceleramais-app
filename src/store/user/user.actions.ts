@@ -60,6 +60,7 @@ export const createUser = (
     formData.append('email', user.email)
     formData.append('userName', user.userName)
     formData.append('provider', user.provider)
+    formData.append('biography', user.biography)
 
     if (user.profileImage) {
       formData.append('profileImage', {
@@ -114,6 +115,7 @@ export const editUser = (params: { user: string; dto: EditUserDto }) => {
       formData.append('firstName', dto.firstName)
       formData.append('lastName', dto.lastName)
       formData.append('userName', dto.userName)
+      formData.append('biography', dto.biography)
 
       if (dto.profileImage) {
         formData.append('profileImage', {

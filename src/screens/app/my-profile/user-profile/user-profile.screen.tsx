@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { View, StyleSheet, Image } from 'react-native'
+import { isEmpty } from 'lodash'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -104,16 +105,18 @@ const UserProfileScreen: FunctionComponent<UserProfileScreenProps> = ({
               </View>
             </View>
 
-            <View style={{ marginTop: 20 }}>
-              <TextSemiBold style={{ fontSize: 14 }}>Sobre</TextSemiBold>
-              <TextRegular style={{ lineHeight: 25, fontSize: 12 }}>
-                {userProfile?.biography}
-              </TextRegular>
+            {!isEmpty(userProfile?.biography) && (
+              <View style={{ marginTop: 20 }}>
+                <TextSemiBold style={{ fontSize: 14 }}>Sobre</TextSemiBold>
+                <TextRegular style={{ lineHeight: 25, fontSize: 12 }}>
+                  {userProfile?.biography}
+                </TextRegular>
+              </View>
+            )}
 
-              <CustomButton variant="outlined" style={{ marginTop: 20 }}>
-                Ver Campeonatos
-              </CustomButton>
-            </View>
+            <CustomButton variant="outlined" style={{ marginTop: 20 }}>
+              Ver Campeonatos
+            </CustomButton>
           </>
         )}
       </ScrollViewWithPullRefresh>
