@@ -2,11 +2,13 @@ import { RouteProp } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export type SignUpScreenDefaultValues = {
+  id: string
   firstName: string
   lastName: string
   email: string
   userName: string
   profileImageUrl?: string
+  biography?: string
 }
 
 export type AuthStackParamList = {

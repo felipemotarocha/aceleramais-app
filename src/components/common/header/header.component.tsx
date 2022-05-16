@@ -47,7 +47,7 @@ const Header: FunctionComponent<HeaderProps> = ({
         paddingTop: Platform.OS === 'android' ? insets.top : insets.top + 25,
         ...styles.container
       }}>
-      {showBack && (
+      {showBack ? (
         <Feather
           accessibilityLabel="Back"
           name="chevron-left"
@@ -55,9 +55,11 @@ const Header: FunctionComponent<HeaderProps> = ({
           color={Colors.text}
           onPress={handleBackPress}
         />
+      ) : (
+        <View style={{ width: 25 }}></View>
       )}
       <TextBold style={{ fontSize: 16 }}>{children}</TextBold>
-      <View>{renderRight && renderRight}</View>
+      <View style={{ width: 25 }}>{renderRight && renderRight}</View>
     </Container>
   )
 }

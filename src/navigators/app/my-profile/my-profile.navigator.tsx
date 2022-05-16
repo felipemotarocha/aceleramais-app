@@ -15,7 +15,11 @@ const Stack = createNativeStackNavigator<UserStackParamList>()
 const MyProfileNavigator: FunctionComponent<MyProfileNavigatorProps> = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="User Profile" component={UserProfileScreen} />
+      <Stack.Screen
+        name="User Profile"
+        component={UserProfileScreen}
+        initialParams={{ showBack: false }}
+      />
       <Stack.Screen name="Sign Up" component={SignUpScreen} />
     </Stack.Navigator>
   )

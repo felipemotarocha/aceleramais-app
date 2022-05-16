@@ -12,6 +12,8 @@ import ScrollViewWithPullRefresh from '~components/common/scrollview-with-pull-r
 // Utilities
 import User from '~types/user.types'
 import Colors from '~constants/colors.constants'
+import { useRoute } from '@react-navigation/native'
+import { UserProfileScreenRouteProp } from '~navigators/app/my-profile/my-profile.navigator.types'
 
 interface UserProfileScreenProps {
   userProfile: User | undefined
@@ -27,83 +29,93 @@ const UserProfileScreen: FunctionComponent<UserProfileScreenProps> = ({
   refetch,
   renderOptionsButton
 }) => {
+  const { params } = useRoute<UserProfileScreenRouteProp>()
+
   return (
     <View style={styles.container}>
-      <Header showBack renderRight={renderOptionsButton()}>
+      <Header showBack={params.showBack} renderRight={renderOptionsButton()}>
         Perfil do Piloto
       </Header>
       <ScrollViewWithPullRefresh
         style={styles.content}
         refetch={refetch}
         refreshing={refreshing}>
-        <View style={styles.top}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: userProfile?.profileImageUrl }}
-              style={{ flex: 1, borderRadius: 120 }}
-            />
-          </View>
+        {userProfile && (
+          <>
+            <View style={styles.top}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{
+                    uri: `${
+                      userProfile?.profileImageUrl
+                    }?${new Date().toISOString()}`
+                  }}
+                  style={{ flex: 1, borderRadius: 120 }}
+                />
+              </View>
 
-          <View style={{ alignItems: 'center', marginTop: 20 }}>
-            <TextMedium style={{ fontSize: 16 }}>
-              {userProfile?.firstName}{' '}
-              <TextSemiBold>
-                {userProfile?.lastName?.toUpperCase()}
-              </TextSemiBold>
-            </TextMedium>
+              <View style={{ alignItems: 'center', marginTop: 20 }}>
+                <TextMedium style={{ fontSize: 16 }}>
+                  {userProfile?.firstName}{' '}
+                  <TextSemiBold>
+                    {userProfile?.lastName?.toUpperCase()}
+                  </TextSemiBold>
+                </TextMedium>
 
-            <TextRegular>@{userProfile?.userName}</TextRegular>
-          </View>
+                <TextRegular>@{userProfile?.userName}</TextRegular>
+              </View>
 
-          <View style={styles.achievements}>
-            <View style={styles.achievement}>
-              <TextMedium style={{ fontSize: 14 }}>
-                {userProfile?.wins}
-              </TextMedium>
-              <TextMedium
-                style={{ fontSize: 12, color: Colors.input.placeholder }}>
-                {userProfile?.wins! > 1 || userProfile?.wins === 0
-                  ? 'VITÓRIAS'
-                  : 'VITÓRIA'}
-              </TextMedium>
+              <View style={styles.achievements}>
+                <View style={styles.achievement}>
+                  <TextMedium style={{ fontSize: 14 }}>
+                    {userProfile?.wins}
+                  </TextMedium>
+                  <TextMedium
+                    style={{ fontSize: 12, color: Colors.input.placeholder }}>
+                    {userProfile?.wins! > 1 || userProfile?.wins === 0
+                      ? 'VITÓRIAS'
+                      : 'VITÓRIA'}
+                  </TextMedium>
+                </View>
+
+                <View style={styles.achievement}>
+                  <TextMedium style={{ fontSize: 14 }}>
+                    {userProfile?.titles}
+                  </TextMedium>
+                  <TextMedium
+                    style={{ fontSize: 12, color: Colors.input.placeholder }}>
+                    {userProfile?.titles! > 1 || userProfile?.titles === 0
+                      ? 'TÍTULOS'
+                      : 'TÍTULO'}
+                  </TextMedium>
+                </View>
+
+                <View style={styles.achievement}>
+                  <TextMedium style={{ fontSize: 14 }}>
+                    {userProfile?.podiums}
+                  </TextMedium>
+                  <TextMedium
+                    style={{ fontSize: 12, color: Colors.input.placeholder }}>
+                    {userProfile?.podiums! > 1 || userProfile?.podiums === 0
+                      ? 'PÓDIOS'
+                      : 'PÓDIO'}
+                  </TextMedium>
+                </View>
+              </View>
             </View>
 
-            <View style={styles.achievement}>
-              <TextMedium style={{ fontSize: 14 }}>
-                {userProfile?.titles}
-              </TextMedium>
-              <TextMedium
-                style={{ fontSize: 12, color: Colors.input.placeholder }}>
-                {userProfile?.titles! > 1 || userProfile?.titles === 0
-                  ? 'TÍTULOS'
-                  : 'TÍTULO'}
-              </TextMedium>
+            <View style={{ marginTop: 20 }}>
+              <TextSemiBold style={{ fontSize: 14 }}>Sobre</TextSemiBold>
+              <TextRegular style={{ lineHeight: 25, fontSize: 12 }}>
+                {userProfile?.biography}
+              </TextRegular>
+
+              <CustomButton variant="outlined" style={{ marginTop: 20 }}>
+                Ver Campeonatos
+              </CustomButton>
             </View>
-
-            <View style={styles.achievement}>
-              <TextMedium style={{ fontSize: 14 }}>
-                {userProfile?.podiums}
-              </TextMedium>
-              <TextMedium
-                style={{ fontSize: 12, color: Colors.input.placeholder }}>
-                {userProfile?.podiums! > 1 || userProfile?.podiums === 0
-                  ? 'PÓDIOS'
-                  : 'PÓDIO'}
-              </TextMedium>
-            </View>
-          </View>
-        </View>
-
-        <View style={{ marginTop: 20 }}>
-          <TextSemiBold style={{ fontSize: 14 }}>Sobre</TextSemiBold>
-          <TextRegular style={{ lineHeight: 25, fontSize: 12 }}>
-            {userProfile?.biography}
-          </TextRegular>
-
-          <CustomButton variant="outlined" style={{ marginTop: 20 }}>
-            Ver Campeonatos
-          </CustomButton>
-        </View>
+          </>
+        )}
       </ScrollViewWithPullRefresh>
     </View>
   )

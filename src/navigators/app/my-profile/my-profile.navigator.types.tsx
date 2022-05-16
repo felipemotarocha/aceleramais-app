@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { SignUpScreenDefaultValues } from '~navigators/auth/auth-stack.navigator.types'
 
 export type UserStackParamList = {
-  'User Profile': { userName: string }
+  'User Profile': { userName: string; showBack: boolean }
   'Sign Up': {
     defaultValues?: SignUpScreenDefaultValues
     isEdit: boolean
