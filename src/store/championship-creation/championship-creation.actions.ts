@@ -45,14 +45,20 @@ export const createChampionship = (
       }
 
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/championship`, {
+      const response = await fetch(`${API_URL}/api/championship`, {
         body: formData as any,
         method: 'POST'
       })
 
+      if (!response.ok) {
+        throw new Error()
+      }
+
       return dispatch(createChampionshipSuccess())
     } catch (error) {
-      return dispatch(createChampionshipFailure(error as any))
+      dispatch(createChampionshipFailure((error as any).message))
+
+      throw error
     }
   }
 }
@@ -78,14 +84,20 @@ export const editChampionship = (
       }
 
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/championship/${championship}`, {
+      const response = await fetch(`${API_URL}/api/championship`, {
         body: formData as any,
         method: 'PUT'
       })
 
+      if (!response.ok) {
+        throw new Error()
+      }
+
       return dispatch(editChampionshipSuccess())
     } catch (error) {
-      return dispatch(editChampionshipFailure(error as any))
+      dispatch(editChampionshipFailure((error as any).message))
+
+      throw error
     }
   }
 }

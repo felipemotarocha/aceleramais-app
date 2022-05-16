@@ -52,16 +52,25 @@ export const submitChampionshipPendentDriversEdition = (
       formData.append('data', JSON.stringify(data))
 
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/championship/${championship}`, {
-        body: formData as any,
-        method: 'PUT'
-      })
+      const response = await fetch(
+        `${API_URL}/api/championship/${championship}`,
+        {
+          body: formData as any,
+          method: 'PUT'
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error()
+      }
 
       return dispatch(submitChampionshipPendentDriversEditionSuccess())
     } catch (error) {
-      return dispatch(
-        submitChampionshipPendentDriversEditionFailure(error as any)
+      dispatch(
+        submitChampionshipPendentDriversEditionFailure((error as any).message)
       )
+
+      throw error
     }
   }
 }

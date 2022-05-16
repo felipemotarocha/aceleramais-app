@@ -140,7 +140,9 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
 
       showSuccess('As modificações foram salvas com sucesso!')
     } catch (_err) {
-      showError('Algo deu errado. Por favor, tente novamente mais tarde.')
+      showError(
+        'Algo deu errado. Por favor, tente novamente mais tarde ou entre em contato conosco.'
+      )
     }
   }
 

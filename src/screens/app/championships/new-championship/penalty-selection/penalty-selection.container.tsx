@@ -142,7 +142,9 @@ const ChampionshipPenaltySelectionContainer: FunctionComponent<
           `O campeonato foi ${isEdit ? 'editado' : 'criado'} com sucesso.`
         )
       } catch (error) {
-        showError(error as any)
+        showError(
+          'Algo deu errado. Por favor, tente novamente mais tarde ou entre em contato conosco.'
+        )
       }
     },
     [dispatch, penalties, currentUser, championshipDetails]

@@ -29,6 +29,9 @@ import Championship, {
 } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
 import api from '~api/axios.api'
+import { showError, showSuccess } from '~helpers/flash-message.helpers'
+import User from '~types/user.types'
+import Team from '~types/team.types'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
@@ -38,7 +41,6 @@ import {
   submitRacePenaltiesAndBonificationsEdit
 } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.actions'
 import { updateChampionshipDrivers } from '~store/race-penalties-and-bonifications/race-penalties-and-bonifications.slice'
-import { showSuccess } from '~helpers/flash-message.helpers'
 
 interface PenaltiesAndBonificationsContainerProps {}
 
@@ -112,7 +114,7 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
         _bonifications.push({
           driver: rest,
           bonification: bonification.bonification
-        })
+        } as any)
       }
     }
 
@@ -138,7 +140,7 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
         _penalties.push({
           driver: rest,
           penalty: penalty.penalty
-        })
+        } as any)
       }
     }
 
@@ -156,8 +158,12 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
       bonification?: Bonification
     }) => {
       const newChampionshipDrivers = championshipDrivers.map((_driver) => {
-        const _driverId = _driver.isRegistered ? _driver.user!.id : _driver.id
-        const driverId = driver.isRegistered ? driver.user!.id : driver.id
+        const _driverId = _driver.isRegistered
+          ? (_driver.user as User)!.id
+          : _driver.id
+        const driverId = driver.isRegistered
+          ? (driver.user as User)!.id
+          : driver.id
 
         if (_driverId !== driverId) return _driver
 
@@ -165,7 +171,8 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
           return {
             ..._driver,
             bonifications: _driver.bonifications?.filter(
-              (item) => item.bonification.id !== bonification.id
+              (item) =>
+                (item.bonification as Bonification).id !== bonification.id
             )
           }
         }
@@ -174,7 +181,7 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
           return {
             ..._driver,
             penalties: _driver.penalties?.filter(
-              (item) => item.penalty.id !== penalty.id
+              (item) => (item.penalty as Penalty).id !== penalty.id
             )
           }
         }
@@ -200,7 +207,7 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
       return (
         <View style={{ marginBottom: 15 }}>
           <DriverBonificationAndPenaltyItem
-            driver={item.driver}
+            driver={item.driver as any}
             type={item.bonification ? 'bonification' : 'penalty'}
             bonification={item.bonification}
             penalty={item.penalty}
@@ -265,62 +272,68 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
   )
 
   const handleSavePress = useCallback(async () => {
-    const {
-      races,
-      teams,
-      bonifications,
-      penalties,
-      // @ts-ignore
-      scoringSystem: { scoringSystem }
-    } = championshipWithFullPopulate!
+    try {
+      const {
+        races,
+        teams,
+        bonifications,
+        penalties,
+        // @ts-ignore
+        scoringSystem: { scoringSystem }
+      } = championshipWithFullPopulate!
 
-    const drivers = championshipDrivers.map((driver) => {
-      const _driver = { ...driver }
+      const drivers = championshipDrivers.map((driver) => {
+        const _driver = { ...driver }
 
-      if (driver.isRegistered) {
-        _driver.user = driver.user!.id as any
+        if (driver.isRegistered) {
+          _driver.user = (driver.user as User)!.id
+        }
+
+        if (driver.team) {
+          _driver.team = (driver.team as Team)!.id
+        }
+
+        if (driver.bonifications) {
+          _driver.bonifications = driver.bonifications.map((item) => ({
+            race: item.race,
+            bonification: (item.bonification as Bonification).id
+          })) as any
+        }
+
+        if (driver.penalties) {
+          _driver.penalties = driver.penalties.map((item) => ({
+            race: item.race,
+            penalty: (item.penalty as Penalty).id
+          })) as any
+        }
+
+        return _driver
+      })
+
+      const payload = {
+        drivers,
+        races,
+        teams,
+        bonifications,
+        penalties,
+        scoringSystem
       }
 
-      if (driver.team) {
-        _driver.team = driver.team.id as any
-      }
-
-      if (driver.bonifications) {
-        _driver.bonifications = driver.bonifications.map((item) => ({
-          race: item.race,
-          bonification: item.bonification.id
-        })) as any
-      }
-
-      if (driver.penalties) {
-        _driver.penalties = driver.penalties.map((item) => ({
-          race: item.race,
-          penalty: item.penalty.id
-        })) as any
-      }
-
-      return _driver
-    })
-
-    const payload = {
-      drivers,
-      races,
-      teams,
-      bonifications,
-      penalties,
-      scoringSystem
-    }
-
-    dispatch(
-      submitRacePenaltiesAndBonificationsEdit(
-        championshipWithFullPopulate!.id,
-        payload
+      dispatch(
+        submitRacePenaltiesAndBonificationsEdit(
+          championshipWithFullPopulate!.id,
+          payload
+        )
       )
-    )
 
-    navigation.goBack()
+      navigation.goBack()
 
-    showSuccess('As modificações foram salvas com sucesso!')
+      showSuccess('As modificações foram salvas com sucesso!')
+    } catch (_err) {
+      showError(
+        'Algo deu errado. Por favor, tente novamente mais tarde ou entre em contato conosco.'
+      )
+    }
   }, [dispatch, navigation, championshipWithFullPopulate, championshipDrivers])
 
   const data = [

@@ -100,12 +100,21 @@ export const submitRacePenaltiesAndBonificationsEdit = (
       formData.append('data', JSON.stringify(data))
 
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/championship/${championship}`, {
-        body: formData as any,
-        method: 'PUT'
-      })
+      const response = await fetch(
+        `${API_URL}/api/championship/${championship}`,
+        {
+          body: formData as any,
+          method: 'PUT'
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error()
+      }
     } catch (error: any) {
       dispatch(submitRacePenaltiesAndBonificationsEditFailure(error?.message))
+
+      throw error
     }
   }
 }
