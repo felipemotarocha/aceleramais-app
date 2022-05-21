@@ -13,7 +13,9 @@ export const getEnvironment = () => {
         messagingSenderId: '20063332770',
         appId: '1:20063332770:web:69413a2b31199c3cf26afb',
         measurementId: 'G-CMMHHVG5ST'
-      }
+      },
+      GOOGLE_EXPO_CLIENT_ID:
+        '20063332770-unph6kv7ar2pc595joqf0eokvehm75ed.apps.googleusercontent.com'
     }
   }
 
@@ -21,7 +23,7 @@ export const getEnvironment = () => {
     env: 'development',
     API_URL: 'http://192.168.15.19:5050',
     GOOGLE_EXPO_CLIENT_ID:
-      '277005183601-g1nih0lq8jfsnrc6letqt93u4d8jel9b.apps.googleusercontent.com',
+      '878035662808-nr3s966ip9d6i2u2958a5ad2md0koo2n.apps.googleusercontent.com',
     FIREBASE_CONFIG: {
       apiKey: 'AIzaSyCiPCh7T7RO9HwljOsPAOw8sczypuhc7qU',
       authDomain: 'aceleramais-development.firebaseapp.com',
