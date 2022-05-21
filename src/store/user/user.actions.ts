@@ -25,15 +25,17 @@ import {
 import User from '~types/user.types'
 import { EditUserDto } from '~dtos/user.dtos'
 import { showError } from '~helpers/flash-message.helpers'
+import api from '~api/axios.api'
 
 export const loginUser = (id: string, authToken: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(loginUserStart())
 
     try {
-      const { data } = await axios.get(`${API_URL}/api/user?id=${id}`)
-
       await AsyncStorage.setItem('authToken', authToken)
+
+      const { data } = await api.get(`/api/user?id=${id}`)
+
       await AsyncStorage.setItem('userId', id)
 
       return dispatch(loginUserSuccess(data))
@@ -47,6 +49,7 @@ export const createUser = (
   user: Omit<User, 'wins' | 'titles' | 'podiums'> & {
     profileImage?: { uri: string; type: string }
     profileImageUrl?: string
+    authToken: string
   }
 ) => {
   return async (dispatch: Dispatch) => {
@@ -76,7 +79,10 @@ export const createUser = (
       // eslint-disable-next-line no-undef
       await fetch(`${API_URL}/api/user`, {
         body: formData as any,
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${user.authToken}`
+        }
       })
 
       return dispatch(createUserSuccess())

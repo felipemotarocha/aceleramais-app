@@ -17,9 +17,14 @@ export const tooManyFailedAttemps = () =>
     'Essa conta foi bloqueada por muitas tentativas de login sem sucesso. Para recuperá-la, resete a sua senha.'
   )
 
-export const checkIfUserIsRegistered = async (userId: string) => {
+export const checkIfUserIsRegistered = async (
+  userId: string,
+  authToken: string
+) => {
   try {
-    await axios.get(`${API_URL}/api/user?id=${userId}`)
+    await axios.get(`${API_URL}/api/user?id=${userId}`, {
+      headers: { Authorization: `Bearer ${authToken}` }
+    })
 
     return true
   } catch (_) {

@@ -105,7 +105,8 @@ const SignUpContainer: FunctionComponent = () => {
           ...data,
           id: user.uid,
           provider: user.providerId,
-          profileImage: profileImage
+          profileImage: profileImage,
+          authToken
         })
       )
 

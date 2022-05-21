@@ -62,12 +62,12 @@ const SocialSignUpContainer: FunctionComponent<
       }
 
       if (profileImage) {
-        await dispatch(createUser({ ...basePayload, profileImage }))
+        await dispatch(createUser({ ...basePayload, authToken, profileImage }))
 
         return await dispatch(loginUser(id, authToken))
       }
 
-      await dispatch(createUser({ ...basePayload, profileImageUrl }))
+      await dispatch(createUser({ ...basePayload, authToken, profileImageUrl }))
 
       return await dispatch(loginUser(id, authToken))
     },

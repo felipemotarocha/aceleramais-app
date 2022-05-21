@@ -40,7 +40,12 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
 
       const { user } = await signInWithCredential(getAuth(), credential)
 
-      const userIsRegistered = await checkIfUserIsRegistered(user.uid)
+      const authToken = await user.getIdToken()
+
+      const userIsRegistered = await checkIfUserIsRegistered(
+        user.uid,
+        authToken
+      )
 
       if (!userIsRegistered) {
         const firstName = user?.displayName?.split(' ')[0] || ''
@@ -53,11 +58,9 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
           lastName,
           provider: 'google',
           profileImageUrl: user.photoURL || '',
-          authToken: idToken
+          authToken
         })
       }
-
-      const authToken = await user.getIdToken()
 
       return await dispatch(loginUser(user.uid, authToken))
     },
