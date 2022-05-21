@@ -1,4 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Actions
 import {
@@ -51,12 +52,17 @@ export const submitChampionshipPendentDriversEdition = (
 
       formData.append('data', JSON.stringify(data))
 
+      const authToken = await AsyncStorage.getItem('authToken')
+
       // eslint-disable-next-line no-undef
       const response = await fetch(
         `${API_URL}/api/championship/${championship}`,
         {
           body: formData as any,
-          method: 'PUT'
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${authToken}`
+          }
         }
       )
 

@@ -6,7 +6,6 @@ import React, {
 } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 import * as ImagePicker from 'expo-image-picker'
 import {
   CommonActions,
@@ -31,6 +30,7 @@ import {
 } from '~store/user/user.actions'
 import { SignUpScreenRouteProp } from '~navigators/auth/auth-stack.navigator.types'
 import { showSuccess } from '~helpers/flash-message.helpers'
+import api from '~api/axios.api'
 
 const SignUpContainer: FunctionComponent = () => {
   const { params } = useRoute<SignUpScreenRouteProp>()
@@ -120,7 +120,7 @@ const SignUpContainer: FunctionComponent = () => {
 
   const checkIfUsernameAlreadyExists = async (userName: string) => {
     try {
-      await axios.get(`${API_URL}/api/user?userName=${userName}`)
+      await api.get(`${API_URL}/api/user?userName=${userName}`)
 
       return false
     } catch (_) {

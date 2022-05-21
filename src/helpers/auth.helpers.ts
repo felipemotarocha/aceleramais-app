@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '~api/axios.api'
 import { API_URL } from '~constants/config.constants'
 import { showError } from './flash-message.helpers'
 
@@ -22,7 +22,7 @@ export const checkIfUserIsRegistered = async (
   authToken: string
 ) => {
   try {
-    await axios.get(`${API_URL}/api/user?id=${userId}`, {
+    await api.get(`${API_URL}/api/user?id=${userId}`, {
       headers: { Authorization: `Bearer ${authToken}` }
     })
 

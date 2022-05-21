@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '~api/axios.api'
 
 // Utilities
 import { API_URL } from '~constants/config.constants'
@@ -15,7 +15,7 @@ export const getChampionships = (driver: string) => {
     await dispatch(getChampionshipsStart())
 
     try {
-      const { data: championships }: { data: Championship[] } = await axios.get(
+      const { data: championships }: { data: Championship[] } = await api.get(
         `${API_URL}/api/championship?driver=${driver}`
       )
 

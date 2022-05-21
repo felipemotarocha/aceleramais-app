@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '~api/axios.api'
 
 // Utilities
 import { API_URL } from '~constants/config.constants'
@@ -17,7 +17,7 @@ export const getTracks = () => {
     await dispatch(getTracksStart())
 
     try {
-      const { data: tracks }: { data: Track[] } = await axios.get(
+      const { data: tracks }: { data: Track[] } = await api.get(
         `${API_URL}/api/track`
       )
 

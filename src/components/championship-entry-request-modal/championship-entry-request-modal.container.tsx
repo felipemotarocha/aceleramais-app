@@ -3,6 +3,7 @@ import { batch } from 'react-redux'
 
 // Components
 import ChampionshipEntryRequestModal from './championship-entry-request-modal.component'
+import Loading from '~components/common/loading/loading.component'
 
 // Utilities
 import Team from '~types/team.types'
@@ -30,6 +31,8 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
   )
 
   const { currentUser } = useAppSelector((state) => state.user)
+
+  const { loading } = useAppSelector((state) => state.championshipCreation)
 
   const dispatch = useAppDispatch()
 
@@ -74,13 +77,16 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
   }
 
   return (
-    <ChampionshipEntryRequestModal
-      {...rest}
-      teams={populatedTeams}
-      handleSubmit={handleSubmit}
-      isVisible={isVisible}
-      setIsVisible={setIsVisible}
-    />
+    <>
+      {loading && <Loading />}
+      <ChampionshipEntryRequestModal
+        {...rest}
+        teams={populatedTeams}
+        handleSubmit={handleSubmit}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+      />
+    </>
   )
 }
 

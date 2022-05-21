@@ -1,4 +1,3 @@
-import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Dispatch } from '@reduxjs/toolkit'
 import FormData from 'form-data'
@@ -77,7 +76,7 @@ export const createUser = (
 
     try {
       // eslint-disable-next-line no-undef
-      await fetch(`${API_URL}/api/user`, {
+      const response = await fetch(`${API_URL}/api/user`, {
         body: formData as any,
         method: 'POST',
         headers: {
@@ -85,9 +84,16 @@ export const createUser = (
         }
       })
 
+      if (!response.ok) {
+        dispatch(createUserFailure(response.body))
+        return showError(
+          'Algo deu errado. Por favor, tente novamente mais tarde.'
+        )
+      }
+
       return dispatch(createUserSuccess())
-    } catch (error) {
-      return dispatch(createUserFailure(error))
+    } catch (error: any) {
+      return dispatch(createUserFailure(error.message))
     }
   }
 }
@@ -116,12 +122,13 @@ export const editUser = (params: { user: string; dto: EditUserDto }) => {
 
       const formData = new FormData()
 
-      console.log({ dto })
-
       formData.append('firstName', dto.firstName)
       formData.append('lastName', dto.lastName)
       formData.append('userName', dto.userName)
-      formData.append('biography', dto.biography)
+
+      if (dto.biography) {
+        formData.append('biography', dto.biography)
+      }
 
       if (dto.profileImage) {
         formData.append('profileImage', {
@@ -133,17 +140,22 @@ export const editUser = (params: { user: string; dto: EditUserDto }) => {
         formData.append('profileImageUrl', dto.profileImageUrl)
       }
 
+      const authToken = await AsyncStorage.getItem('authToken')
+
       // eslint-disable-next-line no-undef
       const response = await fetch(`${API_URL}/api/user/${user}`, {
         body: formData as any,
-        method: 'PATCH'
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
       })
-
-      console.log({ response })
 
       if (!response.ok) {
         dispatch(submitUserEditionFailure(response.body))
-        return showError('Algo deu errado.')
+        return showError(
+          'Algo deu errado. Por favor, tente novamente mais tarde.'
+        )
       }
 
       dispatch(submitUserEditionSuccess())
@@ -158,7 +170,7 @@ export const refreshCurrentUser = (user: string) => {
     dispatch(refreshCurrentUserStart())
 
     try {
-      const { data } = await axios.get(`${API_URL}/api/user?id=${user}`)
+      const { data } = await api.get(`${API_URL}/api/user?id=${user}`)
 
       dispatch(refreshCurrentUserSuccess(data))
     } catch (error) {

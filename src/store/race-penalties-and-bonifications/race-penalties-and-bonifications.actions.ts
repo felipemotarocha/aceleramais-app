@@ -1,10 +1,11 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import api from '~api/axios.api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import FormData from 'form-data'
 
 import { API_URL } from '~constants/config.constants'
 import Championship, { Bonification, Penalty } from '~types/championship.types'
 import Race from '~types/race.types'
+import api from '~api/axios.api'
 
 import {
   getBonificationsFailure,
@@ -99,12 +100,17 @@ export const submitRacePenaltiesAndBonificationsEdit = (
 
       formData.append('data', JSON.stringify(data))
 
+      const authToken = await AsyncStorage.getItem('authToken')
+
       // eslint-disable-next-line no-undef
       const response = await fetch(
         `${API_URL}/api/championship/${championship}`,
         {
           body: formData as any,
-          method: 'PUT'
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${authToken}`
+          }
         }
       )
 

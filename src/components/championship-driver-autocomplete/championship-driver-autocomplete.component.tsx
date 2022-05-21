@@ -10,14 +10,13 @@ import {
   Image
 } from 'react-native'
 import Autocomplete from 'react-native-autocomplete-input'
-import axios from 'axios'
 
 import User from '~types/user.types'
-import { API_URL } from '~constants/config.constants'
 import Colors from '~constants/colors.constants'
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
+import api from '~api/axios.api'
 
 interface ChampionshipDriverAutocompleteProps extends TextInputProps {
   hasError?: boolean
@@ -35,8 +34,8 @@ const ChampionshipDriverAutocomplete: React.FunctionComponent<
 
     if (query.length < 3) return setDrivers([])
 
-    const { data } = await axios.get(
-      `${API_URL}/api/user/all?userName=${query.toLowerCase()}`
+    const { data } = await api.get(
+      `/api/user/all?userName=${query.toLowerCase()}`
     )
 
     setDrivers(data.slice(0, 6))

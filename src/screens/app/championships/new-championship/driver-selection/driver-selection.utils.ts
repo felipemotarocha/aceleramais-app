@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
+import api from '~api/axios.api'
 
 import { API_URL } from '~constants/config.constants'
 import { _Driver } from '~store/championship-creation/championship-creation.slice'
@@ -14,7 +14,7 @@ const ChampionshipDriverSelectionUtils = {
     drivers: _Driver[]
   }) => {
     if (data.isRegistered) {
-      const { data: driver } = await axios.get(
+      const { data: driver } = await api.get(
         `${API_URL}/api/user?userName=${data.userName}`
       )
 

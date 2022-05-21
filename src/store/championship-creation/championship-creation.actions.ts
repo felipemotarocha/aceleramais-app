@@ -1,5 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import FormData from 'form-data'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { API_URL } from '~constants/config.constants'
 import ChampionshipHelpers from '~helpers/championship.helpers'
@@ -44,10 +45,15 @@ export const createChampionship = (
         })
       }
 
+      const authToken = await AsyncStorage.getItem('authToken')
+
       // eslint-disable-next-line no-undef
       const response = await fetch(`${API_URL}/api/championship`, {
         body: formData as any,
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
       })
 
       if (!response.ok) {
@@ -83,11 +89,19 @@ export const editChampionship = (
         })
       }
 
+      const authToken = await AsyncStorage.getItem('authToken')
+
       // eslint-disable-next-line no-undef
-      const response = await fetch(`${API_URL}/api/championship`, {
-        body: formData as any,
-        method: 'PUT'
-      })
+      const response = await fetch(
+        `${API_URL}/api/championship/${championship}`,
+        {
+          body: formData as any,
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${authToken}`
+          }
+        }
+      )
 
       if (!response.ok) {
         throw new Error()
@@ -95,7 +109,7 @@ export const editChampionship = (
 
       return dispatch(editChampionshipSuccess())
     } catch (error) {
-      dispatch(editChampionshipFailure((error as any).message))
+      dispatch(editChampionshipFailure((error as any)?.message))
 
       throw error
     }
