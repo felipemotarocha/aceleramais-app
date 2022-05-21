@@ -1,9 +1,10 @@
 {
   "expo": {
-    "name": "sim-racer-app",
+    "name": "aceleramais",
+    "owner": "aceleramais",
     "plugins": ["expo-camera"],
-    "scheme": "simracerapp",
-    "slug": "sim-racer-app",
+    "scheme": "aceleramais",
+    "slug": "aceleramais",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -30,6 +31,5 @@
       "favicon": "./assets/favicon.png"
     },
     "sdkVersion": "44.0.0"
-  },
-  "name": "sim-racer-app"
+  }
 }
