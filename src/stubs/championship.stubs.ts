@@ -24,7 +24,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
             userName: 'felipe.rocha',
             profileImageUrl:
               'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-            id: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+            id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
             provider: 'firebase',
             email: 'felipe@rocha.com'
           },
@@ -40,7 +40,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
             userName: 'felipe.rocha',
             profileImageUrl:
               'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-            id: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+            id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
             provider: 'firebase',
             email: 'felipe@rocha.com'
           },
@@ -107,7 +107,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
               userName: 'felipe.rocha',
               profileImageUrl:
                 'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-              id: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+              id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
               provider: 'firebase',
               email: 'felipe@rocha.com'
             },
@@ -284,7 +284,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
             userName: 'felipe.rocha',
             profileImageUrl:
               'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-            id: 'ohYViVrxyCakFXTrUdlS981v8Pf2'
+            id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2'
           },
           isCreator: true
         }
@@ -362,7 +362,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
             userName: 'felipe.rocha',
             profileImageUrl:
               'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-            id: 'ohYViVrxyCakFXTrUdlS981v8Pf2'
+            id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2'
           },
           team: {
             name: 'McLaren',
@@ -428,7 +428,7 @@ const ChampionshipStubs: { validChampionships: Championship[] } = {
               userName: 'felipe.rocha',
               profileImageUrl:
                 'https://lh3.googleusercontent.com/a-/AOh14Gg-QreTOcdpYlm9Jys5-NnkxK1gXhoxm-X53FLwcQ=s96-c',
-              id: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+              id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
               email: 'felipe@rocha.com.br'
             },
             team: {

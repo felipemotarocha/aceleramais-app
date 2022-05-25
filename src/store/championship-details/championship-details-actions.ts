@@ -7,7 +7,10 @@ import Championship from '~types/championship.types'
 import {
   getChampionshipDetailsFailure,
   getChampionshipDetailsStart,
-  getChampionshipDetailsSuccess
+  getChampionshipDetailsSuccess,
+  requestChampionshipEntryFailure,
+  requestChampionshipEntryStart,
+  requestChampionshipEntrySuccess
 } from './championship-details.slice'
 
 export const getChampionshipDetails = (championship: string) => {
@@ -21,6 +24,27 @@ export const getChampionshipDetails = (championship: string) => {
       await dispatch(getChampionshipDetailsSuccess(championshipDetails))
     } catch (error: any) {
       await dispatch(getChampionshipDetailsFailure(error?.message))
+    }
+  }
+}
+
+export const requestChampionshipEntry = (params: {
+  championship: string
+  driver: string
+  team?: string
+}) => {
+  return async (dispatch: Dispatch) => {
+    await dispatch(requestChampionshipEntryStart())
+
+    try {
+      await api.post(
+        `${API_URL}/api/championship/${params.championship}/requestEntry`,
+        { ...params }
+      )
+
+      await dispatch(requestChampionshipEntrySuccess())
+    } catch (error: any) {
+      await dispatch(requestChampionshipEntryFailure(error?.message))
     }
   }
 }

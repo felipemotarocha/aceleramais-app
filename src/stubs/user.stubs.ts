@@ -2,7 +2,7 @@ import User from '~types/user.types'
 
 const UserStubs: { validUser: User } = {
   validUser: {
-    id: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+    id: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
     firstName: 'Felipe',
     lastName: 'Rocha',
     email: 'felipemotarocha@gmail.com',

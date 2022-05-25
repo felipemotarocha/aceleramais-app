@@ -39,7 +39,7 @@ describe('Championship Helpers', () => {
         penalties: []
       },
       {
-        user: 'ohYViVrxyCakFXTrUdlS981v8Pf2',
+        user: '6UrOYyinh9TJg9M6n1t5mSJzQPu2',
         team: '62618f71e73e0fc8a51081b9',
         isRegistered: true,
         isRemoved: true,
@@ -113,7 +113,7 @@ describe('Championship Helpers', () => {
       }
     ])
     expect(result.admins).toStrictEqual([
-      { user: 'ohYViVrxyCakFXTrUdlS981v8Pf2', isCreator: true }
+      { user: '6UrOYyinh9TJg9M6n1t5mSJzQPu2', isCreator: true }
     ])
     expect(result.bonifications).toStrictEqual([
       {

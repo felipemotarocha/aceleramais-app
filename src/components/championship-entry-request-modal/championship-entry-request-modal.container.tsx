@@ -8,13 +8,14 @@ import Loading from '~components/common/loading/loading.component'
 // Utilities
 import Team from '~types/team.types'
 import api from '~api/axios.api'
-import ChampionshipEntryRequestModalHelpers from './championship-entry-request-modal.helpers'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
-import { editChampionship } from '~store/championship-creation/championship-creation.actions'
 import { _Team } from '~store/championship-creation/championship-creation.slice'
-import { getChampionshipDetails } from '~store/championship-details/championship-details-actions'
+import {
+  getChampionshipDetails,
+  requestChampionshipEntry
+} from '~store/championship-details/championship-details-actions'
 
 interface ChampionshipEntryRequestModalContainerProps {
   isVisible: boolean
@@ -54,21 +55,16 @@ const ChampionshipEntryRequestModalContainer: FunctionComponent<
 
   const handleSubmit = async (data: { team?: _Team }) => {
     try {
-      const { data: _data } = await api.get(
-        `/api/championship/${championshipDetails!.id}?full_populate=true`
-      )
-
-      const payload =
-        ChampionshipEntryRequestModalHelpers.generateSubmitPayload({
-          championship: _data,
-          driver: currentUser!,
-          team: data?.team?.id
-        })
-
       setIsVisible(false)
 
       batch(async () => {
-        await dispatch(editChampionship(championshipDetails!.id, payload))
+        await dispatch(
+          requestChampionshipEntry({
+            championship: championshipDetails!.id,
+            driver: currentUser!.id,
+            team: data.team?.id
+          })
+        )
         await dispatch(getChampionshipDetails(championshipDetails!.id))
       })
     } catch (error) {
