@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 0.52.0"
+  },
+  "build": {
+    "production": {
+      "node": "16.14.2",
+      "releaseChannel": "production"
+    },
+    "preview": {
+      "node": "16.14.2",
+      "releaseChannel": "staging",
+      "distribution": "internal"
+    },
+    "development": {
+      "node": "16.14.2",
+      "releaseChannel": "development",
+      "developmentClient": true,
+      "distribution": "internal"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

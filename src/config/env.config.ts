@@ -4,7 +4,7 @@ export const getEnvironment = () => {
   if (Updates.releaseChannel.startsWith('prd')) {
     return {
       env: 'production',
-      API_URL: '',
+      API_URL: 'http://192.168.15.19:5050',
       FIREBASE_CONFIG: {
         apiKey: 'AIzaSyCjWamIffDjvLSoFoY6jR9Py4dMrjB5yc0',
         authDomain: 'aceleramais-94101.firebaseapp.com',
@@ -15,7 +15,9 @@ export const getEnvironment = () => {
         measurementId: 'G-CMMHHVG5ST'
       },
       GOOGLE_EXPO_CLIENT_ID:
-        '20063332770-unph6kv7ar2pc595joqf0eokvehm75ed.apps.googleusercontent.com'
+        '20063332770-unph6kv7ar2pc595joqf0eokvehm75ed.apps.googleusercontent.com',
+      ANDROID_CLIENT_ID:
+        '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com'
     }
   }
 
@@ -31,6 +33,8 @@ export const getEnvironment = () => {
       storageBucket: 'aceleramais-development.appspot.com',
       messagingSenderId: '878035662808',
       appId: '1:878035662808:web:8be3b5e29d7876670b64ad'
-    }
+    },
+    ANDROID_CLIENT_ID:
+      '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com'
   }
 }
