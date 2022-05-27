@@ -35,6 +35,6 @@ export const getEnvironment = () => {
       appId: '1:878035662808:web:8be3b5e29d7876670b64ad'
     },
     ANDROID_CLIENT_ID:
-      '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com'
+      '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com'
   }
 }
