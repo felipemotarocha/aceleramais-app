@@ -1,10 +1,10 @@
-import axios from 'axios'
+import api from '~api/axios.api'
 import { API_URL } from '~constants/config.constants'
 
 const UserHelpers = {
   checkIfUserNameAlreadyExists: async (userName: string) => {
     try {
-      await axios.get(`${API_URL}/api/user?userName=${userName}`)
+      await api.get(`${API_URL}/api/user?userName=${userName}`)
 
       return false
     } catch (_) {
