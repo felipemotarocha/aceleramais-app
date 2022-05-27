@@ -5,18 +5,19 @@
   "build": {
     "production": {
       "node": "16.14.2",
-      "releaseChannel": "production"
-    },
-    "preview": {
-      "node": "16.14.2",
-      "releaseChannel": "staging",
-      "distribution": "internal"
+      "releaseChannel": "production",
+      "env": {
+        "APP_VARIANT": "production"
+      }
     },
     "development": {
       "node": "16.14.2",
       "releaseChannel": "development",
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "development"
+      }
     }
   },
   "submit": {
