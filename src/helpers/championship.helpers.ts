@@ -102,41 +102,53 @@ const ChampionshipHelpers = {
       startDate: item!.startDate!
     }))
 
-    const drivers = dto.drivers.map((item) => {
-      const driver: ChampionshipDriver = {
-        penalties: item.penalties!.map((item) => ({
-          penalty: item.penalty.id,
-          race: item.race
-        })),
-        bonifications: item.bonifications!.map((item) => ({
-          bonification: item.bonification.id,
-          race: item.race
-        })),
-        isRemoved: item.isRemoved,
-        team: item.team?.id,
-        isRegistered: false
-      }
+    const driversAndTeams: {
+      drivers: ChampionshipDriver[]
+      teams: Omit<Team, 'championship'>[]
+    } = {
+      drivers: [],
+      teams: []
+    }
 
-      if (item.isRegistered) {
-        driver.isRegistered = true
-        driver.user = item.id
-      }
+    if (dto?.drivers) {
+      driversAndTeams.drivers = dto.drivers?.map((item) => {
+        const driver: ChampionshipDriver = {
+          penalties: item.penalties!.map((item) => ({
+            penalty: item.penalty.id,
+            race: item.race
+          })),
+          bonifications: item.bonifications!.map((item) => ({
+            bonification: item.bonification.id,
+            race: item.race
+          })),
+          isRemoved: item.isRemoved,
+          team: item.team?.id,
+          isRegistered: false
+        }
 
-      if (!item.isRegistered) {
-        driver.id = item.id
-        driver.firstName = item.firstName
-        driver.lastName = item.lastName
-        driver.isRegistered = false
-      }
+        if (item.isRegistered) {
+          driver.isRegistered = true
+          driver.user = item.id
+        }
 
-      return driver
-    })
+        if (!item.isRegistered) {
+          driver.id = item.id
+          driver.firstName = item.firstName
+          driver.lastName = item.lastName
+          driver.isRegistered = false
+        }
 
-    const teams = dto.teams.map((item) => ({
-      id: item.id,
-      color: item.color,
-      name: item.name
-    }))
+        return driver
+      })
+    }
+
+    if (dto?.teams) {
+      driversAndTeams.teams = dto.teams.map((item) => ({
+        id: item.id,
+        color: item.color,
+        name: item.name
+      }))
+    }
 
     let scoringSystem = {}
 
@@ -150,8 +162,8 @@ const ChampionshipHelpers = {
       platform: basicInfo?.platform,
       avatarImage: basicInfo?.image,
       races,
-      teams,
-      drivers,
+      teams: driversAndTeams.teams,
+      drivers: driversAndTeams.drivers,
       pendentDrivers: pendentDrivers as { user: string; team?: string }[],
       scoringSystem,
       penalties,
