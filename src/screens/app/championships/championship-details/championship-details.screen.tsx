@@ -29,21 +29,14 @@ const ChampionshipDetailsScreen: FunctionComponent<
           refetch={refetch}
           refreshing={refreshing}
           contentContainerStyle={{ padding: 20 }}>
-          <ChampionshipDetailsHeaderContainer
-            {...championshipDetails}
-            championship={championshipDetails.id}
-            teams={championshipDetails.teams as string[]}
-          />
+          <ChampionshipDetailsHeaderContainer />
 
           <ChampionshipNextRaces
             championship={championshipDetails.id}
             nextRaces={championshipDetails.nextRaces}
           />
 
-          <ChampionshipLeadingDrivers
-            championship={championshipDetails.id}
-            driverStandings={championshipDetails.driverStandings}
-          />
+          <ChampionshipLeadingDrivers />
 
           <ChampionshipLeadingTeams
             championship={championshipDetails.id}

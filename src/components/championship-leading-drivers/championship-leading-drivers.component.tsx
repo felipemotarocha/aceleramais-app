@@ -2,29 +2,31 @@ import { useNavigation } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
-import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
-import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
+import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Utilities
 import { ChampionshipDriverStandings } from '~types/championship.types'
 import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
+import { useAppSelector } from '~store'
+import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
 
-interface ChampionshipLeadingDriversProps {
-  championship: string
-  driverStandings: ChampionshipDriverStandings
-}
-
-const ChampionshipLeadingDrivers: FunctionComponent<
-  ChampionshipLeadingDriversProps
-> = ({ championship, driverStandings }) => {
+const ChampionshipLeadingDrivers: FunctionComponent = () => {
   const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
 
-  const firstDriver = driverStandings.standings[0]
+  const { championshipDetails } = useAppSelector(
+    (state) => state.championshipDetails
+  )
+
+  const driverStandings = championshipDetails!
+    .driverStandings as ChampionshipDriverStandings
+  const championship = championshipDetails!.id
+
+  const firstDriver = driverStandings.standings?.[0]
   const secondDriver = driverStandings.standings?.[1]
   const thirdDriver = driverStandings.standings?.[2]
 
@@ -103,7 +105,11 @@ const ChampionshipLeadingDrivers: FunctionComponent<
       <TextSemiBold style={{ fontSize: 14, marginTop: 20, marginBottom: 10 }}>
         Líderes
       </TextSemiBold>
-      {isEmpty(driverStandings.standings) ? (
+      {isEmpty(championshipDetails!.drivers) ? (
+        <TextRegular style={{ fontSize: 12 }}>
+          Este campeonato não possui nenhum piloto.
+        </TextRegular>
+      ) : isEmpty(driverStandings.standings) ? (
         <TextRegular style={{ fontSize: 12 }}>
           Os líderes ficarão disponíveis após a primeira corrida ser concluida.
         </TextRegular>
