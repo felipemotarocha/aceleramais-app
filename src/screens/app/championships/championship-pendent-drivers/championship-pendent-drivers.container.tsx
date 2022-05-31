@@ -116,21 +116,11 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
           }))
       ]
 
-      console.log(
-        JSON.stringify({
-          ...data,
-          drivers: newDrivers,
-          pendentDrivers: newPendentDrivers
-        })
-      )
-
       const payload = ChampionshipHelpers.convertChampionshipToUpsertPayload({
         ...data,
         drivers: newDrivers,
         pendentDrivers: newPendentDrivers
       })
-
-      console.log(JSON.stringify(payload))
 
       await dispatch(
         submitChampionshipPendentDriversEdition(championship, payload)
@@ -139,7 +129,9 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
       navigation.goBack()
 
       showSuccess('As modificações foram salvas com sucesso!')
-    } catch (_err) {
+    } catch (error) {
+      console.error(error)
+
       showError(
         'Algo deu errado. Por favor, tente novamente mais tarde ou entre em contato conosco.'
       )

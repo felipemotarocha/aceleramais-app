@@ -56,7 +56,7 @@ const ChampionshipHelpers = {
 
     const pendentDrivers = championship.pendentDrivers.map((driver) => ({
       user: (driver.user as User).id,
-      team: (driver.team as Team).id
+      team: (driver.team as Team)?.id
     }))
 
     const admins = championship.admins.map((admin) => ({
