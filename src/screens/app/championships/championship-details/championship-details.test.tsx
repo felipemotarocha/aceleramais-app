@@ -95,6 +95,27 @@ describe('Championship Details', () => {
     })
   })
 
+  it('should show an warning if there is no drivers', async () => {
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: {
+        standings: []
+      },
+      teamStandings: {
+        standings: []
+      },
+      drivers: []
+    })
+
+    const { getByText, queryByText } = render(<ChampionshipDetailsContainer />)
+
+    await waitFor(async () => {
+      getByText(/este campeonato não possui nenhum piloto./i)
+
+      expect(queryByText(/ver classificação completa/i)).toBeNull()
+    })
+  })
+
   it('should show the leading teams', async () => {
     axiosMock.onGet().reply(200, {
       ...ChampionshipDetailsStubs.validResponse,
@@ -128,6 +149,28 @@ describe('Championship Details', () => {
       getByText(
         /os times ficarão disponíveis após a primeira corrida ser concluida./i
       )
+
+      expect(queryByText(/ver classificação completa/i)).toBeNull()
+    })
+  })
+
+  it('should show an warning if there is no teams', async () => {
+    axiosMock.onGet().reply(200, {
+      ...ChampionshipDetailsStubs.validResponse,
+      driverStandings: {
+        standings: []
+      },
+      teamStandings: {
+        standings: []
+      },
+      drivers: [],
+      teams: []
+    })
+
+    const { getByText, queryByText } = render(<ChampionshipDetailsContainer />)
+
+    await waitFor(async () => {
+      getByText(/este campeonato não possui nenhum time./i)
 
       expect(queryByText(/ver classificação completa/i)).toBeNull()
     })
