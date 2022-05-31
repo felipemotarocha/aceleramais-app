@@ -56,7 +56,10 @@ const ChampionshipScoringSystemSelectionScreen: FunctionComponent<
     return _defaultValues
   }, [scoringSystem])
 
-  const methods = useForm({ defaultValues })
+  const methods = useForm({
+    defaultValues,
+    shouldUnregister: true
+  })
 
   return (
     <View style={styles.container}>
