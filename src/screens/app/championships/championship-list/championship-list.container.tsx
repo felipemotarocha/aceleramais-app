@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import React, {
   FunctionComponent,
   useCallback,
@@ -5,12 +6,17 @@ import React, {
   useMemo
 } from 'react'
 import { View } from 'react-native'
+
+// Components
 import ChampionshipItem from '~components/championship-item/championship-item.component'
+
+// Screens
+import ChampionshipListScreen from './championship-list.screen'
+
+// Utilities
 import { useAppDispatch, useAppSelector } from '~store'
 import { getChampionships } from '~store/championships/championships.actions'
 import Championship from '~types/championship.types'
-
-import ChampionshipListScreen from './championship-list.screen'
 
 interface ChampionshipListContainerProps {}
 
@@ -42,8 +48,9 @@ const ChampionshipListContainer: FunctionComponent<
     }
 
     if (filterBy === 'completed') {
-      // TODO: filter by "isCompleted" field
-      return []
+      return championships.filter((championship) =>
+        isEmpty(championship.nextRaces)
+      )
     }
 
     return championships
