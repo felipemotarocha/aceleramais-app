@@ -5,7 +5,6 @@ import { View, StyleSheet } from 'react-native'
 import SearchHeader from '~components/search-header/search-header.component'
 import ChampionshipItem from '~components/championship-item/championship-item.component'
 import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
-import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -14,6 +13,7 @@ import Championship from '~types/championship.types'
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import { submitSearch } from '~store/search/search.actions'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 
 interface SearchScreenProps {}
 
@@ -61,7 +61,7 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = () => {
                 justifyContent: 'center',
                 paddingVertical: 10
               }}>
-              <TextSemiBold>Não há campeonatos para exibir.</TextSemiBold>
+              <TextMedium>Não há campeonatos para exibir.</TextMedium>
             </View>
           }
         />

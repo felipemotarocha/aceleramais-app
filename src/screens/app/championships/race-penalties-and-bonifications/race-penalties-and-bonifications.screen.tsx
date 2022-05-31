@@ -10,6 +10,7 @@ import {
 // Components
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import Header from '~components/common/header/header.component'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 import RaceItem from '~components/race-item/race-item.component'
 
 // Utilities
@@ -23,6 +24,7 @@ import Race from '~types/race.types'
 
 interface PenaltiesAndBonificationsScreenProps {
   race?: Race
+  canEdit: boolean
   data: (
     | {
         title: string
@@ -76,7 +78,14 @@ interface PenaltiesAndBonificationsScreenProps {
 
 const RacePenaltiesAndBonificationsScreen: FunctionComponent<
   PenaltiesAndBonificationsScreenProps
-> = ({ data, race, renderItem, renderSectionHeader, handleSavePress }) => {
+> = ({
+  data,
+  race,
+  canEdit,
+  renderItem,
+  renderSectionHeader,
+  handleSavePress
+}) => {
   return (
     <View style={styles.container}>
       <Header showBack>Penalizações e Bonificações</Header>
@@ -97,15 +106,29 @@ const RacePenaltiesAndBonificationsScreen: FunctionComponent<
               : item.driver.id || ''
           }
           style={{ paddingHorizontal: 20 }}
+          ListEmptyComponent={
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingVertical: 10
+              }}>
+              <TextMedium style={{ textAlign: 'center' }}>
+                Nenhuma bonificação ou penalização foi atribuida nessa corrida.
+              </TextMedium>
+            </View>
+          }
         />
       </View>
 
-      <View
-        style={{ paddingBottom: 20, paddingHorizontal: 20, paddingTop: 15 }}>
-        <CustomButton variant="primary" onPress={handleSavePress}>
-          Salvar
-        </CustomButton>
-      </View>
+      {canEdit && (
+        <View
+          style={{ paddingBottom: 20, paddingHorizontal: 20, paddingTop: 15 }}>
+          <CustomButton variant="primary" onPress={handleSavePress}>
+            Salvar
+          </CustomButton>
+        </View>
+      )}
     </View>
   )
 }

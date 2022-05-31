@@ -86,8 +86,9 @@ const RaceClassificationScreen: FunctionComponent<
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>
-                    <TextMedium>
-                      Os resultados dessa corrida ainda não foram registrados.
+                    <TextMedium style={{ textAlign: 'center' }}>
+                      Os resultados dessa corrida ainda não foram registrados
+                      pelo administrador.
                     </TextMedium>
                   </View>
                 )
