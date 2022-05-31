@@ -75,6 +75,7 @@ const ChampionshipListContainer: FunctionComponent<
       loading={loading}
       renderItem={renderItem}
       fetchChampionships={fetchChampionships}
+      filterBy={filterBy}
     />
   )
 }

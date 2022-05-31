@@ -5,8 +5,8 @@ import { View, StyleSheet, ListRenderItem } from 'react-native'
 // Components
 import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
 import Header from '~components/common/header/header.component'
-import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import TextMedium from '~components/common/text-medium/text-medium.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -40,7 +40,7 @@ const ChampionshipPendentDriversScreen: FunctionComponent<
               justifyContent: 'center',
               paddingVertical: 20
             }}>
-            <TextSemiBold>Não há nenhum piloto pendente.</TextSemiBold>
+            <TextMedium>Não há nenhum piloto pendente.</TextMedium>
           </View>
         }
       />
