@@ -69,6 +69,7 @@ export const submitRaceClassificationEdit = (
       dispatch(submitRaceClassificationEditSuccess())
     } catch (error: any) {
       dispatch(submitRaceClassificationEditFailure(error?.message))
+      throw error(error?.message)
     }
   }
 }

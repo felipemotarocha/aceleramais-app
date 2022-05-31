@@ -17,6 +17,7 @@ import RaceClassificationScreen from './race-classification.screen'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import DriverName from '~components/driver-name/driver-name.component'
+import Loading from '~components/common/loading/loading.component'
 
 // Redux
 import { useAppSelector } from '~store'
@@ -38,7 +39,7 @@ import {
 } from '~navigators/app/championships/championships.navigator.types'
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
-import { showSuccess } from '~helpers/flash-message.helpers'
+import { showError, showSuccess } from '~helpers/flash-message.helpers'
 import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface RaceClassificationContainerProps {}
@@ -55,9 +56,8 @@ const RaceClassificationContainer: FunctionComponent<
   const [driversSelectionModalIsVisible, setDriversSelectionModalIsVisible] =
     useState(false)
 
-  const { raceClassification, championshipAdmins } = useAppSelector(
-    (state) => state.raceClassification
-  )
+  const { raceClassification, championshipAdmins, submitIsLoading } =
+    useAppSelector((state) => state.raceClassification)
 
   const { currentUser } = useAppSelector((state) => state.user)
 
@@ -92,13 +92,19 @@ const RaceClassificationContainer: FunctionComponent<
   }, [navigation, raceClassification])
 
   const handleSavePress = useCallback(async () => {
-    await dispatch(submitRaceClassificationEdit(raceClassification!))
+    try {
+      await dispatch(submitRaceClassificationEdit(raceClassification!))
 
-    await dispatch(getChampionshipRaces(raceClassification!.race.championship!))
+      await dispatch(
+        getChampionshipRaces(raceClassification!.race.championship!)
+      )
 
-    navigation.goBack()
+      navigation.goBack()
 
-    showSuccess('Os resultados foram salvos com sucesso!')
+      showSuccess('Os resultados foram salvos com sucesso!')
+    } catch (_err) {
+      showError('Algo deu errado.')
+    }
   }, [dispatch, raceClassification])
 
   const renderItem = useCallback(
@@ -181,19 +187,23 @@ const RaceClassificationContainer: FunctionComponent<
   )
 
   return (
-    <RaceClassificationScreen
-      raceClassification={raceClassification}
-      driversSelectionModalIsVisible={driversSelectionModalIsVisible}
-      isEditable={isEditable}
-      setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
-      handleEditDriversPress={handleEditDriversPress}
-      handlePenaltiesAndBonificationsPress={
-        handlePenaltiesAndBonificationsPress
-      }
-      renderItem={renderItem}
-      handleDragEnd={handleDragEnd}
-      handleSavePress={handleSavePress}
-    />
+    <>
+      {submitIsLoading && <Loading />}
+
+      <RaceClassificationScreen
+        raceClassification={raceClassification}
+        driversSelectionModalIsVisible={driversSelectionModalIsVisible}
+        isEditable={isEditable}
+        setDriversSelectionModalIsVisible={setDriversSelectionModalIsVisible}
+        handleEditDriversPress={handleEditDriversPress}
+        handlePenaltiesAndBonificationsPress={
+          handlePenaltiesAndBonificationsPress
+        }
+        renderItem={renderItem}
+        handleDragEnd={handleDragEnd}
+        handleSavePress={handleSavePress}
+      />
+    </>
   )
 }
 
