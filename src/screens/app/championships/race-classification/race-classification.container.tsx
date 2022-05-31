@@ -39,6 +39,7 @@ import {
 import { RaceClassification, RaceClassificationItem } from '~types/race.types'
 import Colors from '~constants/colors.constants'
 import { showSuccess } from '~helpers/flash-message.helpers'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface RaceClassificationContainerProps {}
 
@@ -126,7 +127,7 @@ const RaceClassificationContainer: FunctionComponent<
                 source={{
                   uri:
                     item?.user?.profileImageUrl ||
-                    'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                    `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
                 }}
               />
             </View>

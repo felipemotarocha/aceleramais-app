@@ -11,12 +11,16 @@ import {
 } from 'react-native'
 import Autocomplete from 'react-native-autocomplete-input'
 
-import User from '~types/user.types'
-import Colors from '~constants/colors.constants'
+// Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
+
+// Utilities
 import api from '~api/axios.api'
+import Colors from '~constants/colors.constants'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
+import User from '~types/user.types'
 
 interface ChampionshipDriverAutocompleteProps extends TextInputProps {
   hasError?: boolean
@@ -62,7 +66,7 @@ const ChampionshipDriverAutocomplete: React.FunctionComponent<
               source={{
                 uri:
                   item?.profileImageUrl ||
-                  'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                  `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
               }}
             />
           </View>

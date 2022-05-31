@@ -11,6 +11,7 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 // Utilities
 import Race from '~types/race.types'
 import { ChampionshipListScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface ChampionshipItemProps {
   id: string
@@ -47,7 +48,7 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
           source={{
             uri:
               avatarImageUrl ||
-              'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+              `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
           }}
         />
       </View>

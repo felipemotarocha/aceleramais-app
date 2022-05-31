@@ -17,6 +17,7 @@ import DriverName from '~components/driver-name/driver-name.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import Colors from '~constants/colors.constants'
 import { clear } from '~store/championship-driver-standings/championship-driver-standings.slice'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface ChampionshipDriverStandingsContainerProps {}
 
@@ -64,7 +65,7 @@ const ChampionshipDriverStandingsContainer: FunctionComponent<
               source={{
                 uri:
                   item?.user?.profileImageUrl ||
-                  'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                  `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
               }}
             />
           </View>

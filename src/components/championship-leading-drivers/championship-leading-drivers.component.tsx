@@ -12,6 +12,7 @@ import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/champio
 
 // Utilities
 import { ChampionshipDriverStandings } from '~types/championship.types'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface ChampionshipLeadingDriversProps {
   championship: string
@@ -41,7 +42,7 @@ const ChampionshipLeadingDrivers: FunctionComponent<
             source={{
               uri:
                 driver?.user?.profileImageUrl ||
-                'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
             }}
           />
         </View>

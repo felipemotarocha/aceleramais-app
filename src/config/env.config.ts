@@ -17,7 +17,8 @@ export const getEnvironment = () => {
       GOOGLE_EXPO_CLIENT_ID:
         '20063332770-unph6kv7ar2pc595joqf0eokvehm75ed.apps.googleusercontent.com',
       ANDROID_CLIENT_ID:
-        '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com'
+        '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com',
+      AWS_CLOUDFRONT_URL: 'd3g6qzm2mux0or.cloudfront.net'
     }
   }
 
@@ -35,6 +36,7 @@ export const getEnvironment = () => {
       appId: '1:878035662808:web:8be3b5e29d7876670b64ad'
     },
     ANDROID_CLIENT_ID:
-      '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com'
+      '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com',
+    AWS_CLOUDFRONT_URL: 'dtz9w99dxalws.cloudfront.net'
   }
 }

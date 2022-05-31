@@ -9,6 +9,7 @@ import EditRaceDriverModal from '~components/edit-race-driver-modal/edit-race-dr
 
 // Utilities
 import { RaceClassificationItem } from '~types/race.types'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface RaceDriverItemProps {
   driver: RaceClassificationItem
@@ -48,7 +49,7 @@ const RaceDriverItem: React.FunctionComponent<RaceDriverItemProps> = ({
               source={{
                 uri:
                   driver?.user?.profileImageUrl ||
-                  'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                  `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
               }}
             />
           </View>

@@ -6,6 +6,7 @@ import TextMedium from '~components/common/text-medium/text-medium.component'
 import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface ChampionshipDetailsHeaderProps {
   name: string
@@ -43,7 +44,7 @@ const ChampionshipDetailsHeader: FunctionComponent<
             source={{
               uri:
                 avatarImageUrl ||
-                'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+                `https://${AWS_CLOUDFRONT_URL}/championship-avatars/default.png`
             }}
           />
         </View>

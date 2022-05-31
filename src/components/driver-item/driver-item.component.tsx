@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
+import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
 
 interface DriverItemProps {
   profileImageUrl?: string
@@ -17,7 +18,7 @@ const DriverItem: FunctionComponent<DriverItemProps> = ({
           source={{
             uri:
               profileImageUrl ||
-              'https://sim-racer-app.s3.sa-east-1.amazonaws.com/profile-images/default.png'
+              `https://${AWS_CLOUDFRONT_URL}/user-avatars/default.png`
           }}
         />
       </View>
