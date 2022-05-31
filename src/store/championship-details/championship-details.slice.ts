@@ -44,6 +44,11 @@ const championshipDetailsSlice = createSlice({
     requestChampionshipEntryFailure: (state, action: PayloadAction<string>) => {
       state.loading = false
       state.error = action.payload
+    },
+    clear: (state) => {
+      state.loading = false
+      state.error = null
+      state.championshipDetails = undefined
     }
   }
 })
@@ -54,7 +59,8 @@ export const {
   getChampionshipDetailsFailure,
   requestChampionshipEntryStart,
   requestChampionshipEntrySuccess,
-  requestChampionshipEntryFailure
+  requestChampionshipEntryFailure,
+  clear
 } = championshipDetailsSlice.actions
 
 const championshipDetailsReducer = championshipDetailsSlice.reducer

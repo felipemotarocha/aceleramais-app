@@ -10,6 +10,7 @@ import { ChampionshipDetailsScreenRouteProp } from '~navigators/app/championship
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 import { getChampionshipDetails } from '~store/championship-details/championship-details-actions'
+import { clear } from '~store/championship-details/championship-details.slice'
 
 interface ChampionshipDetailsContainerProps {}
 
@@ -30,7 +31,13 @@ const ChampionshipDetailsContainer: FunctionComponent<
     dispatch(getChampionshipDetails(championship))
   }, [dispatch])
 
-  useEffect(() => fetchChampionshipDetails(), [fetchChampionshipDetails])
+  useEffect(() => {
+    fetchChampionshipDetails()
+
+    return () => {
+      dispatch(clear())
+    }
+  }, [fetchChampionshipDetails])
 
   return (
     <ChampionshipDetailsScreen

@@ -59,7 +59,6 @@ const championshipPendentDriversSlice = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
-      state.pendentDrivers = []
       state.submitIsLoading = false
       state.error = action.payload
     },
