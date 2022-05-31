@@ -33,15 +33,16 @@ const ChampionshipEditionScreen: React.FunctionComponent<
           Editar Detalhes e Configurações
         </CustomButton>
 
+        {/* 
         <CustomButton
           variant="outlined"
           style={{ marginVertical: 15, alignItems: 'flex-start' }}>
           Gerenciar Administradores
-        </CustomButton>
+        </CustomButton> */}
 
         <CustomButton
           variant="outlined"
-          style={{ marginBottom: 15, alignItems: 'flex-start' }}
+          style={{ marginVertical: 15, alignItems: 'flex-start' }}
           onPress={() => handlePress('pendentDrivers')()}>
           Gerenciar Pilotos Pendentes
         </CustomButton>
@@ -57,13 +58,14 @@ const ChampionshipEditionScreen: React.FunctionComponent<
           Editar Resultados de Uma Corrida
         </CustomButton>
 
+        {/* 
         <TextSemiBold style={{ fontSize: 16, marginBottom: 15 }}>
           Zona Perigosa
         </TextSemiBold>
 
         <CustomButton variant="outlined" style={{ alignItems: 'flex-start' }}>
           Excluir Campeonato
-        </CustomButton>
+        </CustomButton> */}
       </View>
     </View>
   )
