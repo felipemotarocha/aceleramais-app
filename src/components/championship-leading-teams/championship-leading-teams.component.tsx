@@ -10,18 +10,18 @@ import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.compo
 import CustomButton from '~components/common/custom-button/custom-button.component'
 
 // Utilities
-import { ChampionshipTeamStandings } from '~types/championship.types'
 import { ChampionshipDetailsScreenNavigationProp } from '~navigators/app/championships/championships.navigator.types'
+import { useAppSelector } from '~store'
 
-interface ChampionshipLeadingTeamsProps {
-  championship: string
-  teamStandings: ChampionshipTeamStandings
-}
-
-const ChampionshipLeadingTeams: FunctionComponent<
-  ChampionshipLeadingTeamsProps
-> = ({ championship, teamStandings }) => {
+const ChampionshipLeadingTeams: FunctionComponent = () => {
   const navigation = useNavigation<ChampionshipDetailsScreenNavigationProp>()
+
+  const { championshipDetails } = useAppSelector(
+    (state) => state.championshipDetails
+  )
+
+  const teamStandings = championshipDetails!.teamStandings
+  const championship = championshipDetails!.id
 
   const firstTeam = teamStandings.standings[0]
   const secondTeam = teamStandings.standings?.[1]
@@ -70,7 +70,11 @@ const ChampionshipLeadingTeams: FunctionComponent<
         Times
       </TextSemiBold>
 
-      {isEmpty(teamStandings.standings) ? (
+      {isEmpty(championshipDetails!.teams) ? (
+        <TextRegular style={{ fontSize: 12, marginBottom: 15 }}>
+          Este campeonato não possui nenhum time.
+        </TextRegular>
+      ) : isEmpty(teamStandings.standings) ? (
         <TextRegular style={{ fontSize: 12, marginBottom: 15 }}>
           Os times ficarão disponíveis após a primeira corrida ser concluida.
         </TextRegular>

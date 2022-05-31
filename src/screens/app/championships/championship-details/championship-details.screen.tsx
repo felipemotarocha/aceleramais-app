@@ -38,10 +38,7 @@ const ChampionshipDetailsScreen: FunctionComponent<
 
           <ChampionshipLeadingDrivers />
 
-          <ChampionshipLeadingTeams
-            championship={championshipDetails.id}
-            teamStandings={championshipDetails.teamStandings}
-          />
+          <ChampionshipLeadingTeams />
         </ScrollViewWithPullRefresh>
       )}
     </View>
