@@ -1,0 +1,42 @@
+name: Publish to Development
+
+on:
+  push:
+    branches:
+      - development
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+      - run: yarn install
+      - run: yarn test:ci
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v2
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: 🏗 Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 🚀 Publish app
+        run: expo publish --non-interactive --release-channel development
