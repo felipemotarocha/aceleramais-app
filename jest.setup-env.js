@@ -23,3 +23,5 @@ jest.mock('@react-navigation/native', () => {
     })
   }
 })
+
+jest.setTimeout(20_000)
