@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests --runInBand --silent",
     "test:watch": "yarn test --watch",
     "test:staged": "yarn test",
-    "test:ci": "yarn test --coverage",
+    "test:ci": "yarn test --coverage --forceExit",
     "test:verbose": "jest --passWithNoTests --runInBand --watch"
   },
   "dependencies": {
