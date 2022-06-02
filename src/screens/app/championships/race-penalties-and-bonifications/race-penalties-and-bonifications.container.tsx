@@ -356,7 +356,9 @@ const RacePenaltiesAndBonificationsContainer: FunctionComponent<
       <RacePenaltiesAndBonificationsScreen
         race={race}
         canEdit={canEdit}
-        data={data.length === 2 ? [] : data}
+        data={
+          data[0].data.length === 0 && data[1].data.length === 0 ? [] : data
+        }
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         handleSavePress={handleSavePress}
