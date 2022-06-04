@@ -6,18 +6,18 @@ export const getEnvironment = () => {
       env: 'production',
       API_URL: 'https://aceleramais-production.herokuapp.com',
       FIREBASE_CONFIG: {
-        apiKey: 'AIzaSyCjWamIffDjvLSoFoY6jR9Py4dMrjB5yc0',
-        authDomain: 'aceleramais-94101.firebaseapp.com',
-        projectId: 'aceleramais-94101',
-        storageBucket: 'aceleramais-94101.appspot.com',
-        messagingSenderId: '20063332770',
-        appId: '1:20063332770:web:69413a2b31199c3cf26afb',
-        measurementId: 'G-CMMHHVG5ST'
+        apiKey: 'AIzaSyDL4qI8LKb7-MQCWpf8BYmtP41QPxZCBoY',
+        authDomain: 'aceleramais-production-352314.firebaseapp.com',
+        projectId: 'aceleramais-production-352314',
+        storageBucket: 'aceleramais-production-352314.appspot.com',
+        messagingSenderId: '116952032771',
+        appId: '1:116952032771:web:26aebe149f5b80cba41036',
+        measurementId: 'G-CEX5Q2QXHG'
       },
       GOOGLE_EXPO_CLIENT_ID:
-        '20063332770-unph6kv7ar2pc595joqf0eokvehm75ed.apps.googleusercontent.com',
+        '116952032771-ak6mt9dkmkp0kui3am0rbh77dt7lvl65.apps.googleusercontent.com',
       ANDROID_CLIENT_ID:
-        '20063332770-7kh2sqehdga65f8kgqok735bnqvhdv22.apps.googleusercontent.com',
+        '116952032771-km9e0u63fenub9umn843c5da4eidt4vd.apps.googleusercontent.com',
       AWS_CLOUDFRONT_URL: 'd3g6qzm2mux0or.cloudfront.net'
     }
   }
