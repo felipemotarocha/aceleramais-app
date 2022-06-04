@@ -10,6 +10,14 @@
         "APP_VARIANT": "production"
       }
     },
+    "preview": {
+      "node": "16.14.2",
+      "releaseChannel": "production",
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "production"
+      }
+    },
     "development": {
       "node": "16.14.2",
       "releaseChannel": "development",
