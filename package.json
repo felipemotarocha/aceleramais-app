@@ -5,6 +5,7 @@
   "scripts": {
     "start": "expo start",
     "build:android:development": "eas build --profile development --platform android",
+    "build:android:preview": "eas build --profile preview --platform android",
     "build:android:production": "eas build --profile production --platform android",
     "android": "expo start --android",
     "ios": "expo start --ios",
