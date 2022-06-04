@@ -39,6 +39,8 @@ export const loginUser = (id: string, authToken: string) => {
 
       return dispatch(loginUserSuccess(data))
     } catch (error) {
+      await AsyncStorage.removeItem('authToken')
+
       return dispatch(loginUserFailure(error))
     }
   }
