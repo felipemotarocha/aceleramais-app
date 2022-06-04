@@ -6,15 +6,21 @@ import { useRoute } from '@react-navigation/native'
 // Screens
 import SocialSignUp from './social-sign-up.screen'
 
+// Components
+import Loading from '~components/common/loading/loading.component'
+
 // Utilities
 import { SocialSignUpScreenRouteProp } from '~navigators/auth/auth-stack.navigator.types'
 import { createUser, loginUser } from '~store/user/user.actions'
+import { useAppSelector } from '~store'
 
 interface SocialSignUpContainerProps {}
 
 const SocialSignUpContainer: FunctionComponent<
   SocialSignUpContainerProps
 > = () => {
+  const { loading } = useAppSelector((state) => state.user)
+
   const [profileImage, setProfileImage] = useState<
     | {
         uri: string
@@ -75,11 +81,15 @@ const SocialSignUpContainer: FunctionComponent<
   )
 
   return (
-    <SocialSignUp
-      handlePickImagePress={handlePickImagePress}
-      profileImageUri={profileImage?.uri}
-      handleContinuePress={handleContinuePress}
-    />
+    <>
+      {loading && <Loading />}
+
+      <SocialSignUp
+        handlePickImagePress={handlePickImagePress}
+        profileImageUri={profileImage?.uri}
+        handleContinuePress={handleContinuePress}
+      />
+    </>
   )
 }
 
