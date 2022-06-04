@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { useDispatch } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
 
 // Screens
 import SocialSignUp from './social-sign-up.screen'
@@ -57,11 +58,11 @@ const SocialSignUpContainer: FunctionComponent<
   }, [])
 
   const handleContinuePress = useCallback(
-    async (data: { userName: string }) => {
+    async (data: { userName: string; lastName?: string }) => {
       const basePayload = {
         id,
         firstName,
-        lastName,
+        lastName: (isEmpty(lastName) ? data?.lastName : lastName)!,
         email,
         provider,
         userName: data.userName
