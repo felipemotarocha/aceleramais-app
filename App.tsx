@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import * as Updates from 'expo-updates'
 
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -29,6 +30,21 @@ const App = () => {
     Poppins_600SemiBold,
     Poppins_700Bold
   })
+
+  useEffect(() => {
+    const updateApp = async () => {
+      if (Updates.releaseChannel === 'default') return
+
+      const { isAvailable } = await Updates.checkForUpdateAsync()
+
+      if (!isAvailable) return
+
+      await Updates.fetchUpdateAsync()
+      await Updates.reloadAsync()
+    }
+
+    updateApp()
+  }, [])
 
   onAuthStateChanged(auth, async (user) => {
     if (user != null) {
