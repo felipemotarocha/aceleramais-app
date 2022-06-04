@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { Image, Platform, StyleSheet } from 'react-native'
 
 // Components
 import TextBold from '~components/common/text-bold/text-bold.component'
@@ -55,9 +55,11 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
             Continuar com o Google
           </SignInWithGoogleButton>
 
-          <CustomButton variant="outlined" style={styles.button}>
-            Continuar com a Apple
-          </CustomButton>
+          {Platform.OS === 'ios' && (
+            <CustomButton variant="outlined" style={styles.button}>
+              Continuar com a Apple
+            </CustomButton>
+          )}
         </Buttons>
       </Content>
     </Container>
