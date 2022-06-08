@@ -18,6 +18,8 @@ export const getEnvironment = () => {
         '116952032771-ak6mt9dkmkp0kui3am0rbh77dt7lvl65.apps.googleusercontent.com',
       ANDROID_CLIENT_ID:
         '116952032771-km9e0u63fenub9umn843c5da4eidt4vd.apps.googleusercontent.com',
+      IOS_CLIENT_ID:
+        '116952032771-d8k1tqvpgvb98qidmsnti590m39720h8.apps.googleusercontent.com',
       AWS_CLOUDFRONT_URL: 'd3g6qzm2mux0or.cloudfront.net'
     }
   }
@@ -38,6 +40,8 @@ export const getEnvironment = () => {
       },
       ANDROID_CLIENT_ID:
         '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com',
+      IOS_CLIENT_ID:
+        '878035662808-ln5l2dfaj4s5f46i1vh9h1e7v9dovpom.apps.googleusercontent.com',
       AWS_CLOUDFRONT_URL: 'dtz9w99dxalws.cloudfront.net'
     }
   }
@@ -57,6 +61,8 @@ export const getEnvironment = () => {
     },
     ANDROID_CLIENT_ID:
       '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com',
+    IOS_CLIENT_ID:
+      '878035662808-ln5l2dfaj4s5f46i1vh9h1e7v9dovpom.apps.googleusercontent.com',
     AWS_CLOUDFRONT_URL: 'dtz9w99dxalws.cloudfront.net'
   }
 }
