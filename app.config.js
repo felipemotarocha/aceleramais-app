@@ -23,12 +23,27 @@ export default {
     resizeMode: 'cover',
     backgroundColor: '#1C1C1C'
   },
+  web: {
+    config: {
+      firebase: {
+        apiKey: 'AIzaSyDL4qI8LKb7-MQCWpf8BYmtP41QPxZCBoY',
+        authDomain: 'aceleramais-production-352314.firebaseapp.com',
+        projectId: 'aceleramais-production-352314',
+        storageBucket: 'aceleramais-production-352314.appspot.com',
+        messagingSenderId: '116952032771',
+        appId: '1:116952032771:web:26aebe149f5b80cba41036',
+        measurementId: 'G-CEX5Q2QXHG'
+      }
+    }
+  },
   ios: {
     icon: './assets/icon.png',
-    bundleIdentifier: environment.package
+    bundleIdentifier: environment.package,
+    googleServicesFile: './GoogleService-Info.plist'
   },
   android: {
     package: environment.package,
+    googleServicesFile: './google-services.json',
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#E10600'
