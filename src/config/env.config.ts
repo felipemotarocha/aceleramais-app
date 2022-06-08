@@ -36,7 +36,8 @@ export const getEnvironment = () => {
         projectId: 'aceleramais-development',
         storageBucket: 'aceleramais-development.appspot.com',
         messagingSenderId: '878035662808',
-        appId: '1:878035662808:web:8be3b5e29d7876670b64ad'
+        appId: '1:878035662808:web:8be3b5e29d7876670b64ad',
+        measurementId: 'G-VDPH5KX5CG'
       },
       ANDROID_CLIENT_ID:
         '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com',
@@ -57,7 +58,8 @@ export const getEnvironment = () => {
       projectId: 'aceleramais-development',
       storageBucket: 'aceleramais-development.appspot.com',
       messagingSenderId: '878035662808',
-      appId: '1:878035662808:web:8be3b5e29d7876670b64ad'
+      appId: '1:878035662808:web:8be3b5e29d7876670b64ad',
+      measurementId: 'G-VDPH5KX5CG'
     },
     ANDROID_CLIENT_ID:
       '878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com',

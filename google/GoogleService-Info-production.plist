@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>116952032771-p5ortostvi4oii7rsnskocten439m2cl.apps.googleusercontent.com</string>
+	<string>116952032771-d8k1tqvpgvb98qidmsnti590m39720h8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.116952032771-p5ortostvi4oii7rsnskocten439m2cl</string>
+	<string>com.googleusercontent.apps.116952032771-d8k1tqvpgvb98qidmsnti590m39720h8</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>116952032771-km9e0u63fenub9umn843c5da4eidt4vd.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.aceleramais.dev</string>
+	<string>com.aceleramais.app</string>
 	<key>PROJECT_ID</key>
 	<string>aceleramais-production-352314</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:116952032771:ios:7e3c1434a57c31e8a41036</string>
+	<string>1:116952032771:ios:31a74a4ecbe5f210a41036</string>
 </dict>
 </plist>
