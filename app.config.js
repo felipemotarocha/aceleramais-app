@@ -6,7 +6,7 @@ function getEnvironment() {
       name: '(DEV) Acelera+',
       package: 'com.aceleramais.dev',
       androidGoogleServicesFile: './google/google-services-development.json',
-      iosGoogleServicesFile: './google/GoogleService-Info-development.json',
+      iosGoogleServicesFile: './google/google-services-development.json',
       firebaseConfig: {
         apiKey: 'AIzaSyCiPCh7T7RO9HwljOsPAOw8sczypuhc7qU',
         authDomain: 'aceleramais-development.firebaseapp.com',
@@ -21,7 +21,7 @@ function getEnvironment() {
       name: 'Acelera+',
       package: 'com.aceleramais.app',
       androidGoogleServicesFile: './google/google-services-production.json',
-      iosGoogleServicesFile: './google/GoogleService-Info-production.json',
+      iosGoogleServicesFile: './google/google-services-production.json',
       firebaseConfig: {
         apiKey: 'AIzaSyDL4qI8LKb7-MQCWpf8BYmtP41QPxZCBoY',
         authDomain: 'aceleramais-production-352314.firebaseapp.com',
