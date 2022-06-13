@@ -76,9 +76,9 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
         })
       }
 
-      setIsLoading(false)
-
       await dispatch(loginUser(user.uid, authToken))
+
+      setIsLoading(false)
     },
     [navigation]
   )
