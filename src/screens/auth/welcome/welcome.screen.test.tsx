@@ -26,7 +26,4 @@ it('should show the welcome text and the login buttons', async () => {
 
   const signInWithGoogle = getByText(/continuar com o google/i)
   expect(signInWithGoogle).toBeDefined()
-
-  const signInWithApple = getByText(/continuar com a apple/i)
-  expect(signInWithApple).toBeDefined()
 })
