@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useRef } from 'react'
 import { Keyboard, StyleSheet, Image, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Controller, useForm } from 'react-hook-form'
 import { Feather } from '@expo/vector-icons'
 import { useRoute } from '@react-navigation/native'
+import { isEmpty } from 'lodash'
 
 // Components
 import Header from '~components/common/header/header.component'
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     padding: 20
   },
   input: {
-    marginBottom: 10
+    marginVertical: 10
   }
 })
 
@@ -41,60 +42,94 @@ const SocialSignUp: FunctionComponent<SocialSignUpProps> = ({
   handlePickImagePress,
   handleContinuePress
 }) => {
+  const userNameRef = useRef<any>()
+
   const {
     control,
     formState: { errors },
     handleSubmit
-  } = useForm<{ userName: string }>()
+  } = useForm<{ userName: string; lastName?: string }>()
 
   const {
-    params: { profileImageUrl }
+    params: { lastName, profileImageUrl }
   } = useRoute<SocialSignUpScreenRouteProp>()
 
-  console.log({ errors })
-
   return (
-    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
-      <Header showBack>Complete seu cadastro</Header>
-      <View style={{ marginTop: 20 }}>
-        <ImagePickerButton
-          onPress={handlePickImagePress}
-          showBackground={!profileImageUri && !profileImageUrl}>
-          {profileImageUri ? (
-            <Image
-              source={{
-                uri: profileImageUri
-              }}
-              resizeMode="cover"
-              style={{ borderRadius: 200, flex: 1 }}
-            />
-          ) : profileImageUrl ? (
-            <Image
-              source={{
-                uri: profileImageUrl
-              }}
-              resizeMode="cover"
-              style={{ borderRadius: 200, flex: 1 }}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Feather
-                name="camera"
-                size={72}
-                color={Colors.input.placeholder}
+    <DismissKeyboard>
+      <View style={{ backgroundColor: Colors.background, flex: 1 }}>
+        <Header showBack>Complete seu cadastro</Header>
+        <View style={{ marginTop: 20 }}>
+          <ImagePickerButton
+            onPress={handlePickImagePress}
+            showBackground={!profileImageUri && !profileImageUrl}>
+            {profileImageUri ? (
+              <Image
+                source={{
+                  uri: profileImageUri
+                }}
+                resizeMode="cover"
+                style={{ borderRadius: 200, flex: 1 }}
               />
-            </View>
-          )}
-        </ImagePickerButton>
-      </View>
-      <KeyboardAwareScrollView style={{ flex: 1 }} bounces={false}>
-        <DismissKeyboard>
+            ) : profileImageUrl ? (
+              <Image
+                source={{
+                  uri: profileImageUrl
+                }}
+                resizeMode="cover"
+                style={{ borderRadius: 200, flex: 1 }}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                <Feather
+                  name="camera"
+                  size={72}
+                  color={Colors.input.placeholder}
+                />
+              </View>
+            )}
+          </ImagePickerButton>
+        </View>
+        <KeyboardAwareScrollView style={{ flex: 1 }} bounces={false}>
           <View style={styles.container}>
+            {isEmpty(lastName) && (
+              <Controller
+                control={control}
+                rules={{
+                  required: true
+                }}
+                shouldUnregister
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <CustomInput
+                    style={styles.input}
+                    placeholder="Digite seu sobrenome"
+                    accessibilityLabel="Digite seu sobrenome"
+                    textContentType="familyName"
+                    autoCompleteType="name"
+                    autoCorrect={false}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    hasError={!!errors.lastName}
+                    blurOnSubmit={false}
+                    returnKeyType="next"
+                    onSubmitEditing={() => userNameRef.current?.focus()}
+                  />
+                )}
+                name="lastName"
+              />
+            )}
+
+            {errors.lastName?.type === 'required' && (
+              <TextMedium style={{ fontSize: 12, color: Colors.error }}>
+                Sobrenome é obrigatório.
+              </TextMedium>
+            )}
+
             <Controller
               control={control}
               rules={{
@@ -108,6 +143,7 @@ const SocialSignUp: FunctionComponent<SocialSignUpProps> = ({
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <CustomInput
+                  ref={userNameRef}
                   style={styles.input}
                   placeholder="Digite seu nome de usuário"
                   accessibilityLabel="Digite seu nome de usuário"
@@ -151,9 +187,9 @@ const SocialSignUp: FunctionComponent<SocialSignUpProps> = ({
               Continuar
             </CustomButton>
           </View>
-        </DismissKeyboard>
-      </KeyboardAwareScrollView>
-    </View>
+        </KeyboardAwareScrollView>
+      </View>
+    </DismissKeyboard>
   )
 }
 

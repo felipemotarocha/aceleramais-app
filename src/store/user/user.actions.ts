@@ -39,6 +39,8 @@ export const loginUser = (id: string, authToken: string) => {
 
       return dispatch(loginUserSuccess(data))
     } catch (error) {
+      await AsyncStorage.removeItem('authToken')
+
       return dispatch(loginUserFailure(error))
     }
   }
@@ -62,7 +64,10 @@ export const createUser = (
     formData.append('email', user.email)
     formData.append('userName', user.userName)
     formData.append('provider', user.provider)
-    formData.append('biography', user.biography)
+
+    if (user.biography) {
+      formData.append('biography', user.biography)
+    }
 
     if (user.profileImage) {
       formData.append('profileImage', {

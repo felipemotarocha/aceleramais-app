@@ -29,6 +29,17 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "felipemotarocha@icloud.com",
+        "ascAppId": "1627918641",
+        "language": "pt-BR",
+        "companyName": "Acelera+",
+        "bundleIdentifier": "com.aceleramais.app",
+        "ascApiKeyId": "YQTMM7U9MV",
+        "ascApiKeyIssuerId": "83df2a6b-1ff2-4444-b25b-b2778b0b5874",
+        "ascApiKeyPath": "./AuthKey_YQTMM7U9MV.p8"
+      }
+    }
   }
 }

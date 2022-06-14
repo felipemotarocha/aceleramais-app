@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 // Reducers
@@ -15,21 +15,31 @@ import searchReducer from './search/search.slice'
 import championshipPendentDriversReducer from './championship-pendent-drivers/championship-pendent-drivers.slice'
 import userProfileReducer from './user-profile/user-profile.slice'
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    championshipCreation: championshipCreationReducer,
-    championships: championshipsReducer,
-    championshipDetails: championshipDetailsReducer,
-    championshipRaces: championshipRacesReducer,
-    championshipDriverStandings: championshipDriverStandingsReducer,
-    championshipTeamStandings: championshipTeamStandingsReducer,
-    raceClassification: raceClassificationReducer,
-    racePenaltiesAndBonifications: racePenaltiesAndBonificationsReducer,
-    championshipPendentDrivers: championshipPendentDriversReducer,
-    search: searchReducer,
-    userProfile: userProfileReducer
+const combinedReducer = combineReducers({
+  user: userReducer,
+  championshipCreation: championshipCreationReducer,
+  championships: championshipsReducer,
+  championshipDetails: championshipDetailsReducer,
+  championshipRaces: championshipRacesReducer,
+  championshipDriverStandings: championshipDriverStandingsReducer,
+  championshipTeamStandings: championshipTeamStandingsReducer,
+  raceClassification: raceClassificationReducer,
+  racePenaltiesAndBonifications: racePenaltiesAndBonificationsReducer,
+  championshipPendentDrivers: championshipPendentDriversReducer,
+  search: searchReducer,
+  userProfile: userProfileReducer
+})
+
+const rootReducer = (state, action) => {
+  if (action.type === 'user/signOutUserSuccess') {
+    state = undefined
   }
+
+  return combinedReducer(state, action)
+}
+
+const store = configureStore({
+  reducer: rootReducer
 })
 
 export type RootState = ReturnType<typeof store.getState>

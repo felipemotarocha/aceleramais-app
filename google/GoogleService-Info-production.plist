@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>116952032771-d8k1tqvpgvb98qidmsnti590m39720h8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.116952032771-d8k1tqvpgvb98qidmsnti590m39720h8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>116952032771-km9e0u63fenub9umn843c5da4eidt4vd.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAbekz3avj8OS4F33g0r97gFzAxahytO4A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>116952032771</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.aceleramais.app</string>
+	<key>PROJECT_ID</key>
+	<string>aceleramais-production-352314</string>
+	<key>STORAGE_BUCKET</key>
+	<string>aceleramais-production-352314.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:116952032771:ios:31a74a4ecbe5f210a41036</string>
+</dict>
+</plist>

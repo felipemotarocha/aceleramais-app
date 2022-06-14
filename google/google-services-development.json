@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "878035662808",
+    "project_id": "aceleramais-development",
+    "storage_bucket": "aceleramais-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878035662808:android:1bc0ed5b5944e4c10b64ad",
+        "android_client_info": {
+          "package_name": "com.aceleramais.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878035662808-v5tadrcl52kkld3tci4tqqfstdk6ueia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aceleramais.dev",
+            "certificate_hash": "269a20514c303f40085fdb584e4e286a887c2ed7"
+          }
+        },
+        {
+          "client_id": "878035662808-nr3s966ip9d6i2u2958a5ad2md0koo2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjbAVgNtP_mPQbCF94--hSFBspPAzpwg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878035662808-nr3s966ip9d6i2u2958a5ad2md0koo2n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "878035662808-ln5l2dfaj4s5f46i1vh9h1e7v9dovpom.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aceleramais.dev",
+                "app_store_id": "1627918641"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { Image, Platform, StyleSheet } from 'react-native'
 
 // Components
 import TextBold from '~components/common/text-bold/text-bold.component'
 import SignInWithGoogleButton from '~components/common/sign-in-with-google-button/sign-in-with-google-button.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
+import SignInWithAppleButton from '~components/common/sign-in-with-apple-button/sign-in-with-apple-button.component'
 
 // Styles
 import { Buttons, Container, Content } from './welcome.styles'
@@ -55,9 +56,7 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({
             Continuar com o Google
           </SignInWithGoogleButton>
 
-          <CustomButton variant="outlined" style={styles.button}>
-            Continuar com a Apple
-          </CustomButton>
+          {Platform.OS === 'ios' && <SignInWithAppleButton />}
         </Buttons>
       </Content>
     </Container>

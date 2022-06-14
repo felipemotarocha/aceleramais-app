@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { PressableProps } from 'react-native'
 import {
   signInWithCredential,
@@ -11,6 +16,7 @@ import { useNavigation } from '@react-navigation/native'
 
 // Components
 import CustomButton from '../custom-button/custom-button.component'
+import Loading from '../loading/loading.component'
 
 // Utilities
 import {
@@ -26,6 +32,8 @@ interface SignInWithGoogleButtonProps extends PressableProps {}
 const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
   props
 ) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const [, response, promptAsync] = Google.useIdTokenAuthRequest({
     expoClientId: GOOGLE_EXPO_CLIENT_ID,
     iosClientId: GOOGLE_EXPO_CLIENT_ID,
@@ -55,6 +63,8 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
         const firstName = user?.displayName?.split(' ')[0] || ''
         const lastName = user?.displayName?.split(' ')[1] || ''
 
+        setIsLoading(false)
+
         return navigation.navigate('Social Sign Up', {
           id: user.uid,
           email: user.email || '',
@@ -66,13 +76,17 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
         })
       }
 
-      return await dispatch(loginUser(user.uid, authToken))
+      await dispatch(loginUser(user.uid, authToken))
+
+      setIsLoading(false)
     },
     [navigation]
   )
 
   useEffect(() => {
     if (response?.type === 'success') {
+      setIsLoading(true)
+
       handleGoogleAuth(response)
     }
   }, [response, handleGoogleAuth])
@@ -86,13 +100,16 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
   }, [promptAsync])
 
   return (
-    <CustomButton
-      {...props}
-      variant="outlined"
-      onPress={handlePress}
-      disabled={false}>
-      Continuar com o Google
-    </CustomButton>
+    <>
+      {isLoading && <Loading />}
+      <CustomButton
+        {...props}
+        variant="outlined"
+        onPress={handlePress}
+        disabled={false}>
+        Continuar com o Google
+      </CustomButton>
+    </>
   )
 }
 
