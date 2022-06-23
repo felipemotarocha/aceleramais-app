@@ -8,6 +8,8 @@
     "build:android:preview": "eas build --profile preview --platform android",
     "build:android:production": "eas build --profile production --platform android",
     "build:ios:production": "eas build --profile production --platform ios",
+    "submit:ios:production": "eas submit --profile production --platform ios",
+    "submit:android:production": "eas submit --profile production --platform android",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
