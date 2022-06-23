@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator<AppTabBottomParamList>()
 const AppBottomTabNavigator = () => {
   return (
     <Tab.Navigator
+      sceneContainerStyle={{ flex: 1, backgroundColor: Colors.background }}
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveBackgroundColor: Colors.backgroundSecondary,
