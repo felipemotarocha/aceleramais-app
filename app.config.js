@@ -43,7 +43,7 @@ export default {
   owner: 'aceleramais',
   plugins: ['expo-camera'],
   scheme: 'aceleramais',
-  version: '1.0.0',
+  version: '1.1.0',
   icon: './assets/icon.png',
   sdkVersion: '44.0.0',
   splash: {
@@ -60,7 +60,8 @@ export default {
   ios: {
     icon: './assets/icon.png',
     bundleIdentifier: environment.package,
-    googleServicesFile: environment.iosGoogleServicesFile
+    googleServicesFile: environment.iosGoogleServicesFile,
+    buildNumber: '1.1.0'
   },
   android: {
     package: environment.package,
@@ -68,6 +69,7 @@ export default {
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#E10600'
-    }
+    },
+    versionCode: 2
   }
 }
