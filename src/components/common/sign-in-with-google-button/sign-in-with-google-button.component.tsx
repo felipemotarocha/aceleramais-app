@@ -21,7 +21,8 @@ import Loading from '../loading/loading.component'
 // Utilities
 import {
   GOOGLE_EXPO_CLIENT_ID,
-  ANDROID_CLIENT_ID
+  ANDROID_CLIENT_ID,
+  IOS_CLIENT_ID
 } from '~constants/config.constants'
 import { checkIfUserIsRegistered } from '~helpers/auth.helpers'
 import { loginUser } from '~store/user/user.actions'
@@ -36,7 +37,7 @@ const SignInWithGoogleButton: FunctionComponent<SignInWithGoogleButtonProps> = (
 
   const [, response, promptAsync] = Google.useIdTokenAuthRequest({
     expoClientId: GOOGLE_EXPO_CLIENT_ID,
-    iosClientId: GOOGLE_EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
     androidClientId: ANDROID_CLIENT_ID
   })
 
