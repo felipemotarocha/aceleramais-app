@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react'
 import * as Updates from 'expo-updates'
+import { View } from 'react-native'
 
 import 'react-native-gesture-handler'
 import 'react-native-reanimated'
@@ -17,9 +18,13 @@ import { Provider } from 'react-redux'
 import { onAuthStateChanged } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// Utilities
 import store from '~store'
-import RootStackNavigator from '~navigators/root/root-stack.navigator'
 import { auth } from 'src/config/firebase.config'
+import Colors from '~constants/colors.constants'
+
+// Navigators
+import RootStackNavigator from '~navigators/root/root-stack.navigator'
 
 const App = () => {
   const [isInitializing, setIsInitializing] = useState(true)
@@ -34,15 +39,11 @@ const App = () => {
   useEffect(() => {
     const updateApp = async () => {
       if (Updates.releaseChannel === 'default') return
-
       const { isAvailable } = await Updates.checkForUpdateAsync()
-
       if (!isAvailable) return
-
       await Updates.fetchUpdateAsync()
       await Updates.reloadAsync()
     }
-
     updateApp()
   }, [])
 
@@ -66,7 +67,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <RootStackNavigator />
+      <View style={{ flex: 1, backgroundColor: Colors.background }}>
+        <RootStackNavigator />
+      </View>
     </Provider>
   )
 }
