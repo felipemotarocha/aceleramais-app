@@ -51,6 +51,7 @@ export default {
     resizeMode: 'cover',
     backgroundColor: '#1C1C1C'
   },
+  assetBundlePatterns: ['assets/*'],
   web: {
     config: {
       firebase: environment.firebaseConfig
