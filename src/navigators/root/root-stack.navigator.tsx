@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import { View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import FlashMessage from 'react-native-flash-message'
@@ -14,6 +15,7 @@ import { useAppSelector } from '~store'
 
 // Redux Actions
 import { loginUser } from '~store/user/user.actions'
+import Colors from '~constants/colors.constants'
 
 interface RootStackNavigatorProps {}
 
@@ -42,13 +44,15 @@ const RootStackNavigator: FunctionComponent<RootStackNavigatorProps> = () => {
   if (isInitializing) return <AppLoading />
 
   return (
-    <NavigationContainer>
-      {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
-      <FlashMessage
-        position="bottom"
-        textStyle={{ fontFamily: 'Poppins_600SemiBold' }}
-      />
-    </NavigationContainer>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
+      <NavigationContainer>
+        {currentUser ? <AppBottomTabNavigator /> : <AuthStackNavigator />}
+        <FlashMessage
+          position="bottom"
+          textStyle={{ fontFamily: 'Poppins_600SemiBold' }}
+        />
+      </NavigationContainer>
+    </View>
   )
 }
 
