@@ -42,7 +42,7 @@ describe('Championship Driver Selection', () => {
     )
 
     getByPlaceholderText(/nome e sobrenome/i)
-    getByText(/piloto possui conta no sim racer/i)
+    getByText(/piloto possui conta no acelera+/i)
     getByText(/adicionar/i)
 
     getByText(/pular/i)
@@ -57,7 +57,7 @@ describe('Championship Driver Selection', () => {
     )
 
     getByPlaceholderText(/nome e sobrenome/i)
-    getByText(/piloto possui conta no sim racer/i)
+    getByText(/piloto possui conta no acelera+/i)
     getByText(/adicionar/i)
     getByText(/pular/i)
 
@@ -70,7 +70,7 @@ describe('Championship Driver Selection', () => {
       { preloadedState: initialState }
     )
 
-    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+    fireEvent.press(getByLabelText(/piloto possui conta no acelera+?/i))
 
     await waitFor(async () => getByPlaceholderText('Nome de usuário'))
   })
@@ -88,7 +88,7 @@ describe('Championship Driver Selection', () => {
       <ChampionshipDriverSelectionContainer />
     )
 
-    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+    fireEvent.press(getByLabelText(/piloto possui conta no acelera+?/i))
 
     fireEvent.press(getByText(/adicionar/i))
 
@@ -351,7 +351,7 @@ describe('Championship Driver Selection', () => {
       }
     })
 
-    fireEvent.press(getByLabelText(/piloto possui conta no sim racer?/i))
+    fireEvent.press(getByLabelText(/piloto possui conta no acelera+?/i))
 
     await waitFor(async () => getByPlaceholderText(/nome de usuário/i))
 
