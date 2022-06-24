@@ -183,10 +183,10 @@ const ChampionshipDriverSelectionScreen: FunctionComponent<
                 onValueChange={onChange}
                 color={Colors.primary}
                 style={{ borderRadius: 50 }}
-                accessibilityLabel="Piloto possui conta no Sim Racer?"
+                accessibilityLabel="Piloto possui conta no Acelera+?"
               />
               <TextRegular style={{ fontSize: 12, marginLeft: 7 }}>
-                Piloto possui conta no Sim Racer
+                Piloto possui conta no Acelera+
               </TextRegular>
             </View>
           )}
