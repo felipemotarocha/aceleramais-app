@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { View } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
@@ -46,6 +51,8 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
   const { loading, submitIsLoading, pendentDrivers } = useAppSelector(
     (state) => state.championshipPendentDrivers
   )
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigation =
     useNavigation<ChampionshipPendentDriversScreenNavigationProp>()
@@ -95,6 +102,8 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true)
+
       const { data } = await api.get(
         `/api/championship/${championship}?full_populate=true`
       )
@@ -135,6 +144,8 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
       showError(
         'Algo deu errado. Por favor, tente novamente mais tarde ou entre em contato conosco.'
       )
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -154,7 +165,7 @@ const ChampionshipPendentDriversContainer: FunctionComponent<
 
   return (
     <>
-      {submitIsLoading && <Loading />}
+      {(isLoading || submitIsLoading) && <Loading />}
 
       <ChampionshipPendentDriversScreen
         refreshing={loading}
