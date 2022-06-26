@@ -62,7 +62,7 @@ const ChampionshipItem: FunctionComponent<ChampionshipItemProps> = ({
           <TextMedium style={{ fontSize: 12 }}>Código:</TextMedium> #{code}
         </TextRegular>
 
-        <TextRegular style={{ fontSize: 12, flex: 1 }}>
+        <TextRegular style={{ fontSize: 12, flex: 1 }} numberOfLines={2}>
           <TextMedium style={{ fontSize: 12 }}>Plataforma:</TextMedium>{' '}
           {platform}
         </TextRegular>
