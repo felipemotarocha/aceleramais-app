@@ -14,6 +14,7 @@ import RacePenaltiesAndBonificationsScreen from '~screens/app/championships/race
 import PenaltyOrBonificationDriverSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/driver-selection/driver-selection.container'
 import PenaltyOrBonificationSelectionScreen from '~screens/app/championships/add-penalty-or-bonification/penalty-or-bonification-selection/penalty-or-bonification-selection.container'
 import SearchScreen from '~screens/app/search/search/search.screen'
+import UserProfileScreen from '~screens/app/my-profile/user-profile/user-profile.container'
 
 interface SearchNavigatorProps {}
 
@@ -70,6 +71,11 @@ const SearchNavigator: FunctionComponent<SearchNavigatorProps> = () => {
       <Stack.Screen
         name="Penalty or Bonification Selection"
         component={PenaltyOrBonificationSelectionScreen}
+      />
+      <Stack.Screen
+        name="User Profile"
+        component={UserProfileScreen}
+        initialParams={{ showBack: false }}
       />
     </Stack.Navigator>
   )
