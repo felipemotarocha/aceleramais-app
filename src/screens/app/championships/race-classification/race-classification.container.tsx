@@ -82,6 +82,18 @@ const RaceClassificationContainer: FunctionComponent<
     []
   )
 
+  const handleDriverPress = useCallback(
+    (driver: RaceClassificationItem) => {
+      if (!driver.isRegistered) return
+
+      return navigation.navigate('User Profile', {
+        showBack: true,
+        userName: driver.user?.userName!
+      })
+    },
+    [navigation]
+  )
+
   const handlePenaltiesAndBonificationsPress = useCallback(() => {
     if (!raceClassification?.race.championship) return
 
@@ -120,6 +132,7 @@ const RaceClassificationContainer: FunctionComponent<
       <ScaleDecorator>
         <Pressable
           style={styles.itemContainer}
+          onPress={!isEditable ? () => handleDriverPress(item) : () => {}}
           onLongPress={isEditable ? () => drag() : () => {}}
           disabled={isEditable ? isActive : true}>
           <View style={styles.left}>

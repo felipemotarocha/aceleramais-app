@@ -39,11 +39,16 @@ const App = () => {
   useEffect(() => {
     const updateApp = async () => {
       if (Updates.releaseChannel === 'default') return
+
       const { isAvailable } = await Updates.checkForUpdateAsync()
+
       if (!isAvailable) return
+
       await Updates.fetchUpdateAsync()
+
       await Updates.reloadAsync()
     }
+
     updateApp()
   }, [])
 

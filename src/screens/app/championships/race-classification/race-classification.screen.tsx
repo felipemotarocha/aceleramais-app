@@ -11,6 +11,7 @@ import RaceItem from '~components/race-item/race-item.component'
 import CustomButton from '~components/common/custom-button/custom-button.component'
 import RaceDriversSelectionModalContainer from '~components/race-drivers-selection-modal/race-drivers-selection-modal.container'
 import TextMedium from '~components/common/text-medium/text-medium.component'
+import TextRegular from '~components/common/text-regular/text-regular.component'
 
 // Utilities
 import Colors from '~constants/colors.constants'
@@ -68,6 +69,15 @@ const RaceClassificationScreen: FunctionComponent<
               <Feather name="edit" size={22} color={Colors.textSecondary} />
             )}
           </Pressable>
+
+          {isEditable && !isEmpty(raceClassification?.classification) && (
+            <View style={{ paddingHorizontal: 20, paddingTop: 5 }}>
+              <TextRegular style={{ fontSize: 12 }}>
+                Toque e segure em um piloto e o arraste para alterar sua
+                posição.
+              </TextRegular>
+            </View>
+          )}
 
           <View style={{ flex: 1, marginHorizontal: 20 }}>
             <DraggableFlatList

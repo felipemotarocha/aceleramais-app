@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { FunctionComponent, useCallback, useEffect } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Pressable } from 'react-native'
 
 // Screens
 import ChampionshipDriverStandingsScreen from './championship-driver-standings.screen'
@@ -8,13 +8,18 @@ import ChampionshipDriverStandingsScreen from './championship-driver-standings.s
 // Redux
 import { useAppDispatch, useAppSelector } from '~store'
 
-// Utilities
-import { ChampionshipDriverStandingsScreenRouteProp } from '~navigators/app/championships/championships.navigator.types'
-import { getChampionshipDriverStandings } from '~store/championship-driver-standings/championship-driver-standings.actions'
-import { ChampionshipDriverStandingsItem } from '~types/championship.types'
+// Components
+import TextRegular from '~components/common/text-regular/text-regular.component'
 import TextSemiBold from '~components/common/text-semi-bold/text-semi-bold.component'
 import DriverName from '~components/driver-name/driver-name.component'
-import TextRegular from '~components/common/text-regular/text-regular.component'
+
+// Utilities
+import {
+  ChampionshipDriverStandingsScreenNavigationProp,
+  ChampionshipDriverStandingsScreenRouteProp
+} from '~navigators/app/championships/championships.navigator.types'
+import { getChampionshipDriverStandings } from '~store/championship-driver-standings/championship-driver-standings.actions'
+import { ChampionshipDriverStandingsItem } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
 import { clear } from '~store/championship-driver-standings/championship-driver-standings.slice'
 import { AWS_CLOUDFRONT_URL } from '~constants/config.constants'
@@ -27,6 +32,9 @@ const ChampionshipDriverStandingsContainer: FunctionComponent<
   const {
     params: { championship }
   } = useRoute<ChampionshipDriverStandingsScreenRouteProp>()
+
+  const navigation =
+    useNavigation<ChampionshipDriverStandingsScreenNavigationProp>()
 
   const { championshipDriverStandings, loading } = useAppSelector(
     (state) => state.championshipDriverStandings
@@ -51,9 +59,23 @@ const ChampionshipDriverStandingsContainer: FunctionComponent<
     }
   }, [fetch])
 
+  const handleDriverPress = useCallback(
+    (driver: ChampionshipDriverStandingsItem) => {
+      if (!driver.isRegistered) return
+
+      navigation.navigate('User Profile', {
+        showBack: true,
+        userName: driver.user?.userName!
+      })
+    },
+    [navigation]
+  )
+
   const renderItem = useCallback(
     ({ item }: { item: ChampionshipDriverStandingsItem }) => (
-      <View style={styles.itemContainer}>
+      <Pressable
+        style={styles.itemContainer}
+        onPress={() => handleDriverPress(item)}>
         <View style={styles.left}>
           <TextSemiBold style={{ fontSize: 14, width: 25 }} numberOfLines={1}>
             {item.position}º
@@ -85,7 +107,7 @@ const ChampionshipDriverStandingsContainer: FunctionComponent<
             {item.points} pontos
           </TextSemiBold>
         </View>
-      </View>
+      </Pressable>
     ),
     []
   )

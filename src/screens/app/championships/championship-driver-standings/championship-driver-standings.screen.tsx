@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import Header from '~components/common/header/header.component'
-import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
-
 import Championship, {
   ChampionshipDriverStandings,
   ChampionshipDriverStandingsItem
 } from '~types/championship.types'
 import Colors from '~constants/colors.constants'
-import ChampionshipItem from '~components/championship-item/championship-item.component'
 import { isEmpty } from 'lodash'
+
+// Components
+import ChampionshipItem from '~components/championship-item/championship-item.component'
+import Header from '~components/common/header/header.component'
+import FlatListWithPullRefresh from '~components/common/flatlist-with-pull-refresh/flatlist-with-pull-refresh.component'
 
 interface ChampionshipDriverStandingsScreenProps {
   championship?: Championship
