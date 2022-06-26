@@ -1,5 +1,10 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { FunctionComponent, useCallback, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo
+} from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { format } from 'date-fns'
 import CountryFlag from 'react-native-country-flag'
@@ -47,6 +52,13 @@ const ChampionshipRacesContainer: FunctionComponent<
 
     return () => dispatch(clear())
   }, [championship, dispatch])
+
+  const sortedChampionshipRaces = useMemo(() => {
+    return [...championshipRaces].sort(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
+  }, [championshipRaces])
 
   const handleItemPress = useCallback(
     (race: string) =>
@@ -98,7 +110,7 @@ const ChampionshipRacesContainer: FunctionComponent<
 
   return (
     <ChampionshipRacesScreen
-      races={championshipRaces}
+      races={sortedChampionshipRaces}
       renderItem={renderItem}
     />
   )
