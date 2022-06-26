@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { isEmpty } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Pressable } from 'react-native'
 
 // Components
 import TextMedium from '~components/common/text-medium/text-medium.component'
@@ -29,6 +29,18 @@ const ChampionshipLeadingDrivers: FunctionComponent = () => {
   const firstDriver = driverStandings.standings?.[0]
   const secondDriver = driverStandings.standings?.[1]
   const thirdDriver = driverStandings.standings?.[2]
+
+  const handleDriverPress = useCallback(
+    (driver: typeof firstDriver) => {
+      if (!driver.isRegistered) return
+
+      navigation.navigate('User Profile', {
+        showBack: true,
+        userName: driver?.user?.userName!
+      })
+    },
+    [navigation]
+  )
 
   const renderImage = useCallback((driver: typeof firstDriver) => {
     if (!driver) return null
@@ -116,24 +128,30 @@ const ChampionshipLeadingDrivers: FunctionComponent = () => {
       ) : (
         <>
           {firstDriver && (
-            <View style={styles.driverItem}>
+            <Pressable
+              style={styles.driverItem}
+              onPress={() => handleDriverPress(firstDriver)}>
               {renderImage(firstDriver)}
               <View>{renderDriverInfo(firstDriver)}</View>
-            </View>
+            </Pressable>
           )}
 
           {secondDriver && (
-            <View style={styles.driverItem}>
+            <Pressable
+              style={styles.driverItem}
+              onPress={() => handleDriverPress(secondDriver)}>
               {renderImage(secondDriver)}
               <View>{renderDriverInfo(secondDriver)}</View>
-            </View>
+            </Pressable>
           )}
 
           {thirdDriver && (
-            <View style={styles.driverItem}>
+            <Pressable
+              style={styles.driverItem}
+              onPress={() => handleDriverPress(thirdDriver)}>
               {renderImage(thirdDriver)}
               <View>{renderDriverInfo(thirdDriver)}</View>
-            </View>
+            </Pressable>
           )}
 
           <CustomButton variant="outlined" onPress={handleSeeStandingsPress}>

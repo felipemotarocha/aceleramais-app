@@ -22,6 +22,7 @@ export type ChampionshipsStackParamList = {
     type: 'penalty' | 'bonification'
   }
   'Championship Pendent Drivers': { championship: string }
+  'User Profile': { userName: string; showBack: boolean }
 }
 
 export type ChampionshipListScreenRouteProp = RouteProp<
@@ -75,6 +76,10 @@ export type PenaltyOrBonificationSelectionScreenRouteProp = RouteProp<
 export type ChampionshipPendentDriversScreenRouteProp = RouteProp<
   ChampionshipsStackParamList,
   'Championship Pendent Drivers'
+>
+export type UserProfileScreenRouteProp = RouteProp<
+  ChampionshipsStackParamList,
+  'User Profile'
 >
 
 export type ChampionshipListScreenNavigationProp = NativeStackNavigationProp<
